@@ -1,10 +1,72 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ProductPreview from '../components/ProductPreview.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const products = [
+	{ shot: '/landingpage/editorial_1.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', color: 'white', closeUp: '/landingpage/close_up1.jpg', product: '/landingpage/product1.webp' },
+	{ shot: '/landingpage/editorial_2.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp' },
+	{ shot: '/landingpage/editorial_3.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up3.webp', product: '/landingpage/product3.webp' },
+	{ shot: '/landingpage/editorial_4.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up4.webp', product: '/landingpage/product4.webp' },
+	{ shot: '/landingpage/editorial_5.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up5.webp', product: '/landingpage/product5.webp' },
+	{ shot: '/landingpage/editorial_6.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up6.webp', product: '/landingpage/product6.webp' },
+	{ shot: '/landingpage/editorial_7.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up7.webp', product: '/landingpage/product7.webp' },
+	{ shot: '/landingpage/editorial_2.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp' },
+];
 ---
 
 <Layout>
-	<h1> test </h1>
+	<section class="landingpage" id="landingpage">
+		<article class="products-preview">
+			<div class="editorial-shot">
+				<img id="editorial-img" src="/landingpage/editorial_1.webp" alt="">
+				<div class="product-preview-info">
+					<div class="title" id="product-title"></div>
+					<div class="info">
+						<span class="product-id" id="product-id"></span>
+						<span class="price" id="price"></span>
+					</div>
+				</div>
+			</div>
+			<div class="products-preview-list">
+				<div class="info-list">
+					<div class="heading">AUSGEWÄHLTE PRODUKTE</div>
+					<div class="counter"><span id="counter-current">01</span>/{String(products.length).padStart(2, '0')}</div>
+				</div>
+				<div class="products-preview-content">
+					{products.map((p) => <ProductPreview {...p} />)}
+				</div>
+			</div>
+		</article>
+	</section>
+
+	<div class="nav">
+		<span></span>
+		<button>ENTER SHOP</button>
+	</div>
 </Layout>
+
+<script>
+	import gsap from 'gsap';
+	const editorialImg = document.getElementById('editorial-img');
+	const previews = document.querySelectorAll('.product-preview');
+	const titleEl = document.getElementById('product-title');
+	const idEl = document.getElementById('product-id');
+	const priceEl = document.getElementById('price');
+	const infoEl = document.querySelector('.product-preview-info');
+	const counterCurrent = document.getElementById('counter-current');
+
+
+	previews.forEach((preview, index) => {
+	preview.addEventListener('mouseenter', () => {
+			const shot = preview.dataset.shot;
+			if (!shot) return;
+			editorialImg.src = shot;
+
+			titleEl.textContent = preview.dataset.title;
+    		idEl.textContent = preview.dataset.id;
+    		priceEl.textContent = preview.dataset.price;
+			infoEl.style.color = preview.dataset.color === 'white' ? 'var(--white)' : 'var(--black)';
+			counterCurrent.textContent = String(index + 1).padStart(2, '0');
+		});
+	});
+</script>

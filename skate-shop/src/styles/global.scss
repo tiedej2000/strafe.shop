@@ -1,3 +1,187 @@
+:root{
+    --black: #191a1b;
+    --white: #ffffff;
+    --lightgrey: #dedede;
+
+    --titleFS: clamp(2rem, 4vw, 8rem);
+
+    --satoshi: 'Satoshi', sans-serif; 
+    --ibm: "IBM Plex Mono", monospace;
+}
+
 body{
-    background-color: red;
+    display: grid;
+    place-content: center;
+    position: relative;
+}
+
+*{
+    // outline: 1px solid red;
+    transition:  all 0.3s ease;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+.landingpage{
+    width: 100vw;
+    max-width: 2440px;
+    font-family: var(--satoshi);
+
+    .products-preview{
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+
+        .editorial-shot{
+            height: 100%;
+            width: 50%;
+            position: relative;
+
+            .product-preview-info{
+                position: absolute;
+                bottom: 20px;
+                left: 20px;
+                display: flex;
+                flex-direction: column;
+
+                .title{
+                    font-size: var(--titleFS);
+                    font-weight: 700;
+                    line-height: 1;
+                }
+
+                .info{
+                    display: flex;
+                    gap: 20px;
+                    font-family: var(--ibm);
+                }
+            }
+
+            img {
+                position: absolute;
+                inset: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                object-position: top;
+                user-select: none;
+                pointer-events: none;
+            }
+        }
+
+        .products-preview-list{
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+
+            .info-list{
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding-bottom: 10px;
+                padding-right: 10px;
+                height: 100px;
+            }
+
+            .products-preview-content{
+                display: flex;
+                flex-wrap: wrap;
+                align-content: flex-start;
+                gap: 10px;
+                padding-right: 10px;
+                overflow-y: scroll;
+                height: calc(100vh - 110px);
+                
+    
+                .product-preview{
+                    height: calc((100vh - 110px) / 3);
+                    width: calc(50% - 5px);
+                    transition:  all 0.3s ease;
+                    overflow: hidden;
+    
+                    img{
+                        height: 100%;
+                        width: 100%;
+                        object-fit: cover;
+                        user-select: none;
+                        pointer-events: none;
+                    }
+
+                    .product{
+                        display: none;
+                    }
+    
+                    &:hover{
+                        height: calc((100vh - 110px) / 3);
+                    }
+
+                    &:hover .product{
+                        display: block;
+                    }
+
+                    &:hover .close-up{
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.nav{
+    background-color: var(--lightgrey);
+    height: auto;
+    width: auto;
+    padding: 4px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    border: 2px solid var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+
+    button{
+        background-color: var(--white);
+        color: var(--black);
+        padding: 8px 20px;
+        font-family: var(--satoshi);
+        border-radius: 999px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+
+        &:hover{
+            background-color: green;
+            box-shadow: 0 0 8px rgba(51, 255, 0, 0.247);
+            color: white;
+        }
+    }
 }

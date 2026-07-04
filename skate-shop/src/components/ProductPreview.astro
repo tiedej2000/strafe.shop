@@ -1,0 +1,15 @@
+---
+const { shot, title, id, price, color = 'black', closeUp, product } = Astro.props;
+---
+
+<div
+	class="product-preview"
+	data-shot={shot}
+	data-title={title}
+	data-id={id}
+	data-price={price}
+	data-color={color}
+>
+	<img class="close-up" src={closeUp} alt="" />
+	<img class="product" src={product} alt="" />
+</div>
