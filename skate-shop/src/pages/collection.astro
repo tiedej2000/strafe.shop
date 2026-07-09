@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { products } from '../data/products';
+---
+
+<Layout title="collection">
+    <section class="collection">
+        <div class="collection-grid" id="grid" style="--cols: 2">
+            {products.map((p) => (
+                <a href={`/products/${p.id}`}>
+                    <article class="product-card">
+                        <img src={p.images[0].src} alt={p.images[0].alt} loading="lazy" />
+                        <div class="product-card-info">
+                            <span class="title">{p.title}</span>
+                            <span class="price">€{p.price}</span>
+                        </div>
+                    </article>
+                </a>
+            ))}
+        </div>
+    </section>
+    <div class="nav-collection">
+        <div class="buttons">
+            <div class="grid-button" id="min-btn">MIN</div>
+            <div class="grid-button" id="mid-btn">MID</div>
+            <div class="grid-button" id="max-btn">MAX</div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    const grid = document.getElementById('grid');
+
+    document.getElementById('min-btn').addEventListener('click', () => {
+	    grid.style.setProperty('--cols', 2);
+    });
+    document.getElementById('mid-btn').addEventListener('click', () => {
+	    grid.style.setProperty('--cols', 3);
+    });
+    document.getElementById('max-btn').addEventListener('click', () => {
+	    grid.style.setProperty('--cols', 4);
+    });
+</script>

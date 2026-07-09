@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { products } from '../../data/products';
+
+export function getStaticPaths() {
+	return products.map((p) => ({
+		params: { id: p.id },
+		props: { product: p },
+	}));
+}
+
+const { product } = Astro.props;
+---
+
+<Layout title={product.title}>
+	<section class="product-page">
+		<a href="/collection" class="back">← COLLECTION</a>
+
+		<div class="product-images">
+			{product.images.map((img) => (
+				<img src={img.src} alt={img.alt} />
+			))}
+		</div>
+
+		<div class="product-details">
+			<h1>{product.title}</h1>
+			<span class="id">{product.id}</span>
+			<span class="price">€{product.price}</span>
+		</div>
+	</section>
+</Layout>

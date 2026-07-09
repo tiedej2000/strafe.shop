@@ -10,8 +10,6 @@
 }
 
 body{
-    display: grid;
-    place-content: center;
     position: relative;
 }
 
@@ -153,6 +151,20 @@ body{
     }
 }
 
+.collection{
+    min-height: 100vh;
+
+    .collection-grid {
+	    display: grid;
+	    grid-template-columns: repeat(var(--cols, 3), 1fr);
+	    gap: 20px;
+
+        .product-card{
+            
+        }
+    }
+}
+
 .nav{
     background-color: var(--lightgrey);
     height: auto;
@@ -184,4 +196,32 @@ body{
             color: white;
         }
     }
+}
+
+.nav-collection{
+    position: sticky;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: auto;
+    width: 300px;
+    padding: 8px 15px;
+    background-color: var(--white);
+    border: 1px solid var(--lightgrey);
+
+    .buttons{
+        display: flex;
+        gap: 10px;
+
+
+        .grid-button{
+            width: fit-content;
+            height: auto;
+            padding: 8px 15px;
+            background-color: var(--black);
+            color: var(--white);
+        }
+    }
+
+    
 }
