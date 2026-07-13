@@ -14,7 +14,7 @@ const { product } = Astro.props;
 
 <Layout title={product.title}>
 	<section class="product-page">
-		<a href="/collection" class="back">← COLLECTION</a>
+		<a href="/collection" class="back"> <- COLLECTION</a>
 
 		<div class="product-images">
 			{product.images.map((img) => (
@@ -26,6 +26,21 @@ const { product } = Astro.props;
 			<h1>{product.title}</h1>
 			<span class="id">{product.id}</span>
 			<span class="price">€{product.price}</span>
+			<div class="description">{product.description}</div>
+			<div class="akkordions">
+				<details class="akkordion">
+					<summary class="akkordion-titel">DETAILS</summary>
+					<div class="akkordion-details">
+						{product.productDetails}
+					</div>
+				</details>
+				<details class="akkordion">
+					<summary class="akkordion-titel">PRODUCT CARE</summary>
+					<div class="akkordion-product-care">
+						{product.productCare}
+					</div>
+				</details>
+			</div>
 		</div>
 	</section>
 </Layout>
