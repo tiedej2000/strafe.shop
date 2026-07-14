@@ -5,7 +5,7 @@ import { products } from '../data/products';
 
 <Layout title="collection">
     <section class="collection">
-        <div class="collection-grid" id="grid" style="--cols: 2">
+        <div class="collection-grid" id="grid" style="--cols: 3">
             {products.map((p) => {
                 const front = p.images.find((img) => img.type === 'front') ?? p.images[0];
                 const modell = p.images.find((img) => img.type === 'modell') ?? front;

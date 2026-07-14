@@ -18,8 +18,8 @@ export const products = [
 		title: 'SWEATER WR',
 		price: 120,
 		images: [
-			{ type: 'modell', src: '/products/IDNR2/produkt1_ziphoodie_black_modell.webp', alt: 'Zip Hoodie Blau – am Modell' },
-			{ type: 'closeup', src: '/products/IDNR1/produkt1_ziphoodie_black_closeup.webp', alt: 'Zip Hoodie – Detail' },
+			{ type: 'modell', src: '/products/IDNR2/produkt1_ziphoodie_blue_modell.webp', alt: 'Zip Hoodie Blau – am Modell' },
+			{ type: 'closeup', src: '/products/IDNR2/produkt1_ziphoodie_blue_closeup.webp', alt: 'Zip Hoodie Blau – Detail' },
 			{ type: 'front', src: '/products/IDNR2/produkt1_ziphoodie_blue.webp', alt: 'Zip Hoodie Blau – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR2/produkt1_ziphoodie_blue_black.webp', alt: 'Zip Hoodie Blau – Ansicht' },
 		],
@@ -29,8 +29,8 @@ export const products = [
 		title: 'SWEATER WR',
 		price: 120,
 		images: [
-			{ type: 'modell', src: '/products/IDNR3/produkt1_ziphoodie_black_modell.webp', alt: 'Zip Hoodie Rot – am Modell' },
-			{ type: 'closeup', src: '/products/IDNR1/produkt1_ziphoodie_black_closeup.webp', alt: 'Zip Hoodie – Detail' },
+			{ type: 'modell', src: '/products/IDNR3/produkt1_ziphoodie_red_modell.webp', alt: 'Zip Hoodie Rot – am Modell' },
+			{ type: 'closeup', src: '/products/IDNR3/produkt1_ziphoodie_red_closeup.webp', alt: 'Zip Hoodie Rot – Detail' },
 			{ type: 'front', src: '/products/IDNR3/produkt1_ziphoodie_red.webp', alt: 'Zip Hoodie Rot – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR3/produkt1_ziphoodie_red_back.webp', alt: 'Zip Hoodie Rot – Rückansicht' },
 		],
@@ -179,8 +179,42 @@ export const products = [
 		title: 'JEANS BAGGY ASPHALT',
 		price: 120,
 		images: [
+			{ type: 'modell', src: '/products/IDNR19/produkt9_jeans_baggyasphalt_modell.webp', alt: 'Baggy Jeans Asphalt – am Modell' },
 			{ type: 'front', src: '/products/IDNR19/produkt9_jeans_baggyasphalt.webp', alt: 'Baggy Jeans Asphalt – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR19/produkt9_jeans_baggyasphalt_back.webp', alt: 'Baggy Jeans Asphalt – Rückansicht' },
+		],
+	},
+	{
+		id: 'IDNR20',
+		title: 'CANDLE 3PACK',
+		price: 120,
+		images: [
+			{ type: 'closeup', src: '/products/IDNR20/produkt10_candle_closeup.webp', alt: 'Candle 3-Pack – Detail' },
+			{ type: 'front', src: '/products/IDNR20/produkt10_candle_3pack.webp', alt: 'Candle 3-Pack – Ansicht' },
+		],
+	},
+	{
+		id: 'IDNR21',
+		title: 'BEANIE STAR BEIGE',
+		price: 120,
+		images: [
+			{ type: 'front', src: '/products/IDNR21/produkt11_beanistar_beige.webp', alt: 'Beanie Star Beige – Ansicht' },
+		],
+	},
+	{
+		id: 'IDNR22',
+		title: 'BEANIE STAR BLACK',
+		price: 120,
+		images: [
+			{ type: 'front', src: '/products/IDNR22/produkt11_beanistar_black.webp', alt: 'Beanie Star Schwarz – Ansicht' },
+		],
+	},
+	{
+		id: 'IDNR23',
+		title: 'BEANIE STAR BLUE',
+		price: 120,
+		images: [
+			{ type: 'front', src: '/products/IDNR23/produkt11_beanistar_blue.webp', alt: 'Beanie Star Blau – Ansicht' },
 		],
 	},
 ]
