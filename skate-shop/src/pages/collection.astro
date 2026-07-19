@@ -8,7 +8,7 @@ import { products } from '../data/products';
         <div class="collection-grid" id="grid" style="--cols: 3">
             {products.map((p) => {
                 const front = p.images.find((img) => img.type === 'front') ?? p.images[0];
-                const modell = p.images.find((img) => img.type === 'modell') ?? front;
+                const modell = p.images.find((img) => img.type === 'modell');
                 return (
                 <a href={`/products/${p.id}`}>
                     <article class="product-card">
@@ -16,7 +16,7 @@ import { products } from '../data/products';
                             src={front.src}
                             alt={front.alt}
                             data-front={front.src}
-                            data-modell={modell.src}
+                            data-modell={modell?.src}
                             loading="lazy"
                         />
                         <div class="product-card-info">
@@ -30,45 +30,79 @@ import { products } from '../data/products';
         </div>
     </section>
     <div class="nav-collection">
-        <div class="grid-buttons">
-            <div class="grid-button" id="min-btn"><svg width="380" height="380" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="90" cy="90" r="90"/>
-                <circle cx="90" cy="290" r="90"/>
-                <circle cx="290" cy="90" r="90"/>
-                <circle cx="290" cy="290" r="90"/>
-                </svg>
+        <div class="nav-main">
+            <div class="main-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M224,120v96a8,8,0,0,1-8,8H160a8,8,0,0,1-8-8V164a4,4,0,0,0-4-4H108a4,4,0,0,0-4,4v52a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V120a16,16,0,0,1,4.69-11.31l80-80a16,16,0,0,1,22.62,0l80,80A16,16,0,0,1,224,120Z"></path></svg></div>
+            <div class="nav-main-expanded">
+                <ul>
+                    <li>start</li>
+                    <li>shop</li>
+                    <li>help</li>
+                    <li>impressum</li>
+                </ul>
             </div>
-            <div class="grid-button" id="mid-btn">MID</div>
-            <div class="grid-button" id="max-btn">MAX</div>
         </div>
-        <div class="view-buttons">
-            <div id="product-view"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M53.44,43.5,54.12,38A16,16,0,0,1,70,24H186a16,16,0,0,1,15.88,14l.68,5.49a4,4,0,0,1-4,4.5H57.41A4,4,0,0,1,53.44,43.5ZM169,64a32.06,32.06,0,0,0,31,24h3.59a4,4,0,0,0,4-4.5l-2-16a4,4,0,0,0-4-3.5ZM52.41,88H56A32.06,32.06,0,0,0,87,64H54.41a4,4,0,0,0-4,3.5l-2,16A4,4,0,0,0,52.41,88ZM223.88,214,210.56,107.5a4,4,0,0,0-4-3.5H200a48.07,48.07,0,0,1-47.32-40H136v39.73a8.18,8.18,0,0,1-7.47,8.25,8,8,0,0,1-8.53-8V64H103.32A48.07,48.07,0,0,1,56,104H49.41a4,4,0,0,0-4,3.5L32.12,214a16,16,0,0,0,6.71,15.09A16.56,16.56,0,0,0,48.39,232h40.3a16,16,0,0,0,15.51-12.06l23.8-92,23.79,91.94A16,16,0,0,0,167.31,232h40.3a16.54,16.54,0,0,0,9.56-2.89A16,16,0,0,0,223.88,214Z"></path></svg></div>
-            <div id="model-view"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M100,36a28,28,0,1,1,28,28A28,28,0,0,1,100,36ZM215.42,140.78l-45.25-51.3a28,28,0,0,0-21-9.48H106.83a28,28,0,0,0-21,9.48l-45.25,51.3a16,16,0,0,0,22.56,22.69L89,142.7l-19.7,74.88a16,16,0,0,0,29.08,13.35L128,180l29.58,51a16,16,0,0,0,29.08-13.35L167,142.7l25.9,20.77a16,16,0,0,0,22.56-22.69Z"></path></svg></div>
+        <div class="nav-grid">
+            <div class="grid-buttons">
+                <div class="grid-button" id="min-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M120,44V212a4,4,0,0,1-4,4H56a16,16,0,0,1-16-16V56A16,16,0,0,1,56,40h60A4,4,0,0,1,120,44Zm80-4H140a4,4,0,0,0-4,4V212a4,4,0,0,0,4,4h60a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Z"></path></svg>
+                </div>
+                <div class="grid-button" id="mid-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M216,56v60a4,4,0,0,1-4,4H136V44a4,4,0,0,1,4-4h60A16,16,0,0,1,216,56ZM116,40H56A16,16,0,0,0,40,56v60a4,4,0,0,0,4,4h76V44A4,4,0,0,0,116,40Zm96,96H136v76a4,4,0,0,0,4,4h60a16,16,0,0,0,16-16V140A4,4,0,0,0,212,136ZM40,140v60a16,16,0,0,0,16,16h60a4,4,0,0,0,4-4V136H44A4,4,0,0,0,40,140Z"></path></svg></div>
+                <div class="grid-button" id="max-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M84,52V92H28a4,4,0,0,1-4-4V64A16,16,0,0,1,40,48H80A4,4,0,0,1,84,52Zm16,152a4,4,0,0,0,4,4h48a4,4,0,0,0,4-4V164H100ZM24,168v24a16,16,0,0,0,16,16H80a4,4,0,0,0,4-4V164H28A4,4,0,0,0,24,168Zm0-56v32a4,4,0,0,0,4,4H84V108H28A4,4,0,0,0,24,112ZM152,48H104a4,4,0,0,0-4,4V92h56V52A4,4,0,0,0,152,48Zm76,60H172v40h56a4,4,0,0,0,4-4V112A4,4,0,0,0,228,108ZM100,148h56V108H100ZM216,48H176a4,4,0,0,0-4,4V92h56a4,4,0,0,0,4-4V64A16,16,0,0,0,216,48Zm12,116H172v40a4,4,0,0,0,4,4h40a16,16,0,0,0,16-16V168A4,4,0,0,0,228,164Z"></path></svg></div>
+            </div>
+            <div class="view-buttons">
+                <div class="view-button" id="product-view"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M53.44,43.5,54.12,38A16,16,0,0,1,70,24H186a16,16,0,0,1,15.88,14l.68,5.49a4,4,0,0,1-4,4.5H57.41A4,4,0,0,1,53.44,43.5ZM169,64a32.06,32.06,0,0,0,31,24h3.59a4,4,0,0,0,4-4.5l-2-16a4,4,0,0,0-4-3.5ZM52.41,88H56A32.06,32.06,0,0,0,87,64H54.41a4,4,0,0,0-4,3.5l-2,16A4,4,0,0,0,52.41,88ZM223.88,214,210.56,107.5a4,4,0,0,0-4-3.5H200a48.07,48.07,0,0,1-47.32-40H136v39.73a8.18,8.18,0,0,1-7.47,8.25,8,8,0,0,1-8.53-8V64H103.32A48.07,48.07,0,0,1,56,104H49.41a4,4,0,0,0-4,3.5L32.12,214a16,16,0,0,0,6.71,15.09A16.56,16.56,0,0,0,48.39,232h40.3a16,16,0,0,0,15.51-12.06l23.8-92,23.79,91.94A16,16,0,0,0,167.31,232h40.3a16.54,16.54,0,0,0,9.56-2.89A16,16,0,0,0,223.88,214Z"></path></svg></div>
+                <div class="view-button" id="model-view"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M100,36a28,28,0,1,1,28,28A28,28,0,0,1,100,36ZM215.42,140.78l-45.25-51.3a28,28,0,0,0-21-9.48H106.83a28,28,0,0,0-21,9.48l-45.25,51.3a16,16,0,0,0,22.56,22.69L89,142.7l-19.7,74.88a16,16,0,0,0,29.08,13.35L128,180l29.58,51a16,16,0,0,0,29.08-13.35L167,142.7l25.9,20.77a16,16,0,0,0,22.56-22.69Z"></path></svg></div>
+            </div>
         </div>
     </div>
 </Layout>
 
 <script>
-    const grid = document.getElementById('grid');
+    const grid = document.getElementById('grid')!;
 
-    document.getElementById('min-btn').addEventListener('click', () => {
-	    grid.style.setProperty('--cols', 2);
+    document.getElementById('min-btn')!.addEventListener('click', () => {
+	    grid.style.setProperty('--cols', '2');
     });
-    document.getElementById('mid-btn').addEventListener('click', () => {
-	    grid.style.setProperty('--cols', 3);
+    document.getElementById('mid-btn')!.addEventListener('click', () => {
+	    grid.style.setProperty('--cols', '3');
     });
-    document.getElementById('max-btn').addEventListener('click', () => {
-	    grid.style.setProperty('--cols', 4);
-    });
-
-    const cardImages = document.querySelectorAll('.product-card img');
-
-    document.getElementById('product-view').addEventListener('click', () => {
-        cardImages.forEach((img) => { img.src = img.dataset.front; });
+    document.getElementById('max-btn')!.addEventListener('click', () => {
+	    grid.style.setProperty('--cols', '4');
     });
 
-    document.getElementById('model-view').addEventListener('click', () => {
-        cardImages.forEach((img) => { img.src = img.dataset.modell; });
+    const cardImages = document.querySelectorAll<HTMLImageElement>('.product-card img');
+
+    // aktuelle Ansicht
+    let currentView: 'front' | 'modell' = 'front';
+
+    document.getElementById('product-view')!.addEventListener('click', () => {
+        currentView = 'front';
+        cardImages.forEach((img) => { img.src = img.dataset.front!; });
     });
-    
+
+    document.getElementById('model-view')!.addEventListener('click', () => {
+        currentView = 'modell';
+        cardImages.forEach((img) => {
+            img.src = img.dataset.modell ?? img.dataset.front!;
+        });
+    });
+
+    // wenn Modell img vorhanden
+    cardImages.forEach((img) => {
+        const modell = img.dataset.modell;
+        if (!modell) return; 
+
+        img.addEventListener('mouseenter', () => { img.src = modell; });
+        img.addEventListener('mouseleave', () => {
+            img.src = currentView === 'modell' ? modell : img.dataset.front!;
+        });
+    });
+
+    // main menu
+    const mainIcon = document.querySelector('.main-icon')!;
+    const navMainExpanded = document.querySelector('.nav-main-expanded')!;
+
+    mainIcon.addEventListener('click', () => {
+        navMainExpanded.classList.toggle('active');
+    });
+
 </script>

@@ -47,13 +47,13 @@ const products = [
 
 <script>
 	import gsap from 'gsap';
-	const editorialImg = document.getElementById('editorial-img');
-	const previews = document.querySelectorAll('.product-preview');
-	const titleEl = document.getElementById('product-title');
-	const idEl = document.getElementById('product-id');
-	const priceEl = document.getElementById('price');
-	const infoEl = document.querySelector('.product-preview-info');
-	const counterCurrent = document.getElementById('counter-current');
+	const editorialImg = document.getElementById('editorial-img') as HTMLImageElement;
+	const previews = document.querySelectorAll<HTMLElement>('.product-preview');
+	const titleEl = document.getElementById('product-title')!;
+	const idEl = document.getElementById('product-id')!;
+	const priceEl = document.getElementById('price')!;
+	const infoEl = document.querySelector<HTMLElement>('.product-preview-info')!;
+	const counterCurrent = document.getElementById('counter-current')!;
 
 
 	previews.forEach((preview, index) => {
@@ -62,9 +62,9 @@ const products = [
 			if (!shot) return;
 			editorialImg.src = shot;
 
-			titleEl.textContent = preview.dataset.title;
-    		idEl.textContent = preview.dataset.id;
-    		priceEl.textContent = preview.dataset.price;
+			titleEl.textContent = preview.dataset.title ?? '';
+    		idEl.textContent = preview.dataset.id ?? '';
+    		priceEl.textContent = preview.dataset.price ?? '';
 			infoEl.style.color = preview.dataset.color === 'white' ? 'var(--white)' : 'var(--black)';
 			counterCurrent.textContent = String(index + 1).padStart(2, '0');
 		});

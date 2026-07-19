@@ -160,7 +160,10 @@ body{
 	    gap: 20px;
 
         .product-card{
-            
+            .product-card-info{
+                display: flex;
+                justify-content: space-between;
+            }
         }
     }
 }
@@ -246,42 +249,133 @@ body{
 
 .nav-collection{
     position: sticky;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    height: auto;
-    width: 300px;
-    padding: 8px 15px;
-    background-color: var(--white);
-    border: 1px solid var(--lightgrey);
+    bottom: 30px;
+    width: fit-content;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    gap: 10px;
 
-    .grid-buttons{
-        display: flex;
-        gap: 10px;
+    .nav-main{
+        display: grid;
+        place-content: center;
+        width: 50px;
+        height: 50px;
+        background-color: var(--white);
+        border-radius: 10px;
+        border: 1px solid var(--lightgrey);
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
 
+        position: relative;
+        z-index: 2;
 
-        .grid-button{
-            display: grid;
-            place-content: center;
-            width: fit-content;
-            height: auto;
-            padding: 8px 15px;
-            background-color: var(--black);
-            color: var(--white);
-
+        .main-icon{
             svg{
-                width: 12px;
-                height: 12px;
-                fill: var(--white);
+                height: 20px;
+                fill: var(--black);
+            }
+        }
+
+        .nav-main-expanded{
+            opacity: 0;
+            display: none;
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            height: auto;
+            width: 200px;
+            background-color: var(--white);
+            z-index: -1;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--lightgrey);
+            font-family: var(--satoshi);
+
+            &.active{
+                opacity: 1;
+                display: flex;
             }
         }
     }
 
-    .view-buttons{
+    .nav-grid{
         display: flex;
-        gap: 10px;
+        justify-content: space-between;
+        padding: 8px;
+        width: fit-content;
+        background-color: var(--white);
+        width: 450px;
+        height: 50px;
+        border-radius: 10px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+
+
+        .grid-buttons{
+            display: flex;
+            border: 1px solid var(--lightgrey);
+            border-radius: 6px;
+
+            .grid-button{
+                display: grid;
+                place-content: center;
+                padding: 0 8px;
+                cursor: pointer;
+                position: relative;
+
+                & + .grid-button::before{
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 1px;
+                    height: 50%;
+                    background-color: var(--lightgrey);
+                }
+
+                &:hover{
+                    background-color: var(--lightgrey);
+                }
+
+                svg{
+                    height: 20px;
+                    fill: var(--black);
+                }
+            }
+        }
+    
+        .view-buttons{
+            display: flex;
+            border: 1px solid var(--lightgrey);
+            border-radius: 6px;
+
+            .view-button{
+                display: grid;
+                place-content: center;
+                padding: 0 8px;
+                cursor: pointer;
+                position: relative;
+
+                & + .view-button::before{
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 1px;
+                    height: 50%;
+                    background-color: var(--lightgrey);
+                }
+
+                &:hover{
+                    background-color: var(--lightgrey);
+                }
+            }
+    
+            svg{
+                height: 20px;
+                fill: var(--black);
+            }
+        }
     }
     
 }

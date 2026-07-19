@@ -1,4 +1,16 @@
-export const products = [
+type ProductImage = { type: string; src: string; alt: string };
+
+type Product = {
+	id: string;
+	title: string;
+	price: number;
+	images: ProductImage[];
+	description?: string;
+	productDetails?: string;
+	productCare?: string;
+};
+
+export const products: Product[] = [
 	{
 		id: 'IDNR1',
 		title: 'SWEATER WR',

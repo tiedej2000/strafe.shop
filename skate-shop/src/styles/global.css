@@ -8,8 +8,6 @@
 }
 
 body {
-  display: grid;
-  place-content: center;
   position: relative;
 }
 
@@ -138,6 +136,57 @@ body {
   display: none;
 }
 
+.collection {
+  min-height: 100vh;
+}
+.collection .collection-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 3), 1fr);
+  gap: 20px;
+}
+.collection .collection-grid .product-card .product-card-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-page {
+  display: flex;
+  position: relative;
+}
+.product-page .back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: var(--white);
+}
+.product-page .product-images {
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+}
+.product-page .product-details {
+  max-width: 60vw;
+  position: sticky;
+  top: 20px;
+  padding-left: 20px;
+  align-self: flex-start;
+}
+.product-page .akkordion {
+  border-top: 1px solid var(--lightgrey);
+}
+.product-page .akkordion .akkordion-titel {
+  cursor: pointer;
+  padding: 12px 0;
+  font-family: var(--ibm);
+  list-style: none;
+}
+.product-page .akkordion .akkordion-titel::-webkit-details-marker {
+  display: none;
+}
+.product-page .akkordion .akkordion-titel + div {
+  padding-bottom: 12px;
+}
+
 .nav {
   background-color: var(--lightgrey);
   height: auto;
@@ -155,7 +204,7 @@ body {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
 }
-.nav button {
+.nav a {
   background-color: var(--white);
   color: var(--black);
   padding: 8px 20px;
@@ -163,8 +212,45 @@ body {
   border-radius: 999px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
-.nav button:hover {
+.nav a:hover {
   background-color: green;
   box-shadow: 0 0 8px rgba(51, 255, 0, 0.247);
   color: white;
+}
+
+.nav-collection {
+  position: sticky;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: auto;
+  width: 300px;
+  padding: 8px 15px;
+  background-color: var(--white);
+  border: 1px solid var(--lightgrey);
+  display: flex;
+  justify-content: space-between;
+}
+.nav-collection .grid-buttons {
+  display: flex;
+  gap: 10px;
+}
+.nav-collection .grid-buttons .grid-button {
+  display: grid;
+  place-content: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: auto;
+  padding: 8px 15px;
+  background-color: var(--black);
+  color: var(--white);
+}
+.nav-collection .grid-buttons .grid-button svg {
+  width: 12px;
+  height: 12px;
+  fill: var(--white);
+}
+.nav-collection .view-buttons {
+  display: flex;
+  gap: 10px;
 }/*# sourceMappingURL=global.css.map */
