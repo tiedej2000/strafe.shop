@@ -163,6 +163,11 @@ body{
             .product-card-info{
                 display: flex;
                 justify-content: space-between;
+
+                &.hidden{
+                    opacity: 0;
+                    display: none;
+                }
             }
         }
     }
@@ -253,7 +258,7 @@ body{
     width: fit-content;
     margin: 0 auto;
     display: flex;
-    gap: 10px;
+    gap: 15px;
 
     .nav-main{
         display: grid;
@@ -297,6 +302,24 @@ body{
         }
     }
 
+    .cart-expand-button{
+        display: grid;
+        place-content: center;
+        width: 50px;
+        height: 50px;
+        background-color: var(--white);
+        border-radius: 10px;
+        border: 1px solid var(--lightgrey);
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+
+        position: relative;
+        z-index: 2;
+
+        svg{
+            height: 20px;
+        }
+    }
+
     .nav-grid{
         display: flex;
         justify-content: space-between;
@@ -307,75 +330,66 @@ body{
         height: 50px;
         border-radius: 10px;
         box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        position: relative;
 
+        .nav-button{
+            display: grid;
+            place-content: center;
+            padding: 0 8px;
+            cursor: pointer;
+            position: relative;
 
-        .grid-buttons{
-            display: flex;
-            border: 1px solid var(--lightgrey);
-            border-radius: 6px;
-
-            .grid-button{
-                display: grid;
-                place-content: center;
-                padding: 0 8px;
-                cursor: pointer;
-                position: relative;
-
-                & + .grid-button::before{
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 1px;
-                    height: 50%;
-                    background-color: var(--lightgrey);
-                }
-
-                &:hover{
-                    background-color: var(--lightgrey);
-                }
-
-                svg{
-                    height: 20px;
-                    fill: var(--black);
-                }
+            & + .nav-button::before{
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 1px;
+                height: 50%;
+                background-color: var(--lightgrey);
             }
-        }
-    
-        .view-buttons{
-            display: flex;
-            border: 1px solid var(--lightgrey);
-            border-radius: 6px;
 
-            .view-button{
-                display: grid;
-                place-content: center;
-                padding: 0 8px;
-                cursor: pointer;
-                position: relative;
-
-                & + .view-button::before{
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 1px;
-                    height: 50%;
-                    background-color: var(--lightgrey);
-                }
-
-                &:hover{
-                    background-color: var(--lightgrey);
-                }
+            &:hover{
+                background-color: var(--lightgrey);
             }
-    
+
+            &.active svg{
+                fill: green;
+            }
+
             svg{
                 height: 20px;
                 fill: var(--black);
             }
         }
+
+
+        .grid-buttons, .tag-buttons, .view-buttons, .info{
+            display: flex;
+            border: 1px solid var(--lightgrey);
+            border-radius: 6px;
+        }
+
+        .nav-grid-expanded{
+            position: absolute;
+            bottom: -10px;
+            left: -10px;
+            min-height: 200px;
+            width: calc(100% + 20px);
+            background-color: var(--white);
+            z-index: -1;
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+
+            &.active{
+                opacity: 1;
+                display: flex;
+            }
+        }
     }
-    
 }
+
+
+    
