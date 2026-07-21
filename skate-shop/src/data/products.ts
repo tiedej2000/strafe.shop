@@ -21,9 +21,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR1/produkt1_ziphoodie_black.webp', alt: 'Zip Hoodie Schwarz – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR1/produkt1_ziphoodie_black_back.webp', alt: 'Zip Hoodie Schwarz – Rückansicht' },
 		],
-		description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia integer nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per conubia nostra inceptos himenaeos orci varius natoque penatibus et magnis dis parturient montes nascetur ridiculus.',
-		productDetails: 'test auch mal 2',
-		productCare: 'test',
+		description: 'Heavyweight zip hoodie in black. Boxy cut with dropped shoulders, a deep hood and a full-length metal zip. Built for cold sessions and everything after.',
+		productDetails: '80% cotton, 20% recycled polyester. 400 gsm brushed fleece. Boxy fit, dropped shoulders. Full-length metal zip, lined hood, ribbed cuffs and hem. Embroidered logo on the chest, print on the back. Made in Portugal.',
+		productCare: 'Machine wash cold at 30°C, inside out. Do not bleach. Tumble dry low or hang dry. Iron on low, avoid prints and embroidery. Do not dry clean.',
 	},
 	{
 		id: 'IDNR2',
@@ -35,6 +35,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR2/produkt1_ziphoodie_blue.webp', alt: 'Zip Hoodie Blau – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR2/produkt1_ziphoodie_blue_black.webp', alt: 'Zip Hoodie Blau – Ansicht' },
 		],
+		description: 'Heavyweight zip hoodie in washed blue. Boxy cut with dropped shoulders, a deep hood and a full-length metal zip. Built for cold sessions and everything after.',
+		productDetails: '80% cotton, 20% recycled polyester. 400 gsm brushed fleece. Boxy fit, dropped shoulders. Full-length metal zip, lined hood, ribbed cuffs and hem. Embroidered logo on the chest, print on the back. Made in Portugal.',
+		productCare: 'Machine wash cold at 30°C, inside out. Do not bleach. Tumble dry low or hang dry. Iron on low, avoid prints and embroidery. Do not dry clean.',
 	},
 	{
 		id: 'IDNR3',
@@ -46,6 +49,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR3/produkt1_ziphoodie_red.webp', alt: 'Zip Hoodie Rot – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR3/produkt1_ziphoodie_red_back.webp', alt: 'Zip Hoodie Rot – Rückansicht' },
 		],
+		description: 'Heavyweight zip hoodie in deep red. Boxy cut with dropped shoulders, a deep hood and a full-length metal zip. Built for cold sessions and everything after.',
+		productDetails: '80% cotton, 20% recycled polyester. 400 gsm brushed fleece. Boxy fit, dropped shoulders. Full-length metal zip, lined hood, ribbed cuffs and hem. Embroidered logo on the chest, print on the back. Made in Portugal.',
+		productCare: 'Machine wash cold at 30°C, inside out. Wash separately the first few times, the red may bleed. Do not bleach. Tumble dry low or hang dry. Iron on low, avoid prints and embroidery.',
 	},
 	{
 		id: 'IDNR4',
@@ -57,6 +63,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR4/produkt2_jeans.webp', alt: 'Jeans – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR4/produkt_jeans_back.webp', alt: 'Jeans – Rückansicht' },
 		],
+		description: 'Straight-leg five-pocket jeans in rigid denim. Mid rise, roomy through the thigh, cut long so they stack over the shoe. Breaks in fast and only gets better.',
+		productDetails: '100% cotton, 14 oz rigid denim. Mid rise, straight leg. Five-pocket construction, button fly, triple-stitched inseam, reinforced bar tacks at the stress points. Woven label at the back waist. Made in Turkey.',
+		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Hang dry. Wash rarely to keep the fades and the fit. Do not tumble dry.',
 	},
 	{
 		id: 'IDNR5',
@@ -67,6 +76,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR5/produkt3_belt_snake.webp', alt: 'Gürtel Snake – Vorderansicht' },
 			{ type: 'rolled', src: '/products/IDNR5/produkt3_belt_snake_rolled.webp', alt: 'Gürtel Snake – gerollt' },
 		],
+		description: 'Leather belt with a snake print finish and a brushed metal buckle. Slim enough to sit clean in the loops, loud enough to notice.',
+		productDetails: '100% cowhide leather with printed snake finish, textile backing. 3.5 cm wide. Brushed silver-tone buckle, five adjustment holes, single keeper loop. Available in sizes 80 to 100 cm.',
+		productCare: 'Wipe with a soft dry cloth. Keep away from water and direct heat. Treat occasionally with a colourless leather balm. Store rolled or hanging, never folded.',
 	},
 	{
 		id: 'IDNR6',
@@ -77,6 +89,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR6/produkt3_belt_cow.webp', alt: 'Gürtel Cow – Vorderansicht' },
 			{ type: 'rolled', src: '/products/IDNR6/produkt3_belt_cow_rolled.webp', alt: 'Gürtel Cow – gerollt' },
 		],
+		description: 'Leather belt in a black and white cow pattern with a brushed metal buckle. A plain pair of jeans is all it needs.',
+		productDetails: '100% cowhide leather with hair-on cow finish, textile backing. 3.5 cm wide. Brushed silver-tone buckle, five adjustment holes, single keeper loop. Available in sizes 80 to 100 cm. Every belt is cut individually, so the pattern is never the same twice.',
+		productCare: 'Brush lightly in the direction of the hair. Wipe with a soft dry cloth. Keep away from water and direct heat. Store rolled or hanging, never folded.',
 	},
 	{
 		id: 'IDNR7',
@@ -87,6 +102,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR7/produkt4_tee_lizblue.webp', alt: 'Tee Liz Blau – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR7/produkt4_tee_liz_back.webp', alt: 'Tee Liz Blau – Rückansicht' },
 		],
+		description: 'Heavy cotton tee in blue with the Liz artwork screen printed front and back. Boxy body, wide sleeves, holds its shape wash after wash.',
+		productDetails: '100% organic cotton, 240 gsm single jersey. Boxy fit, dropped shoulders, ribbed crew neck, twin-needle hem. Water-based screen print front and back. Made in Portugal.',
+		productCare: 'Machine wash cold at 30°C, inside out. Do not bleach. Tumble dry low or hang dry. Iron on low, never directly on the print. Do not dry clean.',
 	},
 	{
 		id: 'IDNR8',
@@ -97,6 +115,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR8/produkt4_tee_lizblack.webp', alt: 'Tee Liz Schwarz – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR8/produkt4_tee_liz_back.webp', alt: 'Tee Liz Schwarz – Rückansicht' },
 		],
+		description: 'Heavy cotton tee in black with the Liz artwork screen printed front and back. Boxy body, wide sleeves, holds its shape wash after wash.',
+		productDetails: '100% organic cotton, 240 gsm single jersey. Boxy fit, dropped shoulders, ribbed crew neck, twin-needle hem. Water-based screen print front and back. Made in Portugal.',
+		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Tumble dry low or hang dry. Iron on low, never directly on the print. Do not dry clean.',
 	},
 	{
 		id: 'IDNR9',
@@ -107,6 +128,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR9/produkt5_tee_lizblack.webp', alt: 'Tee Liz Schwarz – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR9/produkt5_tee_lizblack_back.webp', alt: 'Tee Liz Schwarz – Rückansicht' },
 		],
+		description: 'Long-body cotton tee in black with an oversized Liz back print. Longer through the body than the classic cut, so it layers under anything.',
+		productDetails: '100% organic cotton, 220 gsm single jersey. Relaxed fit, extended body length, ribbed crew neck, twin-needle hem. Small chest print, oversized water-based back print. Made in Portugal.',
+		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Tumble dry low or hang dry. Iron on low, never directly on the print. Do not dry clean.',
 	},
 	{
 		id: 'IDNR10',
@@ -116,6 +140,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR10/produkt6_wax_lizred.webp', alt: 'Wax Liz Rot – Vorderansicht' },
 			{ type: 'alt', src: '/products/IDNR10/produkt6_wax_lizred2.webp', alt: 'Wax Liz Rot – Ansicht' },
 		],
+		description: 'Skate wax in red, moulded with the Liz face. Hard enough to last a whole session, soft enough to lay down on any ledge, rail or curb.',
+		productDetails: 'Paraffin and beeswax blend, colour pigment. Approx. 90 g. Moulded Liz relief on the front, embossed logo on the back. Fits in the palm and in a front pocket. Made in Germany.',
+		productCare: 'Store below 25°C and out of direct sunlight. Keep away from clothing, the pigment can transfer. Not edible.',
 	},
 	{
 		id: 'IDNR11',
@@ -125,6 +152,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR11/produkt6_wax_lizblue.webp', alt: 'Wax Liz Blau – Vorderansicht' },
 			{ type: 'alt', src: '/products/IDNR11/produkt6_wax_lizblue2.webp', alt: 'Wax Liz Blau – Ansicht' },
 		],
+		description: 'Skate wax in blue, moulded with the Liz face. Hard enough to last a whole session, soft enough to lay down on any ledge, rail or curb.',
+		productDetails: 'Paraffin and beeswax blend, colour pigment. Approx. 90 g. Moulded Liz relief on the front, embossed logo on the back. Fits in the palm and in a front pocket. Made in Germany.',
+		productCare: 'Store below 25°C and out of direct sunlight. Keep away from clothing, the pigment can transfer. Not edible.',
 	},
 	{
 		id: 'IDNR12',
@@ -133,6 +163,9 @@ export const products: Product[] = [
 		images: [
 			{ type: 'front', src: '/products/IDNR12/produkt7_deck_starBB.webp', alt: 'Deck Star BB – Ansicht' },
 		],
+		description: 'Seven-ply maple deck with the Star graphic in black on blue. Medium concave, steep kicks, a shape that works for street and park alike.',
+		productDetails: '7-ply hard rock maple, epoxy pressed. Widths 8.0", 8.25" and 8.5". Medium concave, 14.25" wheelbase. Heat-transfer graphic on the bottom, laser-etched logo on the top ply. Made in the USA.',
+		productCare: 'Keep dry, water delaminates the plies. Do not store in a hot car or against a radiator. Rotate the deck to even out wear and check for cracks before every session.',
 	},
 	{
 		id: 'IDNR13',
@@ -141,6 +174,9 @@ export const products: Product[] = [
 		images: [
 			{ type: 'front', src: '/products/IDNR13/produkt7_deck_starRW.webp', alt: 'Deck Star RW – Ansicht' },
 		],
+		description: 'Seven-ply maple deck with the Star graphic in white on red. Medium concave, steep kicks, a shape that works for street and park alike.',
+		productDetails: '7-ply hard rock maple, epoxy pressed. Widths 8.0", 8.25" and 8.5". Medium concave, 14.25" wheelbase. Heat-transfer graphic on the bottom, laser-etched logo on the top ply. Made in the USA.',
+		productCare: 'Keep dry, water delaminates the plies. Do not store in a hot car or against a radiator. Rotate the deck to even out wear and check for cracks before every session.',
 	},
 	{
 		id: 'IDNR14',
@@ -149,6 +185,9 @@ export const products: Product[] = [
 		images: [
 			{ type: 'front', src: '/products/IDNR14/produkt7_deck_starOY.webp', alt: 'Deck Star OY – Ansicht' },
 		],
+		description: 'Seven-ply maple deck with the Star graphic in orange and yellow. Medium concave, steep kicks, a shape that works for street and park alike.',
+		productDetails: '7-ply hard rock maple, epoxy pressed. Widths 8.0", 8.25" and 8.5". Medium concave, 14.25" wheelbase. Heat-transfer graphic on the bottom, laser-etched logo on the top ply. Made in the USA.',
+		productCare: 'Keep dry, water delaminates the plies. Do not store in a hot car or against a radiator. Rotate the deck to even out wear and check for cracks before every session.',
 	},
 	{
 		id: 'IDNR15',
@@ -157,6 +196,9 @@ export const products: Product[] = [
 		images: [
 			{ type: 'front', src: '/products/IDNR15/produkt8_mag_issue07.webp', alt: 'Magazin Issue 07 – Cover' },
 		],
+		description: 'Issue 07 of the magazine. Photo sections, interviews and trip reports from a year on the road, printed large and on paper worth keeping.',
+		productDetails: '128 pages, 240 × 320 mm. Offset printed on 120 gsm uncoated paper, 300 gsm cover, perfect bound. English and German. Limited run of 1000 copies, unnumbered.',
+		productCare: 'Store upright and out of direct sunlight to keep the cover from fading. Keep dry. Uncoated paper marks easily, that is part of it.',
 	},
 	{
 		id: 'IDNR16',
@@ -165,6 +207,9 @@ export const products: Product[] = [
 		images: [
 			{ type: 'front', src: '/products/IDNR16/produkt8_mag_issue08.webp', alt: 'Magazin Issue 08 – Cover' },
 		],
+		description: 'Issue 08 of the magazine. New photo sections, interviews and a long feature on the spots that did not survive the year.',
+		productDetails: '132 pages, 240 × 320 mm. Offset printed on 120 gsm uncoated paper, 300 gsm cover, perfect bound. English and German. Limited run of 1000 copies, unnumbered.',
+		productCare: 'Store upright and out of direct sunlight to keep the cover from fading. Keep dry. Uncoated paper marks easily, that is part of it.',
 	},
 	{
 		id: 'IDNR17',
@@ -175,6 +220,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR17/produkt9_jeans_baggyblue.webp', alt: 'Baggy Jeans Blau – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR17/produkt9_jeans_baggyblue_back.webp', alt: 'Baggy Jeans Blau – Rückansicht' },
 		],
+		description: 'Baggy five-pocket jeans in mid blue. Wide through the leg from hip to hem with a low rise and plenty of room to move.',
+		productDetails: '100% cotton, 13.5 oz denim. Low rise, baggy leg, wide opening. Five-pocket construction, zip fly, triple-stitched inseam, reinforced bar tacks. Woven label at the back waist. Made in Turkey.',
+		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Hang dry. Wash rarely to keep the fades and the fit. Do not tumble dry.',
 	},
 	{
 		id: 'IDNR18',
@@ -185,6 +233,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR18/produkt9_jeans_baggygreen.webp', alt: 'Baggy Jeans Grün – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR18/produkt9_jeans_baggygreen_back.webp', alt: 'Baggy Jeans Grün – Rückansicht' },
 		],
+		description: 'Baggy five-pocket jeans in washed green. Wide through the leg from hip to hem with a low rise and plenty of room to move.',
+		productDetails: '100% cotton, 13.5 oz denim, garment dyed. Low rise, baggy leg, wide opening. Five-pocket construction, zip fly, triple-stitched inseam, reinforced bar tacks. Woven label at the back waist. Made in Turkey.',
+		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Hang dry. Garment dyed, so the colour will soften over time. Do not tumble dry.',
 	},
 	{
 		id: 'IDNR19',
@@ -195,6 +246,9 @@ export const products: Product[] = [
 			{ type: 'front', src: '/products/IDNR19/produkt9_jeans_baggyasphalt.webp', alt: 'Baggy Jeans Asphalt – Vorderansicht' },
 			{ type: 'back', src: '/products/IDNR19/produkt9_jeans_baggyasphalt_back.webp', alt: 'Baggy Jeans Asphalt – Rückansicht' },
 		],
+		description: 'Baggy five-pocket jeans in asphalt grey. Wide through the leg from hip to hem with a low rise and plenty of room to move.',
+		productDetails: '100% cotton, 13.5 oz denim, garment dyed. Low rise, baggy leg, wide opening. Five-pocket construction, zip fly, triple-stitched inseam, reinforced bar tacks. Woven label at the back waist. Made in Turkey.',
+		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Hang dry. Garment dyed, so the colour will soften over time. Do not tumble dry.',
 	},
 	{
 		id: 'IDNR20',
@@ -204,6 +258,9 @@ export const products: Product[] = [
 			{ type: 'closeup', src: '/products/IDNR20/produkt10_candle_closeup.webp', alt: 'Candle 3-Pack – Detail' },
 			{ type: 'front', src: '/products/IDNR20/produkt10_candle_3pack.webp', alt: 'Candle 3-Pack – Ansicht' },
 		],
+		description: 'Set of three hand-poured candles in the house colours. Unscented, long burning, and they look right on a windowsill full of clutter.',
+		productDetails: 'Set of three. 100% natural soy wax with cotton wicks, unscented. Approx. 180 g each, burn time around 30 hours per candle. Poured and finished by hand in Germany, so small marks and colour shifts are normal.',
+		productCare: 'Trim the wick to 5 mm before each burn. Burn on a heat-resistant surface, away from anything flammable. Never leave a burning candle unattended. Keep away from children and pets.',
 	},
 	{
 		id: 'IDNR21',
@@ -212,6 +269,9 @@ export const products: Product[] = [
 		images: [
 			{ type: 'front', src: '/products/IDNR21/produkt11_beanistar_beige.webp', alt: 'Beanie Star Beige – Ansicht' },
 		],
+		description: 'Ribbed beanie in beige with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.',
+		productDetails: '50% merino wool, 50% acrylic. Fine rib knit, double layered, folded cuff. One size fits most. Embroidered Star patch on the cuff. Made in Italy.',
+		productCare: 'Hand wash cold or machine wash on the wool cycle at 30°C. Do not bleach. Reshape while damp and dry flat, never hang. Do not tumble dry.',
 	},
 	{
 		id: 'IDNR22',
@@ -220,6 +280,9 @@ export const products: Product[] = [
 		images: [
 			{ type: 'front', src: '/products/IDNR22/produkt11_beanistar_black.webp', alt: 'Beanie Star Schwarz – Ansicht' },
 		],
+		description: 'Ribbed beanie in black with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.',
+		productDetails: '50% merino wool, 50% acrylic. Fine rib knit, double layered, folded cuff. One size fits most. Embroidered Star patch on the cuff. Made in Italy.',
+		productCare: 'Hand wash cold or machine wash on the wool cycle at 30°C. Do not bleach. Reshape while damp and dry flat, never hang. Do not tumble dry.',
 	},
 	{
 		id: 'IDNR23',
@@ -228,5 +291,8 @@ export const products: Product[] = [
 		images: [
 			{ type: 'front', src: '/products/IDNR23/produkt11_beanistar_blue.webp', alt: 'Beanie Star Blau – Ansicht' },
 		],
+		description: 'Ribbed beanie in blue with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.',
+		productDetails: '50% merino wool, 50% acrylic. Fine rib knit, double layered, folded cuff. One size fits most. Embroidered Star patch on the cuff. Made in Italy.',
+		productCare: 'Hand wash cold or machine wash on the wool cycle at 30°C. Do not bleach. Reshape while damp and dry flat, never hang. Do not tumble dry.',
 	},
 ]

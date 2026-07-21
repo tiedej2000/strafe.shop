@@ -18,7 +18,20 @@ const { title = 'strafe.shop' } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
+		<div class="cursor" id="cursor" aria-hidden="true">
+			<div class="cursor-dot"></div>
+		</div>
+
 		<slot />
+
+		<script>
+			const cursor = document.getElementById('cursor');
+
+			window.addEventListener('mousemove', (e) => {
+				cursor.style.setProperty('--cursor-x', e.clientX + 'px');
+				cursor.style.setProperty('--cursor-y', e.clientY + 'px');
+			});
+		</script>
 	</body>
 </html>
 

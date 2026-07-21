@@ -1,72 +1,83 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ProductPreview from '../components/ProductPreview.astro';
 
-const products = [
-	{ shot: '/landingpage/editorial_1.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', color: 'white', closeUp: '/landingpage/close_up1.jpg', product: '/landingpage/product1.webp' },
-	{ shot: '/landingpage/editorial_2.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp' },
-	{ shot: '/landingpage/editorial_3.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up3.webp', product: '/landingpage/product3.webp' },
-	{ shot: '/landingpage/editorial_4.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up4.webp', product: '/landingpage/product4.webp' },
-	{ shot: '/landingpage/editorial_5.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up5.webp', product: '/landingpage/product5.webp' },
-	{ shot: '/landingpage/editorial_6.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up6.webp', product: '/landingpage/product6.webp' },
-	{ shot: '/landingpage/editorial_7.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up7.webp', product: '/landingpage/product7.webp' },
-	{ shot: '/landingpage/editorial_2.webp', title: 'SWEATER WR', id: 'ID: 9921100WR', price: '€120', closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp' },
+// Weitere Bilder einfach hier anhaengen
+const editorials = [
+	'/landingpage/editiorial_strafe_1.webp',
+	'/landingpage/editiorial_strafe_2.webp',
+	'/landingpage/close_up3.webp',
+	'/landingpage/close_up4.webp',
+	'/landingpage/close_up5.webp',
+	'/landingpage/close_up6.webp',
+];
+
+// closeUp = Thumbnail, product = das Bild das beim Hover fullscreen kommt
+const chosen = [
+	{ closeUp: '/landingpage/close_up1.webp', product: '/landingpage/product1.webp' },
+	{ closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp' },
+	{ closeUp: '/landingpage/close_up3.webp', product: '/landingpage/product3.webp' },
+	{ closeUp: '/landingpage/close_up4.webp', product: '/landingpage/product4.webp' },
+	{ closeUp: '/landingpage/close_up5.webp', product: '/landingpage/product5.webp' },
+	{ closeUp: '/landingpage/close_up6.webp', product: '/landingpage/product6.webp' },
 ];
 ---
 
 <Layout title="strafe.shop">
-	<section class="landingpage" id="landingpage">
-		<article class="products-preview">
-			<div class="editorial-shot">
-				<img id="editorial-img" src="/landingpage/editorial_1.webp" alt="">
-				<div class="product-preview-info">
-					<div class="title" id="product-title"></div>
-					<div class="info">
-						<span class="product-id" id="product-id"></span>
-						<span class="price" id="price"></span>
-					</div>
-				</div>
-			</div>
-			<div class="products-preview-list">
-				<div class="info-list">
-					<div class="heading">AUSGEWÄHLTE PRODUKTE</div>
-					<div class="counter"><span id="counter-current">01</span>/{String(products.length).padStart(2, '0')}</div>
-				</div>
-				<div class="products-preview-content">
-					{products.map((p) => <ProductPreview {...p} />)}
-				</div>
-			</div>
-		</article>
+	<section class="editorial-loop">
+		<div class="editorial-track">
+			{[...editorials, ...editorials].map((src) => (
+				<img src={src} alt="" />
+			))}
+		</div>
 	</section>
-
-	<div class="nav">
-		<span></span>
-		<a href="/collection">ENTER SHOP</a>
+	<div class="chosen-products">
+		{chosen.map((c) => (
+			<div class="chosen-product">
+				<img class="product-close" src={c.closeUp} alt="" />
+				<img class="product-full" src={c.product} alt="" />
+			</div>
+		))}
+	</div>
+	<div class="nav-start">
+		<div class="logo"><img src='/landingpage/strafe_fullsize.png' alt="strafe"></div>
+		<div class="meta">
+			<span id="date"></span>
+			<span id="time"></span>
+			<span>BRL</span>
+		</div>
+	</div>
+	<div class="links">
+		<span>strafe.site</span>
+		<a href="/collection">enter collection</a>
 	</div>
 </Layout>
 
 <script>
-	import gsap from 'gsap';
-	const editorialImg = document.getElementById('editorial-img') as HTMLImageElement;
-	const previews = document.querySelectorAll<HTMLElement>('.product-preview');
-	const titleEl = document.getElementById('product-title')!;
-	const idEl = document.getElementById('product-id')!;
-	const priceEl = document.getElementById('price')!;
-	const infoEl = document.querySelector<HTMLElement>('.product-preview-info')!;
-	const counterCurrent = document.getElementById('counter-current')!;
+	const track = document.querySelector('.editorial-track')!;
+	const anim = track.getAnimations()[0];
 
+	// der Track enthaelt die Bilder doppelt, also ist die Haelfte die echte Anzahl
+	const count = track.children.length / 2;
 
-	previews.forEach((preview, index) => {
-	preview.addEventListener('mouseenter', () => {
-			const shot = preview.dataset.shot;
-			if (!shot) return;
-			editorialImg.src = shot;
-
-			titleEl.textContent = preview.dataset.title ?? '';
-    		idEl.textContent = preview.dataset.id ?? '';
-    		priceEl.textContent = preview.dataset.price ?? '';
-			infoEl.style.color = preview.dataset.color === 'white' ? 'var(--white)' : 'var(--black)';
-			counterCurrent.textContent = String(index + 1).padStart(2, '0');
+	document.querySelectorAll('.chosen-product').forEach((el, i) => {
+		el.addEventListener('mouseenter', () => {
+			anim.pause();
+			anim.currentTime = (i % count) / count * Number(anim.effect!.getTiming().duration);
 		});
+
+		el.addEventListener('mouseleave', () => anim.play());
 	});
+
+	// datum, zeit 
+	const dateEl = document.getElementById('date')!;
+	const timeEl = document.getElementById('time')!;
+
+	const tick = () => {
+		const now = new Date();
+		dateEl.textContent = now.toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin' });
+		timeEl.textContent = now.toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin' });
+	};
+
+	tick();
+	setInterval(tick, 1000);
 </script>

@@ -7,10 +7,40 @@
 
     --satoshi: 'Satoshi', sans-serif; 
     --ibm: "IBM Plex Mono", monospace;
+
+    --cursor-size: 12px;
+    --cursor-color: var(--black);
 }
 
 body{
     position: relative;
+}
+
+body,
+body *{
+    cursor: default;
+}
+
+.cursor{
+    --cursor-x: 50vw;
+    --cursor-y: 50vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
+    transition: none;
+
+
+    .cursor-dot{
+        width: var(--cursor-size);
+        height: var(--cursor-size);
+        border-radius: 999px;
+        background-color: var(--cursor-color);
+        transform: translate(-50%, -50%);
+    }
 }
 
 *{
@@ -42,112 +72,66 @@ body{
     font-display: swap;
 }
 
-.landingpage{
-    width: 100vw;
-    max-width: 2440px;
-    font-family: var(--satoshi);
+.editorial-loop{
+    // Dauer fuer einen kompletten Durchlauf
+    --editorial-speed: 40s;
 
-    .products-preview{
+    height: 100vh;
+    overflow: hidden;
+
+    .editorial-track{
         display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
+        flex-direction: row;
+        width: max-content;
+        animation: editorial-scroll var(--editorial-speed) linear infinite;
+    }
 
-        .editorial-shot{
-            height: 100%;
-            width: 50%;
-            position: relative;
+    img{
+        height: 75vh;
+        object-fit: cover;
+        flex-shrink: 0;
+        user-select: none;
+        pointer-events: none;
+    }
+}
 
-            .product-preview-info{
-                position: absolute;
-                bottom: 20px;
-                left: 20px;
-                display: flex;
-                flex-direction: column;
+@keyframes editorial-scroll{
+    to{
+        transform: translateX(-50%);
+    }
+}
 
-                .title{
-                    font-size: var(--titleFS);
-                    font-weight: 700;
-                    line-height: 1;
-                }
+.chosen-products{
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0px;
+    z-index: 2;
 
-                .info{
-                    display: flex;
-                    gap: 20px;
-                    font-family: var(--ibm);
-                }
-            }
+    .product-close{
+        height: 45px;
+        width: 75px;
+        object-fit: cover;
+        position: relative;
+        z-index: 2;
+    }
 
-            img {
-                position: absolute;
-                inset: 0;
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-                object-position: top;
-                user-select: none;
-                pointer-events: none;
-            }
-        }
+    .product-full{
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        height: 15vh;
+        object-fit: contain;
+        z-index: 1;
+        opacity: 0;
+        pointer-events: none;
+    }
 
-        .products-preview-list{
-            display: flex;
-            flex-direction: column;
-            width: 50%;
-
-            .info-list{
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-end;
-                padding-bottom: 10px;
-                padding-right: 10px;
-                height: 100px;
-            }
-
-            .products-preview-content{
-                display: flex;
-                flex-wrap: wrap;
-                align-content: flex-start;
-                gap: 10px;
-                padding-right: 10px;
-                overflow-y: scroll;
-                height: calc(100vh - 110px);
-                
-    
-                .product-preview{
-                    height: calc((100vh - 110px) / 3);
-                    width: calc(50% - 5px);
-                    transition:  all 0.3s ease;
-                    overflow: hidden;
-    
-                    img{
-                        height: 100%;
-                        width: 100%;
-                        object-fit: cover;
-                        user-select: none;
-                        pointer-events: none;
-                    }
-
-                    .product{
-                        display: none;
-                    }
-    
-                    &:hover{
-                        height: calc((100vh - 110px) / 3);
-                    }
-
-                    &:hover .product{
-                        display: block;
-                    }
-
-                    &:hover .close-up{
-                        display: none;
-                    }
-                }
-            }
-        }
+    .chosen-product:hover .product-full{
+        opacity: 1;
     }
 }
 
@@ -206,7 +190,6 @@ body{
         border-top: 1px solid var(--lightgrey);
 
         .akkordion-titel{
-            cursor: pointer;
             padding: 12px 0;
             font-family: var(--ibm);
             list-style: none;
@@ -254,6 +237,53 @@ body{
             color: white;
         }
     }
+}
+
+.nav-start, .links{
+    width: calc(75px * 6);
+    position: fixed;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--ibm);
+    font-size: 12px;
+    text-transform: uppercase;
+
+    .logo{
+        width: 35%;
+        margin-inline: auto;
+
+        img{
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+    
+    .meta{
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+
+        span:last-child{
+            text-align: right;
+        }
+    }
+
+    .links{
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.links{
+    width: calc(75px * 6);
+    bottom: 20px;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .nav-collection{
@@ -322,7 +352,6 @@ body{
             display: grid;
             place-content: center;
             padding: 0 8px;
-            cursor: pointer;
             position: relative;
 
             & + .nav-button::before{
@@ -424,6 +453,7 @@ body{
         }
     }
 }
+
 
 
     
