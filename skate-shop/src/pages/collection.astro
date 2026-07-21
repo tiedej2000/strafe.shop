@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { products } from '../data/products';
+import Image from 'astro/components/Image.astro';
+
+const path = Astro.url.pathname;
 ---
 
 <Layout title="collection">
@@ -32,14 +35,6 @@ import { products } from '../data/products';
     <div class="nav-collection">
         <div class="nav-main">
             <div class="main-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M224,120v96a8,8,0,0,1-8,8H160a8,8,0,0,1-8-8V164a4,4,0,0,0-4-4H108a4,4,0,0,0-4,4v52a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V120a16,16,0,0,1,4.69-11.31l80-80a16,16,0,0,1,22.62,0l80,80A16,16,0,0,1,224,120Z"></path></svg></div>
-            <div class="nav-main-expanded">
-                <ul>
-                    <li><a href=""></a>start</li>
-                    <li>shop</li>
-                    <li>help</li>
-                    <li>impressum</li>
-                </ul>
-            </div>
         </div>
         <div class="nav-grid">
             <div class="grid-buttons">
@@ -59,8 +54,21 @@ import { products } from '../data/products';
             <div class="info">
                 <div class="nav-button" id="nav-expand"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M213.66,194.34A8,8,0,0,1,208,208H48a8,8,0,0,1-5.66-13.66L108.69,128H48a8,8,0,0,1-5.66-13.66l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,208,128H147.31Z"></path></svg></div>
             </div>
-            <div class="nav-grid-expanded" id="nav-menu">
-                <div></div>
+            <div class="nav-expanded" id="nav-panel">
+                <div class="panel-section" data-panel="main">
+                    <ul>
+                        <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
+                        <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
+                        <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
+                    </ul>
+                    <div class="titles"><span>strafe.site</span><span>site made by JT</span></div>
+                </div>
+                <div class="panel-section" data-panel="grid">
+                    
+                </div>
+                <div class="panel-section" data-panel="cart">
+                    
+                </div>
             </div>
         </div>
         <div class="cart-expand-button"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M238,82.73A8,8,0,0,0,232,80H187.63L134,18.73a8,8,0,0,0-12,0L68.37,80H24a8,8,0,0,0-7.93,9.06L31.14,202.12A16.06,16.06,0,0,0,47,216H209a16.06,16.06,0,0,0,15.86-13.88L239.93,89.06A8,8,0,0,0,238,82.73ZM81.6,184a7.32,7.32,0,0,1-.81,0,8,8,0,0,1-8-7.2l-5.6-56a8,8,0,0,1,15.92-1.6l5.6,56A8,8,0,0,1,81.6,184Zm54.4-8a8,8,0,0,1-16,0V120a8,8,0,0,1,16,0ZM89.63,80,128,36.15,166.37,80Zm99.13,40.8-5.6,56a8,8,0,0,1-7.95,7.2,7.32,7.32,0,0,1-.81,0,8,8,0,0,1-7.16-8.76l5.6-56a8,8,0,0,1,15.92,1.6Z"></path></svg></div>
@@ -148,12 +156,6 @@ import { navigate } from "astro:transitions/client";
         })
     })
 
-    //nav coll grid expanden
-    const navMenu = document.getElementById('nav-menu')
-    document.getElementById('nav-expand')!.addEventListener('click',()=>{
-        navMenu?.classList.toggle('active')
-    })
-
     // modell bilder pre loaden
     cardImages.forEach((img) => {
         if (img.dataset.modell) {
@@ -162,7 +164,7 @@ import { navigate } from "astro:transitions/client";
         }
     });
 
-    // wenn Modell img vorhanden
+    // wenn Modell img vorhanden zeige modell
     cardImages.forEach((img) => {
         const modell = img.dataset.modell;
         if (!modell) return;
@@ -173,12 +175,19 @@ import { navigate } from "astro:transitions/client";
         });
     });
 
-    // main menu
-    const mainIcon = document.querySelector('.main-icon')!;
-    const navMainExpanded = document.querySelector('.nav-main-expanded')!;
+    // ein panel für alle: zeigt die gewählte sektion, gleicher klick schließt
+    const navPanel = document.getElementById('nav-panel')!;
 
-    mainIcon.addEventListener('click', () => {
-        navMainExpanded.classList.toggle('active');
-    });
+    function openPanel(name: string) {
+        const section = navPanel.querySelector(`[data-panel="${name}"]`)!;
+        const wasOpen = section.classList.contains('active');
+        navPanel.querySelectorAll('.panel-section').forEach((s) => s.classList.remove('active'));
+        navPanel.classList.toggle('active', !wasOpen);
+        section.classList.toggle('active', !wasOpen);
+    }
+
+    document.querySelector('.main-icon')!.addEventListener('click', () => openPanel('main'));
+    document.getElementById('nav-expand')!.addEventListener('click', () => openPanel('grid'));
+    document.querySelector('.cart-expand-button')!.addEventListener('click', () => openPanel('cart'));
 
 </script>
