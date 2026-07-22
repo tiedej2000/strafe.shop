@@ -19,7 +19,9 @@ const { title = 'strafe.shop' } = Astro.props;
 	</head>
 	<body>
 		<div class="cursor" id="cursor" aria-hidden="true">
-			<div class="cursor-dot"></div>
+			<div class="cursor-dot">
+				<div class="dot-meta" id="dot-meta"></div>
+			</div>
 		</div>
 
 		<slot />

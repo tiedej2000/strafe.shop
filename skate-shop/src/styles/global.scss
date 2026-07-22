@@ -8,17 +8,17 @@
     --satoshi: 'Satoshi', sans-serif; 
     --ibm: "IBM Plex Mono", monospace;
 
-    --cursor-size: 12px;
     --cursor-color: var(--black);
 }
 
 body{
     position: relative;
+    scroll-behavior: smooth;
 }
 
 body,
 body *{
-    cursor: default;
+    cursor: none;
 }
 
 .cursor{
@@ -35,12 +35,32 @@ body *{
 
 
     .cursor-dot{
-        width: var(--cursor-size);
-        height: var(--cursor-size);
+        width: 10px;
+        height: 10px;
         border-radius: 999px;
         background-color: var(--cursor-color);
         transform: translate(-50%, -50%);
+        border: 2px solid black;
+
+
+        position: relative;
+
+        .dot-meta{
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: fit-content;
+            white-space: nowrap;
+            font-family: var(--ibm);
+            font-size: 12px;
+        }
+
+        &.active{
+            background-color: transparent;
+        }
     }
+
+
 }
 
 *{
@@ -166,44 +186,93 @@ body *{
     }
 }
 
+:root:has(.collection-grid.single){
+    overflow: hidden;
+}
+
 .collection{
     min-height: 100vh;
     padding: 20px;
 
     .collection-grid {
 	    display: grid;
-	    grid-template-columns: repeat(var(--cols, 3), 1fr);
+	    grid-template-columns: repeat(var(--cols, 4), 1fr);
 	    gap: 20px;
         position: relative;
 
+        // single view
+        &.single{
+            display: flex;
+            height: calc(100vh - 40px); 
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            .product-card{
+                height: 100%;
+                aspect-ratio: 3 / 4;
+                flex-direction: column-reverse;
+            }
+
+            .product-img{
+                flex: 1;
+                min-height: 0; 
+                overflow: hidden;
+            }
+
+            .product-card-info{
+                padding-top: 0px;
+                padding-bottom: 8px;
+            }
+
+            .product-img > img{
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
         .product-card{
             position: relative;
+            display: flex;
+            flex-direction: column;
 
-            .product-shots{
-                display: flex;
-                gap: 8px;
-                position: absolute;
-                bottom: 20px;
-                right: 20px;
-                opacity: 0;
-                pointer-events: none;
-                transition: opacity 0.3s ease;
+            .product-img{
+                position: relative;
+                height: auto;
 
-                img{
-                    height: 80px;
-                    object-fit: cover;
-                    outline: 1px solid var(--white);
+                &:hover{
+                    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+                }
+
+                .product-shots{
+                    display: flex;
+                    gap: 8px;
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.3s ease;
+
+                    img{
+                        height: 75px;
+                        object-fit: cover;
+                        outline: 1px solid var(--white);
+                        box-shadow: 0 0 5px rgba(0,0,0,0.05);
+                    }
+                }
+
+                &:hover .product-shots{
+                    opacity: 1;
                 }
             }
 
-            &:hover .product-shots{
-                opacity: 1;
-            }
 
             .product-card-info{
                 display: flex;
                 justify-content: space-between;
                 font-family: var(--ibm);
+                font-size: 12px;
                 text-transform: uppercase;
                 padding-top: 8px;
 
@@ -211,10 +280,6 @@ body *{
                     opacity: 0;
                     display: none;
                 }
-            }
-
-            &:hover{
-                box-shadow: 0 0 5px rgba(0,0,0,0.1);
             }
         }
     }
@@ -319,7 +384,7 @@ body *{
 
         img{
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
     }
     
@@ -347,7 +412,7 @@ body *{
 
 .nav-collection{
     position: sticky;
-    bottom: 30px;
+    bottom: 40px;
     width: fit-content;
     margin: 0 auto;
     display: flex;
@@ -397,6 +462,7 @@ body *{
 
     .nav-grid{
         display: flex;
+        gap: 10px;
         justify-content: space-between;
         padding: 8px;
         width: fit-content;
