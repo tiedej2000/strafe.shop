@@ -12,6 +12,8 @@ const path = Astro.url.pathname;
             {products.map((p) => {
                 const front = p.images.find((img) => img.type === 'front') ?? p.images[0];
                 const modell = p.images.find((img) => img.type === 'modell');
+                // alle weiteren Bilder des Produkts (ohne das Front-Bild)
+                const shots = p.images.filter((img) => img !== front);
                 return (
                 <a href={`/products/${p.id}`}>
                     <article class="product-card">
@@ -25,6 +27,11 @@ const path = Astro.url.pathname;
                         <div class="product-card-info hidden">
                             <span class="title">{p.title}</span>
                             <span class="price">€{p.price}</span>
+                        </div>
+                        <div class="product-shots">
+                            {shots.map((s) => (
+                                <img src={s.src} alt={s.alt} loading="lazy" />
+                            ))}
                         </div>
                     </article>
                 </a>
@@ -156,24 +163,6 @@ import { navigate } from "astro:transitions/client";
         })
     })
 
-    // modell bilder pre loaden
-    cardImages.forEach((img) => {
-        if (img.dataset.modell) {
-            const pre = new Image();
-            pre.src = img.dataset.modell;
-        }
-    });
-
-    // wenn Modell img vorhanden zeige modell
-    cardImages.forEach((img) => {
-        const modell = img.dataset.modell;
-        if (!modell) return;
-
-        img.addEventListener('mouseenter', () => { img.src = modell; });
-        img.addEventListener('mouseleave', () => {
-            img.src = currentView === 'modell' ? modell : img.dataset.front!;
-        });
-    });
 
     // ein panel für alle: zeigt die gewählte sektion, gleicher klick schließt
     const navPanel = document.getElementById('nav-panel')!;

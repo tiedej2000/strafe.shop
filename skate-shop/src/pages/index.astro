@@ -5,15 +5,14 @@ import Layout from '../layouts/Layout.astro';
 const editorials = [
 	'/landingpage/editiorial_strafe_1.webp',
 	'/landingpage/editiorial_strafe_2.webp',
-	'/landingpage/close_up3.webp',
-	'/landingpage/close_up4.webp',
-	'/landingpage/close_up5.webp',
-	'/landingpage/close_up6.webp',
+	'/landingpage/editiorial_strafe_3.webp',
+	'/landingpage/editiorial_strafe_4.webp',
+	'/landingpage/editiorial_strafe_5.webp',
+	'/landingpage/editiorial_strafe_6.webp',
 ];
 
-// closeUp = Thumbnail, product = das Bild das beim Hover fullscreen kommt
 const chosen = [
-	{ closeUp: '/landingpage/close_up1.webp', product: '/landingpage/product1.webp' },
+	{ closeUp: '/landingpage/close_up1.webp', product: '/landingpage/product1.webp', title:'DECK STAR BB', price:'120' },
 	{ closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp' },
 	{ closeUp: '/landingpage/close_up3.webp', product: '/landingpage/product3.webp' },
 	{ closeUp: '/landingpage/close_up4.webp', product: '/landingpage/product4.webp' },
@@ -29,12 +28,21 @@ const chosen = [
 				<img src={src} alt="" />
 			))}
 		</div>
+		<div class="ediorial-track-options">
+			<div class="ediorial-track-options-pause--resume">PAUSE</div>
+			<div class="ediorial-track-options-faster">FASTER</div>
+			<div class="ediorial-track-options-slower">SLOWER</div>
+		</div>
 	</section>
 	<div class="chosen-products">
 		{chosen.map((c) => (
 			<div class="chosen-product">
 				<img class="product-close" src={c.closeUp} alt="" />
 				<img class="product-full" src={c.product} alt="" />
+				<div class="product-info">
+					<span class="title">{c.title}</span>
+					<span>€{c.price}</span>
+				</div>
 			</div>
 		))}
 	</div>
@@ -59,13 +67,34 @@ const chosen = [
 	// der Track enthaelt die Bilder doppelt, also ist die Haelfte die echte Anzahl
 	const count = track.children.length / 2;
 
+	// manuell pausiert -> hover-leave soll nicht heimlich weiterlaufen lassen
+	let paused = false;
+
 	document.querySelectorAll('.chosen-product').forEach((el, i) => {
 		el.addEventListener('mouseenter', () => {
 			anim.pause();
 			anim.currentTime = (i % count) / count * Number(anim.effect!.getTiming().duration);
 		});
 
-		el.addEventListener('mouseleave', () => anim.play());
+		el.addEventListener('mouseleave', () => { if (!paused) anim.play(); });
+	});
+
+	// track-optionen: pause/resume + tempo
+	const pauseBtn = document.querySelector('.ediorial-track-options-pause--resume')!;
+	pauseBtn.addEventListener('click', () => {
+		paused = !paused;
+		if (paused) anim.pause();
+		else anim.play();
+		pauseBtn.textContent = paused ? 'RESUME' : 'PAUSE';
+	});
+
+	// playbackRate ueberlebt pause/play, kollidiert also nicht mit dem hover-scrub
+	document.querySelector('.ediorial-track-options-faster')!.addEventListener('click', () => { 
+		anim.playbackRate *= 1.5; 
+	});
+
+	document.querySelector('.ediorial-track-options-slower')!.addEventListener('click', () => { 
+		anim.playbackRate /= 1.5; 
 	});
 
 	// datum, zeit 
