@@ -776,7 +776,7 @@ body *{
     //landingpage
     .editorial-loop {
         img{
-            height: 90vh;
+            height: 90dvh;
         }
 
         .ediorial-track-options{
@@ -784,7 +784,7 @@ body *{
         }
 
         &::after{
-            height: 90vh;
+            height: 90dvh;
             background-position-y: 50%;
             background-size: 75%;
         }
