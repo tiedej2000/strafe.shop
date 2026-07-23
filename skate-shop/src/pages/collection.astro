@@ -41,6 +41,7 @@ const path = Astro.url.pathname;
                 );
             })}
         </div>
+        <div class="back-button" id="back-button-start"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M205.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L131.31,128ZM51.31,128l74.35-74.34a8,8,0,0,0-11.32-11.32l-80,80a8,8,0,0,0,0,11.32l80,80a8,8,0,0,0,11.32-11.32Z"></path></svg></div>
     </section>
     <div class="nav-collection">
         <div class="nav-main">
@@ -49,9 +50,9 @@ const path = Astro.url.pathname;
         <div class="nav-grid">
             <div class="grid-buttons">
                 <div class="nav-button active" id="single-btn">1col</div>
-                <div class="nav-button" id="min-btn">2col</div>
-                <div class="nav-button " id="mid-btn">3col</div>
-                <div class="nav-button" id="max-btn">4col</div>
+                <div class="nav-button" id="min-btn">3col</div>
+                <div class="nav-button " id="mid-btn">4col</div>
+                <div class="nav-button" id="max-btn">5col</div>
             </div>
             <div class="view-buttons">
                 <div class="nav-button" id="product-view">flat</div>
@@ -131,15 +132,15 @@ import { initCartUI } from '../scripts/cart';
     });
     document.getElementById('min-btn')!.addEventListener('click', () => {
 	    grid.classList.remove('single');
-	    grid.style.setProperty('--cols', '2');
+	    grid.style.setProperty('--cols', '3');
     });
     document.getElementById('mid-btn')!.addEventListener('click', () => {
 	    grid.classList.remove('single');
-	    grid.style.setProperty('--cols', '3');
+	    grid.style.setProperty('--cols', '4');
     });
     document.getElementById('max-btn')!.addEventListener('click', () => {
 	    grid.classList.remove('single');
-	    grid.style.setProperty('--cols', '4');
+	    grid.style.setProperty('--cols', '5');
     });
 
     // wenn single view, mappe vertical scroll auf horizontal
@@ -200,6 +201,22 @@ import { initCartUI } from '../scripts/cart';
             dotMeta.textContent = ''; 
             dot?.classList.remove('active');
         });
+    });
+
+    //back button
+    const backBtn = document.getElementById('back-button-start')
+    backBtn?.addEventListener('click', () =>{
+        navigate('/');
+    })
+
+    backBtn?.addEventListener('mouseenter', () => { 
+        dotMeta.textContent = 'back';
+        dot?.classList.add('active');
+    });
+
+    backBtn?.addEventListener('mouseleave', () => { 
+        dotMeta.textContent = '';
+        dot?.classList.remove('active');
     });
 
     // panel based on welches menü

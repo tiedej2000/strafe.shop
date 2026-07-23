@@ -15,8 +15,6 @@ const path = Astro.url.pathname;
 
 <Layout title={product.title}>
 	<section class="product-page">
-		<a href="/collection" class="back"> <- COLLECTION</a>
-
 		<div class="product-images">
 			{product.images.map((img) => (
 				<img src={img.src} alt={img.alt} />
@@ -24,12 +22,15 @@ const path = Astro.url.pathname;
 		</div>
 
 		<div class="product-details">
-			<h1>{product.title}</h1>
-			<span class="id">{product.id}</span>
-			<span class="price">€{product.price}</span>
-			<button class="add-to-cart" id="add-to-cart" data-id={product.id}>add to cart</button>
-
+			<div class="details">
+				<span class="id">{product.id}</span>
+				<span class="price">€{product.price}</span>
+			</div>
+			<div class="title">{product.title}</div>
 		</div>
+        <div class="back-button" id="back-button-collection"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M205.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L131.31,128ZM51.31,128l74.35-74.34a8,8,0,0,0-11.32-11.32l-80,80a8,8,0,0,0,0,11.32l80,80a8,8,0,0,0,11.32-11.32Z"></path></svg></div>
+
+		<button class="add-to-cart" id="add-to-cart" data-id={product.id}>add to cart</button>
 	</section>
 	<div class="nav-products">
         <div class="nav-main">
@@ -80,6 +81,7 @@ const path = Astro.url.pathname;
 <script>
 	import { addToCart, initCartUI } from '../../scripts/cart';
 	import { products } from '../../data/products';
+	import { navigate } from "astro:transitions/client";
 
 	const btn = document.getElementById('add-to-cart')!;
 
@@ -131,4 +133,23 @@ const path = Astro.url.pathname;
 		document.querySelector<HTMLElement>('.cart-expand-button')!,
 		products,
 	);
+
+	const dotMeta = document.getElementById('dot-meta');
+    const dot = document.querySelector('.cursor-dot');
+
+	//back button
+    const backBtn = document.getElementById('back-button-collection')
+    backBtn?.addEventListener('click', () =>{
+        navigate('/collection');
+    })
+
+    backBtn?.addEventListener('mouseenter', () => { 
+        dotMeta.textContent = 'back';
+        dot?.classList.add('active');
+    });
+
+    backBtn?.addEventListener('mouseleave', () => { 
+        dotMeta.textContent = '';
+        dot?.classList.remove('active');
+    });
 </script>
