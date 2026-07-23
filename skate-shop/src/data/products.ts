@@ -2,6 +2,7 @@ type ProductImage = { type: string; src: string; alt: string };
 
 type Product = {
 	id: string;
+	category: string;
 	title: string;
 	price: number;
 	images: ProductImage[];
@@ -13,7 +14,8 @@ type Product = {
 export const products: Product[] = [
 	{
 		id: 'IDNR1',
-		title: 'SWEATER WR',
+		category: 'tops',
+		title: 'SWEATER STR BLA',
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR1/produkt1_ziphoodie_black.webp', alt: 'Zip Hoodie Schwarz – Vorderansicht' },
@@ -27,7 +29,8 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR2',
-		title: 'SWEATER WR',
+		category: 'tops',
+		title: 'SWEATER STR BLU',
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR2/produkt1_ziphoodie_blue.webp', alt: 'Zip Hoodie Blau – Vorderansicht' },
@@ -41,7 +44,8 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR3',
-		title: 'SWEATER WR',
+		category: 'tops',
+		title: 'SWEATER STR RED',
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR3/produkt1_ziphoodie_red.webp', alt: 'Zip Hoodie Rot – Vorderansicht' },
@@ -55,7 +59,8 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR4',
-		title: 'JEANS',
+		category: 'bottoms',
+		title: 'STAR JEANS',
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR4/produkt2_jeans.webp', alt: 'Jeans – Vorderansicht' },
@@ -69,7 +74,8 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR5',
-		title: 'BELT SNAKE',
+		category: 'accessories',
+		title: 'SNAKE BELT',
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR5/produkt3_belt_snake.webp', alt: 'Gürtel Snake – Vorderansicht' },
@@ -82,7 +88,8 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR6',
-		title: 'BELT COW',
+		category: 'accessories',
+		title: 'COW BELT',
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR6/produkt3_belt_cow.webp', alt: 'Gürtel Cow – Vorderansicht' },
@@ -95,6 +102,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR7',
+		category: 'tops',
 		title: 'TEE LIZ BLUE',
 		price: 120,
 		images: [
@@ -108,6 +116,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR8',
+		category: 'tops',
 		title: 'TEE LIZ BLACK',
 		price: 120,
 		images: [
@@ -121,7 +130,8 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR9',
-		title: 'TEE LIZ BLACK',
+		category: 'tops',
+		title: 'TEE LIZ BLACK ON BLACK',
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR9/produkt5_tee_lizblack.webp', alt: 'Tee Liz Schwarz – Vorderansicht' },
@@ -134,6 +144,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR10',
+		category: 'gear',
 		title: 'WAX LIZ RED',
 		price: 120,
 		images: [
@@ -146,6 +157,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR11',
+		category: 'gear',
 		title: 'WAX LIZ BLUE',
 		price: 120,
 		images: [
@@ -158,6 +170,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR12',
+		category: 'gear',
 		title: 'DECK STAR BB',
 		price: 120,
 		images: [
@@ -169,6 +182,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR13',
+		category: 'gear',
 		title: 'DECK STAR RW',
 		price: 120,
 		images: [
@@ -180,6 +194,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR14',
+		category: 'gear',
 		title: 'DECK STAR OY',
 		price: 120,
 		images: [
@@ -191,6 +206,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR15',
+		category: 'collectible',
 		title: 'MAG ISSUE 07',
 		price: 120,
 		images: [
@@ -202,6 +218,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR16',
+		category: 'collectible',
 		title: 'MAG ISSUE 08',
 		price: 120,
 		images: [
@@ -213,6 +230,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR17',
+		category: 'bottoms',
 		title: 'JEANS BAGGY BLUE',
 		price: 120,
 		images: [
@@ -226,6 +244,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR18',
+		category: 'bottoms',
 		title: 'JEANS BAGGY GREEN',
 		price: 120,
 		images: [
@@ -239,6 +258,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR19',
+		category: 'bottoms',
 		title: 'JEANS BAGGY ASPHALT',
 		price: 120,
 		images: [
@@ -252,6 +272,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR20',
+		category: 'collectible',
 		title: 'CANDLE 3PACK',
 		price: 120,
 		images: [
@@ -264,6 +285,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR21',
+		category: 'accessories',
 		title: 'BEANIE STAR BEIGE',
 		price: 120,
 		images: [
@@ -275,6 +297,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR22',
+		category: 'accessories',
 		title: 'BEANIE STAR BLACK',
 		price: 120,
 		images: [
@@ -286,6 +309,7 @@ export const products: Product[] = [
 	},
 	{
 		id: 'IDNR23',
+		category: 'accessories',
 		title: 'BEANIE STAR BLUE',
 		price: 120,
 		images: [

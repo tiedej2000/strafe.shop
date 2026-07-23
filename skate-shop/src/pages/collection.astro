@@ -4,12 +4,29 @@ import { products } from '../data/products';
 import Image from 'astro/components/Image.astro';
 
 const path = Astro.url.pathname;
+
+// anzeige-reihenfolge der kategorien – einfach umsortieren
+const categoryOrder = [
+	'tops',
+	'bottoms',
+	'accessories',
+	'gear',
+	'collectible',
+];
+
+// unbekannte kategorien ans ende statt (durch indexOf -1) an den anfang
+const pos = (c: string) => {
+	const i = categoryOrder.indexOf(c);
+	return i === -1 ? categoryOrder.length : i;
+};
+
+const sortedProducts = [...products].sort((a, b) => pos(a.category) - pos(b.category));
 ---
 
 <Layout title="collection">
     <section class="collection">
-        <div class="collection-grid single" id="grid" style="--cols: 3">
-            {products.map((p) => {
+        <div class="collection-grid single" id="grid">
+            {sortedProducts.map((p) => {
                 const front = p.images.find((img) => img.type === 'front') ?? p.images[0];
                 const modell = p.images.find((img) => img.type === 'modell');
     
@@ -129,6 +146,8 @@ import { initCartUI } from '../scripts/cart';
     // grid view änderung
     document.getElementById('single-btn')!.addEventListener('click', () => {
 	    grid.classList.add('single');
+	    // overflow:hidden friert den alten scroll-offset ein -> explizit nach oben
+	    window.scrollTo({ top: 0, behavior: 'instant' });
     });
     document.getElementById('min-btn')!.addEventListener('click', () => {
 	    grid.classList.remove('single');
