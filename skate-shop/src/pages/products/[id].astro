@@ -10,6 +10,7 @@ export function getStaticPaths() {
 }
 
 const { product } = Astro.props;
+const path = Astro.url.pathname;
 ---
 
 <Layout title={product.title}>
@@ -26,21 +27,108 @@ const { product } = Astro.props;
 			<h1>{product.title}</h1>
 			<span class="id">{product.id}</span>
 			<span class="price">€{product.price}</span>
-			<div class="description">{product.description}</div>
-			<div class="akkordions">
-				<details class="akkordion">
-					<summary class="akkordion-titel">DETAILS</summary>
-					<div class="akkordion-details">
-						{product.productDetails}
-					</div>
-				</details>
-				<details class="akkordion">
-					<summary class="akkordion-titel">PRODUCT CARE</summary>
-					<div class="akkordion-product-care">
-						{product.productCare}
-					</div>
-				</details>
-			</div>
+			<button class="add-to-cart" id="add-to-cart" data-id={product.id}>add to cart</button>
+
 		</div>
 	</section>
+	<div class="nav-products">
+        <div class="nav-main">
+            <div class="main-icon">menu</div>
+        </div>
+        <div class="nav-product">
+            <div class="product-buttons">
+                <div class="nav-button" data-panel="description">description</div>
+            </div>
+            <div class="product-buttons">
+                <div class="nav-button" data-panel="details">details</div>
+            </div>
+            <div class="product-buttons">
+                <div class="nav-button" data-panel="care">care</div>
+            </div>
+            <div class="product-buttons">
+                <div class="nav-button" data-panel="size">size guide</div>
+            </div>
+            <div class="nav-expanded" id="nav-panel">
+                <div class="panel-section" data-panel="main">
+                    <img src="/collection/banner_menu.webp" alt="">
+                    <ul>
+                        <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
+                        <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
+                        <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
+                    </ul>
+                    <div class="titles"><span>strafe.site</span><span> made by JT</span></div>
+                </div>
+
+                <div class="panel-section" data-panel="description">{product.description}</div>
+                <div class="panel-section" data-panel="details">{product.productDetails}</div>
+                <div class="panel-section" data-panel="care">{product.productCare}</div>
+                <div class="panel-section" data-panel="size">
+                    <div class="size-row"><span>size</span><span>chest</span><span>length</span></div>
+                    <div class="size-row"><span>s</span><span>54 cm</span><span>68 cm</span></div>
+                    <div class="size-row"><span>m</span><span>57 cm</span><span>70 cm</span></div>
+                    <div class="size-row"><span>l</span><span>60 cm</span><span>72 cm</span></div>
+                    <div class="size-row"><span>xl</span><span>63 cm</span><span>74 cm</span></div>
+                </div>
+
+                <div class="panel-section" data-panel="cart"></div>
+            </div>
+        </div>
+        <div class="cart-expand-button">cart</div>
+    </div>
 </Layout>
+
+<script>
+	import { addToCart, initCartUI } from '../../scripts/cart';
+	import { products } from '../../data/products';
+
+	const btn = document.getElementById('add-to-cart')!;
+
+	btn.addEventListener('click', () => {
+		addToCart(btn.dataset.id!);
+	});
+
+	// vertikales mausrad auf horizontales scrollen der bilder mappen
+	const imagesEl = document.querySelector<HTMLElement>('.product-images')!;
+	imagesEl.addEventListener('wheel', (e) => {
+		if (e.deltaY === 0) return;
+		e.preventDefault();
+		imagesEl.scrollLeft += e.deltaY;
+	}, { passive: false });
+
+	// ein panel für alle: zeigt die gewählte sektion, gleicher klick schließt
+	const navPanel = document.getElementById('nav-panel')!;
+
+	function openPanel(name: string) {
+		const section = navPanel.querySelector(`[data-panel="${name}"]`)!;
+		const wasOpen = section.classList.contains('active');
+		navPanel.querySelectorAll('.panel-section').forEach((s) => s.classList.remove('active'));
+		navPanel.classList.toggle('active', !wasOpen);
+		section.classList.toggle('active', !wasOpen);
+		return !wasOpen;
+	}
+
+	// produkt-info buttons: oeffnen ihre sektion, active folgt dem panel-zustand
+	const infoBtns = document.querySelectorAll<HTMLElement>('.product-buttons .nav-button');
+
+	infoBtns.forEach((b) => {
+		b.addEventListener('click', () => {
+			const offen = openPanel(b.dataset.panel!);
+			infoBtns.forEach((o) => o.classList.remove('active'));
+			b.classList.toggle('active', offen);
+		});
+	});
+
+	document.querySelector('.main-icon')!.addEventListener('click', () => 
+		openPanel('main')
+	);
+	document.querySelector('.cart-expand-button')!.addEventListener('click', () => 
+	openPanel('cart')
+	);
+
+	// cart panel (gemeinsames rendering aus cart.ts)
+	initCartUI(
+		navPanel.querySelector<HTMLElement>('[data-panel="cart"]')!,
+		document.querySelector<HTMLElement>('.cart-expand-button')!,
+		products,
+	);
+</script>

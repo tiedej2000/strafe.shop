@@ -18,7 +18,7 @@ body{
 
 body,
 body *{
-    cursor: none;
+    cursor: default;
 }
 
 .cursor{
@@ -40,8 +40,7 @@ body *{
         border-radius: 999px;
         background-color: var(--cursor-color);
         transform: translate(-50%, -50%);
-        border: 2px solid black;
-
+        border: 2px solid var(--black);
 
         position: relative;
 
@@ -97,6 +96,23 @@ body *{
 
     height: 100vh;
     overflow: hidden;
+    position: relative; // damit das overlay sich hier verankert
+
+    // logo ueber den bildern: eigenes overlay, nicht als background (der liegt hinter dem content)
+    &::after{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 75vh; // nur ueber dem bildband, nicht der weissen flaeche darunter
+        z-index: 3;
+        background-image: url('/landingpage/test_logo_white.png');
+        background-size: 100%;
+        background-position: 50% 0%;
+        background-repeat: no-repeat;
+        pointer-events: none;
+    }
 
     .editorial-track{
         display: flex;
@@ -195,9 +211,9 @@ body *{
     padding: 20px;
 
     .collection-grid {
-	    display: grid;
-	    grid-template-columns: repeat(var(--cols, 4), 1fr);
-	    gap: 20px;
+        display: grid;
+        grid-template-columns: repeat(var(--cols, 4), 1fr);
+        gap: 20px;
         position: relative;
 
         // single view
@@ -206,6 +222,7 @@ body *{
             height: calc(100vh - 40px); 
             overflow-x: auto;
             overflow-y: hidden;
+            scrollbar-width: none;
 
             .product-card{
                 height: 100%;
@@ -241,7 +258,8 @@ body *{
                 height: auto;
 
                 &:hover{
-                    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+                    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+                    border: 1px solid var(--black);
                 }
 
                 .product-shots{
@@ -298,34 +316,42 @@ body *{
 
     .product-images{
         display: flex;
-        flex-direction: column;
-        width: 40vw;
+        flex-direction: row;
+        height: calc(100vh - 40px);
+        margin: 20px;
+        overflow-x: auto;
+        flex: 1;
+        min-width: 0;
+        scrollbar-width: none;
+
+        img{
+            height: 100%;
+            width: auto;
+            max-width: none; 
+            object-fit: cover;
+            flex-shrink: 0;
+        }
     }
 
     .product-details{
-        max-width: 60vw;
-        position: sticky;
-        top: 20px;
-        padding-left: 20px;
+        position: absolute;
+        bottom: 20px;
+        left: 40px;
         align-self: flex-start;
     }
 
-    .akkordion{
-        border-top: 1px solid var(--lightgrey);
+    .add-to-cart{
+        display: block;
+        margin: 20px 0;
+        padding: 10px 20px;
+        border: 1px solid var(--black);
+        background: var(--white);
+        font-family: var(--ibm);
+        text-transform: uppercase;
 
-        .akkordion-titel{
-            padding: 12px 0;
-            font-family: var(--ibm);
-            list-style: none;
-        }
-
-        // Standard-Dreieck (Chrome/Safari) weg
-        .akkordion-titel::-webkit-details-marker{
-            display: none;
-        }
-
-        .akkordion-titel + div{
-            padding-bottom: 12px;
+        &:hover{
+            background: var(--black);
+            color: var(--white);
         }
     }
 }
@@ -410,13 +436,17 @@ body *{
     justify-content: space-between;
 }
 
-.nav-collection{
+.nav-collection, .nav-products{
     position: sticky;
     bottom: 40px;
     width: fit-content;
     margin: 0 auto;
     display: flex;
-    gap: 15px;
+    gap: 20px;
+    font-family: var(--ibm);
+    font-size: 12px;
+    height: 30px;
+    user-select: none;
 
     .nav-main{
         position: relative;
@@ -425,52 +455,50 @@ body *{
         .main-icon{
             display: grid;
             place-content: center;
-            width: 50px;
-            height: 50px;
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            height: 100%;
             transition: all 0.3s ease;
+            padding: 0 16px;
+            border: 1px solid var(--black);
+
+            &:hover{
+                background-color: var(--black);
+                color: var(--white);
+            }
 
             &.active{
-                box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
-            }
-
-            svg{
-                height: 20px;
-                fill: var(--black);
+                background-color: var(--black);
+                color: var(--white);
             }
         }
+
+        
     }
 
     .cart-expand-button{
         display: grid;
         place-content: center;
-        width: 50px;
-        height: 50px;
-        background-color: var(--white);
-        border-radius: 10px;
-        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        padding: 0 16px;
+        border: 1px solid var(--black);
 
         position: relative;
         z-index: 2;
 
-        svg{
-            height: 20px;
+        &:hover{
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        &.active{
+            background-color: var(--black);
+            color: var(--white);
         }
     }
 
-    .nav-grid{
+    .nav-grid, .nav-product{
         display: flex;
         gap: 10px;
         justify-content: space-between;
-        padding: 8px;
         width: fit-content;
-        background-color: var(--white);
-        width: 450px;
-        height: 50px;
-        border-radius: 10px;
-        box-shadow: 0 0 8px rgba(0,0,0,0.1);
         position: relative;
 
         .nav-button{
@@ -487,28 +515,25 @@ body *{
                 transform: translateY(-50%);
                 width: 1px;
                 height: 50%;
-                background-color: var(--lightgrey);
+                background-color: var(--black);
             }
 
             &:hover{
-                background-color: var(--lightgrey);
+                background-color: var(--black);
+                color: var(--white);
             }
 
-            &.active svg{
-                fill: green;
+            &.active{
+                background-color: var(--black);
+                color: var(--white);
             }
 
-            svg{
-                height: 20px;
-                fill: var(--black);
-            }
         }
 
 
-        .grid-buttons, .tag-buttons, .view-buttons, .info{
+        .grid-buttons, .tag-buttons, .view-buttons, .info, .product-buttons{
             display: flex;
-            border: 1px solid var(--lightgrey);
-            border-radius: 6px;
+            border: 1px solid var(--black);
         }
 
         .nav-expanded{
@@ -519,8 +544,7 @@ body *{
             width: calc(100% + 20px);
             background-color: var(--white);
             z-index: -1;
-            border-radius: 10px;
-            padding: 20px 20px 70px;
+            padding: 10px 10px 50px;
             display: none;
             box-shadow: 0 0 8px rgba(0,0,0,0.1);
             font-family: var(--satoshi);
@@ -538,32 +562,33 @@ body *{
             }
 
             .panel-section[data-panel="main"]{
-                text-transform: uppercase;
-                font-weight: 700;
-                background-image: url("/products/IDNR1/produkt1_ziphoodie_black_modell.webp");
                 background-position: 100% 0%;
-                background-size: 20%;
+                background-size: 100% 20%;
                 background-repeat: no-repeat;
 
+                img{
+                    display: block;
+                    width: calc(100% + 20px);
+                    margin: -10px -10px 0;
+                    max-width: none;
+                    object-fit: cover;
+                    margin-bottom: 8px;
+                }
 
                 ul{
                     display: flex;
                     flex-direction: column;
                     gap: 4px;
-                    margin-bottom: 100px;
+                    margin-bottom: 60px;
+                    font-size: 14px;
+
+                    a:hover{
+                        text-decoration: underline;
+                    }
                 }
 
                 a[aria-current="page"]{
-                    background-color: var(--black);
-                    color: var(--white);
-                }
-
-                &:has(a[href="/collection"]:hover){
-                    background-image: url("/products/IDNR1/produkt1_ziphoodie_black_closeup.webp");
-                }
-
-                &:has(a[href="/impressum"]:hover){
-                    background-image: url("/products/IDNR1/produkt1_ziphoodie_black_back.webp");
+                    text-decoration: underline;
                 }
 
 
@@ -571,10 +596,117 @@ body *{
                     display: flex;
                     justify-content: space-between;
                     font-family: var(--ibm);
-                    font-size: 12px;
+                    font-size: 10px;
                     font-weight: 400;
                 }
             }
+
+            // produkt-infos (description/details/care/size) im panel
+            .panel-section[data-panel="description"],
+            .panel-section[data-panel="details"],
+            .panel-section[data-panel="care"],
+            .panel-section[data-panel="size"]{
+                font-family: var(--ibm);
+                font-size: 12px;
+            }
+
+            .panel-section[data-panel="size"] .size-row{
+                display: flex;
+                justify-content: space-between;
+                padding: 6px 0;
+                border-bottom: 1px solid var(--lightgrey);
+                text-transform: uppercase;
+
+                span{
+                    flex: 1;
+                }
+
+                span:not(:first-child){
+                    text-align: right;
+                }
+
+                &:first-child{
+                    font-weight: 700;
+                }
+            }
+
+            .panel-section[data-panel="cart"]{
+                font-family: var(--ibm);
+                font-size: 12px;
+                text-transform: uppercase;
+
+                .cart-img{
+                    display: block;
+                    width: calc(100% + 20px);
+                    margin: -10px -10px 0;
+                    max-width: none;
+                    object-fit: cover;
+                }
+
+                .cart-row{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 8px 0;
+                    border-bottom: 1px solid var(--lightgrey);
+
+                    &:first-child{
+                        padding-top: 0px;
+                    }
+
+                    img{
+                        height: 45px;
+                        object-fit: contain;
+                    }
+
+                    .cart-title{
+                        flex: 1;
+                    }
+
+                    .cart-remove{
+                        border: none;
+                        background: none;
+                        font-family: var(--ibm);
+                        font-size: 12px;
+
+                        &:hover{
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                .cart-total{
+                    display: flex;
+                    justify-content: space-between;
+                    padding-top: 10px;
+                    font-weight: 700;
+                    margin-bottom: 30px;
+                }
+
+                .cart-checkout{
+                    display: block;
+                    width: 100%;
+                    padding: 6px 0;
+                    border: 1px solid var(--black);
+                    background: var(--white);
+                    font-family: var(--ibm);
+
+                    &:hover{
+                        background: var(--black);
+                        color: var(--white);
+                    }
+                }
+
+                .cart-empty{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 20px;
+                }
+            }
+            
         }
     }
 }
