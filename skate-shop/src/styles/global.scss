@@ -242,10 +242,13 @@ body *{
         bottom: 20px;
         left: 20px;
         opacity: 0;
+        // sonst faengt das unsichtbare (opacity:0) info-panel den hover ab und
+        // triggert .chosen-product:hover von der linken seite aus
+        pointer-events: none;
         max-width: 20vw;
 
         .title{
-            font-size: clamp(2rem,3.5vw,8rem);
+            font-size: clamp(2rem,3vw,6rem);
             line-height: 1;
             font-family: var(--satoshi); 
             font-weight: 900; 

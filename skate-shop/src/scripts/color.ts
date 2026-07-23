@@ -4,7 +4,8 @@ export function getColor(): string {
 
 // setzt --currentcolor auf dem root-element
 export function applyColor() {
-	document.documentElement.style.setProperty('--currentcolor', `var(--${getColor()})`);
+	const color = getColor();
+	document.documentElement.style.setProperty('--currentcolor', `var(--${color})`);
 }
 
 export function setColor(name: string) {

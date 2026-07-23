@@ -95,13 +95,11 @@ const chosen = [
 	});
 	const track = document.querySelector('.editorial-track')!;
 
-	// NUR die scroll-animation greifen, nicht die transitions (globales
-	// * { transition: all } liefert getAnimations() sonst auch zurueck, und
-	// [0] koennte eine transition sein). getter -> bei jeder interaktion frisch.
-	const getAnim = () =>
-		track.getAnimations().find(
-			(a) => (a as CSSAnimation).animationName === 'editorial-scroll',
-		) as CSSAnimation | undefined;
+	// die scroll-animation vom track holen (nicht die transitions)
+	function getAnim() {
+		const anims = track.getAnimations() as CSSAnimation[];
+		return anims.find(a => a.animationName === 'editorial-scroll');
+	}
 
 	// der Track enthaelt die Bilder doppelt
 	const count = track.children.length / 2;

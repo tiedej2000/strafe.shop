@@ -14,12 +14,16 @@ const categoryOrder = [
 	'collectible',
 ];
 
-const pos = (c: string) => {
-	const i = categoryOrder.indexOf(c);
-	return i === -1 ? categoryOrder.length : i;
-};
+// position einer kategorie in der reihenfolge; unbekannte ans ende
+function categoryIndex(category: string) {
+	const i = categoryOrder.indexOf(category);
+	if (i === -1) return categoryOrder.length;
+	return i;
+}
 
-const sortedProducts = [...products].sort((a, b) => pos(a.category) - pos(b.category));
+const sortedProducts = [...products].sort((a, b) => {
+	return categoryIndex(a.category) - categoryIndex(b.category);
+});
 ---
 
 <Layout title="collection">

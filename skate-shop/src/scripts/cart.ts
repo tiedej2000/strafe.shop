@@ -40,11 +40,18 @@ const EMPTY_CART_HTML =
 export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: CartProduct[]) {
 	const render = () => {
 		// ids aus dem storage mit den produktdaten zusammenfuehren
-		const items = getCart().flatMap((i) => {
-			const p = products.find((pr) => pr.id === i.id);
-			return p ? [{ ...p, qty: i.qty, size: i.size }] : [];
-		});
-		const total = items.reduce((sum, p) => sum + p.price * p.qty, 0);
+		const items = [];
+		for (const entry of getCart()) {
+			const product = products.find(p => p.id === entry.id);
+			if (product) {
+				items.push({ ...product, qty: entry.qty, size: entry.size });
+			}
+		}
+
+		let total = 0;
+		for (const item of items) {
+			total += item.price * item.qty;
+		}
 
 		panel.innerHTML = items.length
 			? `<img class="cart-img" src="/collection/banner_menu.webp" alt="">`
