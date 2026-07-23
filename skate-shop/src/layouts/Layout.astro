@@ -27,6 +27,11 @@ const { title = 'strafe.shop' } = Astro.props;
 		<slot />
 
 		<script>
+			import { applyColor } from '../scripts/color';
+
+			// gespeicherte akzentfarbe auf jeder seite anwenden
+			applyColor();
+
 			const cursor = document.getElementById('cursor');
 
 			window.addEventListener('mousemove', (e) => {

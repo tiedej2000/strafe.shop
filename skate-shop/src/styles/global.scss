@@ -2,23 +2,32 @@
     --black: #191a1b;
     --white: #ffffff;
     --lightgrey: #dedede;
+    --green: green;
+    --red: red;
+    --blue: blue;
+    --currentcolor: var(--currentcolor);
 
     --titleFS: clamp(2rem, 4vw, 8rem);
 
     --satoshi: 'Satoshi', sans-serif; 
     --ibm: "IBM Plex Mono", monospace;
 
-    --cursor-color: var(--black);
+    --cursor-color: var(--currentcolor);
 }
 
 body{
     position: relative;
     scroll-behavior: smooth;
+    color: var(--currentcolor);
+}
+
+button{
+    color: var(--currentcolor);
 }
 
 body,
 body *{
-    cursor: default;
+    cursor: none;
 }
 
 .cursor{
@@ -40,7 +49,7 @@ body *{
         border-radius: 999px;
         background-color: var(--cursor-color);
         transform: translate(-50%, -50%);
-        border: 2px solid var(--black);
+        border: 2px solid var(--currentcolor);
 
         position: relative;
 
@@ -52,9 +61,21 @@ body *{
             white-space: nowrap;
             font-family: var(--ibm);
             font-size: 12px;
+            opacity: 0;
+            transform: translate(12px,12px);
+            transition: all 0.3s ease-in-out;
         }
 
         &.active{
+            background-color: transparent;
+
+            .dot-meta{
+                opacity: 1;
+                transform: translate(0px,0px);
+            }
+        }
+
+        &.click{
             background-color: transparent;
         }
     }
@@ -91,6 +112,14 @@ body *{
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
 .editorial-loop{
     --editorial-speed: 40s;
 
@@ -106,7 +135,7 @@ body *{
         right: 0;
         height: 75vh; 
         z-index: 3;
-        background-image: url('/landingpage/test_logo_white.png');
+        background-image: url('/landingpage/strafe_alternative_white.svg');
         background-size: 100%;
         background-position: 50% 0%;
         background-repeat: no-repeat;
@@ -128,19 +157,47 @@ body *{
         pointer-events: none;
     }
 
-    .ediorial-track-options{
+    .options{
         display: flex;
-        gap: 10px;
-        justify-content: flex-end;
-        margin-top: 10px;
-        margin-right: 20px;
-        font-family: var(--ibm);
-        font-size: 12px;
+        justify-content: space-between;
+        padding: 10px;
 
-        >:hover{
-            text-decoration: underline;
+        .ediorial-track-options{
+            display: flex;
+            gap: 10px;
+            font-family: var(--ibm);
+            font-size: 12px;
+    
+            >:hover{
+                text-decoration: underline;
+            }
+        }
+
+        .color-changer{
+            display: flex;
+            gap: 2px;
+
+            .color{
+                width: 12px;
+                height: 12px;
+            }
+
+            #red{
+                background-color: var(--red);
+            }
+            #black{
+                background-color: var(--black);
+            }
+            #blue{
+                background-color: var(--blue);
+            }
+            #green{
+                background-color: var(--green);
+            }
         }
     }
+        
+    
     
 }
 
@@ -187,12 +244,14 @@ body *{
         bottom: 20px;
         left: 20px;
         opacity: 0;
+        max-width: 20vw;
 
         .title{
-            font-size: 48px;
+            font-size: clamp(2rem,3.5vw,8rem);
             line-height: 1;
             font-family: var(--satoshi); 
             font-weight: 900; 
+            text-wrap: pretty;
         }
     }
 
@@ -260,7 +319,7 @@ body *{
                     content: '';
                     position: absolute;
                     inset: 0;
-                    border: 1px solid var(--black);
+                    border: 1px solid var(--currentcolor);
                     opacity: 0;
                     pointer-events: none;
                 }
@@ -317,26 +376,67 @@ body *{
 
 .product-page{
     display: flex;
+    flex-direction: column;
     position: relative;
+    height: calc(100vh - 20px);
 
-    .back{
+    .size-picker-wrapper{
         position: absolute;
-        top: 20px;
-        left: 20px;
-        color: var(--white);
+        bottom: 20px;
+        right: 40px;
+        z-index: 1;
+    }
+
+    .size-picker{
+        position: absolute;
+        bottom: -10px;
+        left: -10px;
+        width: calc(100% + 20px);
+        background-color: var(--white);
+        z-index: -1; 
+        padding: 10px 10px 70px; 
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+
+        &.open{
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .size-option{
+            width: 100%;
+            padding: 6px 0;
+            text-align: center;
+            border: 1px solid var(--currentcolor);
+            background: var(--white);
+            font-family: var(--ibm);
+            font-size: 12px;
+            text-transform: uppercase;
+
+            &:hover,
+            &.selected{
+                background-color: var(--currentcolor);
+                color: var(--white);
+            }
+        }
     }
 
     .add-to-cart{
-        position: absolute;
-        bottom: 40px;
-        right: 40px;
+        min-width: 120px;
         padding: 6px 16px;
         font-family: var(--ibm);
         font-size: 12px;
-        border: 1px solid var(--black);
+        border: 1px solid var(--currentcolor);
 
         &:hover{
-            background-color: var(--black);
+            background-color: var(--currentcolor);
             color: var(--white);
         }
     }
@@ -344,9 +444,8 @@ body *{
     .product-images{
         display: flex;
         flex-direction: row;
-        height: calc(100vh - 40px);
-        margin: 20px;
         overflow-x: auto;
+        margin: 0 20px;
         flex: 1;
         min-width: 0;
         scrollbar-width: none;
@@ -361,21 +460,17 @@ body *{
     }
 
     .product-details{
-        position: absolute;
-        bottom: 20px;
-        left: 40px;
         align-self: flex-start;
+        width: 100%;
+        font-family: var(--satoshi);
+        font-size: 12px;
+        height: auto;
+        padding: 20px;
 
         .details{
             display: flex;
             justify-content: space-between;
-        }
-
-        .title{
-            font-family: var(--satoshi);
-            color: var(--white);
-            font-size: 48px;
-            font-weight: 900;
+            height: auto;
         }
 
     }
@@ -400,7 +495,7 @@ body *{
 
     a{
         background-color: var(--white);
-        color: var(--black);
+        color: var(--currentcolor);
         padding: 8px 20px;
         font-family: var(--satoshi);
         border-radius: 999px;
@@ -487,15 +582,15 @@ body *{
             height: 100%;
             transition: all 0.3s ease;
             padding: 0 16px;
-            border: 1px solid var(--black);
+            border: 1px solid var(--currentcolor);
 
             &:hover{
-                background-color: var(--black);
+                background-color: var(--currentcolor);
                 color: var(--white);
             }
 
             &.active{
-                background-color: var(--black);
+                background-color: var(--currentcolor);
                 color: var(--white);
             }
         }
@@ -507,18 +602,18 @@ body *{
         display: grid;
         place-content: center;
         padding: 0 16px;
-        border: 1px solid var(--black);
+        border: 1px solid var(--currentcolor);
 
         position: relative;
         z-index: 2;
 
         &:hover{
-            background-color: var(--black);
+            background-color: var(--currentcolor);
             color: var(--white);
         }
 
         &.active{
-            background-color: var(--black);
+            background-color: var(--currentcolor);
             color: var(--white);
         }
     }
@@ -544,16 +639,16 @@ body *{
                 transform: translateY(-50%);
                 width: 1px;
                 height: 50%;
-                background-color: var(--black);
+                background-color: var(--currentcolor);
             }
 
             &:hover{
-                background-color: var(--black);
+                background-color: var(--currentcolor);
                 color: var(--white);
             }
 
             &.active{
-                background-color: var(--black);
+                background-color: var(--currentcolor);
                 color: var(--white);
             }
 
@@ -562,7 +657,7 @@ body *{
 
         .grid-buttons, .tag-buttons, .view-buttons, .info, .product-buttons{
             display: flex;
-            border: 1px solid var(--black);
+            border: 1px solid var(--currentcolor);
         }
 
         .nav-expanded{
@@ -604,17 +699,48 @@ body *{
                     margin-bottom: 8px;
                 }
 
-                ul{
+                .nav-options{
                     display: flex;
-                    flex-direction: column;
-                    gap: 4px;
-                    margin-bottom: 60px;
-                    font-size: 14px;
+                    justify-content: space-between;
 
-                    a:hover{
-                        text-decoration: underline;
+                    ul{
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4px;
+                        margin-bottom: 60px;
+                        font-size: 14px;
+
+                        a:hover{
+                            text-decoration: underline;
+                        }
+                    }
+
+                    .color-changer{
+                        display: flex;
+                        flex-direction: column;
+                        gap: 2px;
+
+                        .color{
+                            width: 12px;
+                            height: 12px;
+                        }
+
+                        #red{
+                            background-color: var(--red);
+                        }
+                        #black{
+                            background-color: var(--black);
+                        }
+                        #blue{
+                            background-color: var(--blue);
+                        }
+                        #green{
+                            background-color: var(--green);
+                        }
                     }
                 }
+
+                
 
                 a[aria-current="page"]{
                     text-decoration: underline;
@@ -716,12 +842,12 @@ body *{
                     display: block;
                     width: 100%;
                     padding: 6px 0;
-                    border: 1px solid var(--black);
+                    border: 1px solid var(--currentcolor);
                     background: var(--white);
                     font-family: var(--ibm);
 
                     &:hover{
-                        background: var(--black);
+                        background: var(--currentcolor);
                         color: var(--white);
                     }
                 }

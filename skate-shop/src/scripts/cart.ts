@@ -1,7 +1,7 @@
 // Warenkorb in localStorage. Es werden nur id + qty gespeichert –
 // Titel/Preis/Bild kommen beim Rendern frisch aus products.ts.
 
-export type CartItem = { id: string; qty: number };
+export type CartItem = { id: string; qty: number; size?: string };
 
 export function getCart(): CartItem[] {
 	return JSON.parse(localStorage.getItem('cart') ?? '[]');
@@ -17,16 +17,17 @@ function save(cart: CartItem[]) {
 	window.dispatchEvent(new Event('cart-change'));
 }
 
-export function addToCart(id: string) {
+// eine cart-zeile ist id + size: hoodie in M und hoodie in L sind zwei zeilen
+export function addToCart(id: string, size?: string) {
 	const cart = getCart();
-	const item = cart.find((i) => i.id === id);
+	const item = cart.find((i) => i.id === id && i.size === size);
 	if (item) item.qty++;
-	else cart.push({ id, qty: 1 });
+	else cart.push({ id, qty: 1, size });
 	save(cart);
 }
 
-export function removeFromCart(id: string) {
-	save(getCart().filter((i) => i.id !== id));
+export function removeFromCart(id: string, size?: string) {
+	save(getCart().filter((i) => !(i.id === id && i.size === size)));
 }
 
 // ---- gemeinsames cart-panel-rendering fuer collection + produktseite ----
@@ -41,7 +42,7 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 		// ids aus dem storage mit den produktdaten zusammenfuehren
 		const items = getCart().flatMap((i) => {
 			const p = products.find((pr) => pr.id === i.id);
-			return p ? [{ ...p, qty: i.qty }] : [];
+			return p ? [{ ...p, qty: i.qty, size: i.size }] : [];
 		});
 		const total = items.reduce((sum, p) => sum + p.price * p.qty, 0);
 
@@ -50,21 +51,22 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 				+ items.map((p) => `
 				<div class="cart-row">
 					<img src="${p.images[0].src}" alt="">
-					<span class="cart-title">${p.title} ×${p.qty}</span>
+					<span class="cart-title">${p.title}${p.size ? ` (${p.size})` : ''} ×${p.qty}</span>
 					<span>€${p.price * p.qty}</span>
-					<button class="cart-remove" data-id="${p.id}">remove</button>
+					<button class="cart-remove" data-id="${p.id}" data-size="${p.size ?? ''}">remove</button>
 				</div>`).join('')
 				+ `<div class="cart-total"><span>total</span><span>€${total}</span></div>`
 				+ `<button class="cart-checkout">checkout</button>`
 			: EMPTY_CART_HTML;
 
-		cartBtn.textContent = cartCount() ? `cart (${cartCount()})` : 'cart';
+		cartBtn.textContent = cartCount() ? `cart (${cartCount()})` : 'cart (0)';
 	};
 
 	// ein listener fuer alle remove-buttons (auch nach re-render)
 	panel.addEventListener('click', (e) => {
 		const btn = (e.target as HTMLElement).closest<HTMLElement>('.cart-remove');
-		if (btn) removeFromCart(btn.dataset.id!);
+		// leeres data-size wieder zu undefined machen (zeile ohne groesse)
+		if (btn) removeFromCart(btn.dataset.id!, btn.dataset.size || undefined);
 	});
 
 	window.addEventListener('cart-change', render);

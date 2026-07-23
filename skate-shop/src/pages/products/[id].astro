@@ -15,22 +15,30 @@ const path = Astro.url.pathname;
 
 <Layout title={product.title}>
 	<section class="product-page">
+		<div class="product-details">
+			<div class="details">
+				<span class="id">{product.id}</span>
+				<span class="title">{product.title}</span>
+				<span class="price">€ {product.price}</span>
+			</div>
+		</div>
 		<div class="product-images">
 			{product.images.map((img) => (
 				<img src={img.src} alt={img.alt} />
 			))}
 		</div>
-
-		<div class="product-details">
-			<div class="details">
-				<span class="id">{product.id}</span>
-				<span class="price">€{product.price}</span>
-			</div>
-			<div class="title">{product.title}</div>
-		</div>
         <div class="back-button" id="back-button-collection"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M205.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L131.31,128ZM51.31,128l74.35-74.34a8,8,0,0,0-11.32-11.32l-80,80a8,8,0,0,0,0,11.32l80,80a8,8,0,0,0,11.32-11.32Z"></path></svg></div>
 
-		<button class="add-to-cart" id="add-to-cart" data-id={product.id}>add to cart</button>
+		<div class="size-picker-wrapper">
+			{product.sizes && (
+				<div class="size-picker" id="size-picker">
+					{product.sizes.map((s) => (
+						<button class="size-option" data-size={s}>{s}</button>
+					))}
+				</div>
+			)}
+			<button class="add-to-cart" id="add-to-cart" data-id={product.id}>{product.sizes ? 'choose size' : 'add to cart'}</button>
+		</div>
 	</section>
 	<div class="nav-products">
         <div class="nav-main">
@@ -74,7 +82,7 @@ const path = Astro.url.pathname;
                 <div class="panel-section" data-panel="cart"></div>
             </div>
         </div>
-        <div class="cart-expand-button">cart</div>
+        <div class="cart-expand-button">cart (0)</div>
     </div>
 </Layout>
 
@@ -84,9 +92,51 @@ const path = Astro.url.pathname;
 	import { navigate } from "astro:transitions/client";
 
 	const btn = document.getElementById('add-to-cart')!;
+	const sizePicker = document.getElementById('size-picker');
+
+	const sizeOptions = sizePicker
+		? [...sizePicker.querySelectorAll<HTMLElement>('.size-option')]
+		: [];
+	let selectedSize: string | undefined;
+
+	const resetPicker = () => {
+		sizePicker?.classList.remove('open');
+		sizeOptions.forEach((o) => o.classList.remove('selected'));
+		selectedSize = undefined;
+		if (sizePicker) btn.textContent = 'choose size';
+	};
 
 	btn.addEventListener('click', () => {
-		addToCart(btn.dataset.id!);
+		if (!sizePicker) {
+			addToCart(btn.dataset.id!);
+			btn.textContent = 'added';
+			setTimeout(() => { btn.textContent = 'add to cart'; }, 800);
+			return;
+		}
+
+		if (!sizePicker.classList.contains('open')) {
+			sizePicker.classList.add('open');
+			return;
+		}
+
+		if (!selectedSize) {
+			sizePicker.classList.remove('open');
+			return;
+		}
+
+		addToCart(btn.dataset.id!, selectedSize);
+		resetPicker();
+		btn.textContent = 'added';
+		setTimeout(() => { btn.textContent = 'choose size'; }, 800);
+	});
+
+	sizeOptions.forEach((o) => {
+		o.addEventListener('click', () => {
+			sizeOptions.forEach((s) => s.classList.remove('selected'));
+			o.classList.add('selected');
+			selectedSize = o.dataset.size;
+			btn.textContent = 'add to cart';
+		});
 	});
 
 	// vertikales mausrad auf horizontales scrollen der bilder mappen
@@ -96,6 +146,38 @@ const path = Astro.url.pathname;
 		e.preventDefault();
 		imagesEl.scrollLeft += e.deltaY;
 	}, { passive: false });
+
+	const dotMeta = document.getElementById('dot-meta');
+	const dot = document.querySelector('.cursor-dot');
+
+	imagesEl.querySelectorAll('img').forEach((img) => {
+		img.addEventListener('mouseenter', () => {
+			if (dotMeta) dotMeta.textContent = 'add to cart';
+			dot?.classList.add('active');
+		});
+
+		img.addEventListener('mouseleave', () => {
+			if (dotMeta) dotMeta.textContent = '';
+			dot?.classList.remove('active');
+		});
+
+		img.addEventListener('click', () => {
+			// option A: mit groessen oeffnet der bild-klick den size-picker
+			if (sizePicker) {
+				sizePicker.classList.add('open');
+				if (dotMeta) dotMeta.textContent = 'choose size';
+				return;
+			}
+
+			addToCart(btn.dataset.id!);
+			if (dotMeta) {
+				dotMeta.textContent = 'added';
+				setTimeout(() => {
+					if (dotMeta.textContent === 'added') dotMeta.textContent = 'add to cart';
+				}, 800);
+			}
+		});
+	});
 
 	// ein panel für alle: zeigt die gewählte sektion, gleicher klick schließt
 	const navPanel = document.getElementById('nav-panel')!;
@@ -134,22 +216,25 @@ const path = Astro.url.pathname;
 		products,
 	);
 
-	const dotMeta = document.getElementById('dot-meta');
-    const dot = document.querySelector('.cursor-dot');
-
-	//back button
+	// back button (dotMeta/dot sind oben schon deklariert)
     const backBtn = document.getElementById('back-button-collection')
     backBtn?.addEventListener('click', () =>{
         navigate('/collection');
     })
 
-    backBtn?.addEventListener('mouseenter', () => { 
-        dotMeta.textContent = 'back';
+    backBtn?.addEventListener('mouseenter', () => {
+        if (dotMeta) dotMeta.textContent = 'back';
         dot?.classList.add('active');
     });
 
-    backBtn?.addEventListener('mouseleave', () => { 
-        dotMeta.textContent = '';
+    backBtn?.addEventListener('mouseleave', () => {
+        if (dotMeta) dotMeta.textContent = '';
         dot?.classList.remove('active');
+    });
+
+	// füge dem dot die click klasse hinzu
+    window.addEventListener('click', () => {
+        dot?.classList.add('click');
+        setTimeout(() => dot?.classList.remove('click'), 400);
     });
 </script>

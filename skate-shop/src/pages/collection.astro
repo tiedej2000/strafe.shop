@@ -5,7 +5,7 @@ import Image from 'astro/components/Image.astro';
 
 const path = Astro.url.pathname;
 
-// anzeige-reihenfolge der kategorien – einfach umsortieren
+// produkt reihenfolge
 const categoryOrder = [
 	'tops',
 	'bottoms',
@@ -14,7 +14,6 @@ const categoryOrder = [
 	'collectible',
 ];
 
-// unbekannte kategorien ans ende statt (durch indexOf -1) an den anfang
 const pos = (c: string) => {
 	const i = categoryOrder.indexOf(c);
 	return i === -1 ? categoryOrder.length : i;
@@ -85,11 +84,19 @@ const sortedProducts = [...products].sort((a, b) => pos(a.category) - pos(b.cate
             <div class="nav-expanded" id="nav-panel">
                 <div class="panel-section" data-panel="main">
                     <img src="/collection/banner_menu.webp" alt="">
-                    <ul>
-                        <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
-                        <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
-                        <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
-                    </ul>
+                    <div class="nav-options">
+                        <ul>
+                            <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
+                            <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
+                            <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
+                        </ul>
+                        <div class="color-changer">
+                            <div class="color" id="green"></div>
+                            <div class="color" id="blue"></div>
+                            <div class="color" id="red"></div>
+                            <div class="color" id="black"></div>
+			            </div>
+                    </div>
                     <div class="titles"><span>strafe.site</span><span> made by JT</span></div>
                 </div>
                 <div class="panel-section" data-panel="grid">
@@ -143,21 +150,49 @@ import { initCartUI } from '../scripts/cart';
         })
     })
 
-    // grid view änderung
+    import { setColor } from '../scripts/color';
+
+	// msg pro farbe im cursor
+	const colorMessages: Record<string, string> = {
+		green: 'my fav ;-)',
+		blue: 'feeling blue',
+		red: 'danger!!',
+		black: 'ugh really?',
+	};
+
+	// color changer
+	document.querySelectorAll<HTMLElement>('.color-changer .color').forEach((sw) => {
+		sw.addEventListener('click', () => setColor(sw.id));
+
+		sw.addEventListener('mouseenter', () => {
+			if (dotMeta) dotMeta.textContent = colorMessages[sw.id] ?? '';
+			dot?.classList.add('active');
+		});
+
+		sw.addEventListener('mouseleave', () => {
+			if (dotMeta) dotMeta.textContent = '';
+			dot?.classList.remove('active');
+		});
+	});
+
+    // grid view änderung 
     document.getElementById('single-btn')!.addEventListener('click', () => {
+	    localStorage.setItem('col-grid', 'single-btn');
 	    grid.classList.add('single');
-	    // overflow:hidden friert den alten scroll-offset ein -> explizit nach oben
 	    window.scrollTo({ top: 0, behavior: 'instant' });
     });
     document.getElementById('min-btn')!.addEventListener('click', () => {
+	    localStorage.setItem('col-grid', 'min-btn');
 	    grid.classList.remove('single');
 	    grid.style.setProperty('--cols', '3');
     });
     document.getElementById('mid-btn')!.addEventListener('click', () => {
+	    localStorage.setItem('col-grid', 'mid-btn');
 	    grid.classList.remove('single');
 	    grid.style.setProperty('--cols', '4');
     });
     document.getElementById('max-btn')!.addEventListener('click', () => {
+	    localStorage.setItem('col-grid', 'max-btn');
 	    grid.classList.remove('single');
 	    grid.style.setProperty('--cols', '5');
     });
@@ -172,15 +207,17 @@ import { initCartUI } from '../scripts/cart';
     
     const cardImages = document.querySelectorAll<HTMLImageElement>('.product-img > img');
 
-    // aktuelle Ansicht 
+    // aktuelle Ansicht
     let currentView: 'front' | 'modell' = 'modell';
 
     document.getElementById('product-view')!.addEventListener('click', () => {
+        localStorage.setItem('col-view', 'product-view');
         currentView = 'front';
         cardImages.forEach((img) => { img.src = img.dataset.front!; });
     });
 
     document.getElementById('model-view')!.addEventListener('click', () => {
+        localStorage.setItem('col-view', 'model-view');
         currentView = 'modell';
         cardImages.forEach((img) => {
             img.src = img.dataset.modell ?? img.dataset.front!;
@@ -191,16 +228,24 @@ import { initCartUI } from '../scripts/cart';
     const cardInfos = document.querySelectorAll('.product-card-info')
 
     document.getElementById('tag-off')!.addEventListener('click',()=>{
+        localStorage.setItem('col-tags', 'tag-off');
         cardInfos.forEach((card)=>{
             card.classList.add('hidden')
         })
     })
 
     document.getElementById('tag-on')!.addEventListener('click',()=>{
+        localStorage.setItem('col-tags', 'tag-on');
         cardInfos.forEach((card)=>{
             card.classList.remove('hidden')
         })
-    })
+    });
+
+    // gespeicherte nav-einstellungen wiederherstellen
+    ['col-grid', 'col-view', 'col-tags'].forEach((key) => {
+        const id = localStorage.getItem(key);
+        if (id) document.getElementById(id)?.click();
+    });
 
 
     // beim hovern eines produktbilds den titel in die cursor-meta schreiben
@@ -214,12 +259,20 @@ import { initCartUI } from '../scripts/cart';
 
         img.addEventListener('mouseenter', () => { 
             dotMeta.textContent = title;
+            dotMeta.classList.add('active');
             dot?.classList.add('active');
         });
         img.addEventListener('mouseleave', () => { 
             dotMeta.textContent = ''; 
+            dotMeta.classList.remove('active');
             dot?.classList.remove('active');
         });
+    });
+
+    // füge dem dot die click klasse hinzu
+    window.addEventListener('click', () => {
+        dot?.classList.add('click');
+        setTimeout(() => dot?.classList.remove('click'), 400);
     });
 
     //back button

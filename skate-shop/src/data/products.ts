@@ -6,6 +6,7 @@ type Product = {
 	title: string;
 	price: number;
 	images: ProductImage[];
+	sizes?: string[];
 	description?: string;
 	productDetails?: string;
 	productCare?: string;
@@ -15,6 +16,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR1',
 		category: 'tops',
+		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'SWEATER STR BLA',
 		price: 120,
 		images: [
@@ -30,6 +32,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR2',
 		category: 'tops',
+		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'SWEATER STR BLU',
 		price: 120,
 		images: [
@@ -45,6 +48,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR3',
 		category: 'tops',
+		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'SWEATER STR RED',
 		price: 120,
 		images: [
@@ -60,6 +64,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR4',
 		category: 'bottoms',
+		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'STAR JEANS',
 		price: 120,
 		images: [
@@ -103,6 +108,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR7',
 		category: 'tops',
+		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'TEE LIZ BLUE',
 		price: 120,
 		images: [
@@ -117,6 +123,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR8',
 		category: 'tops',
+		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'TEE LIZ BLACK',
 		price: 120,
 		images: [
@@ -131,6 +138,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR9',
 		category: 'tops',
+		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'TEE LIZ BLACK ON BLACK',
 		price: 120,
 		images: [
@@ -172,6 +180,7 @@ export const products: Product[] = [
 		id: 'IDNR12',
 		category: 'gear',
 		title: 'DECK STAR BB',
+		sizes: ['8.0"', '8.25"', '8.5"'],
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR12/produkt7_deck_starBB.webp', alt: 'Deck Star BB – Ansicht' },
@@ -184,6 +193,7 @@ export const products: Product[] = [
 		id: 'IDNR13',
 		category: 'gear',
 		title: 'DECK STAR RW',
+		sizes: ['8.0"', '8.25"', '8.5"'],
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR13/produkt7_deck_starRW.webp', alt: 'Deck Star RW – Ansicht' },
@@ -196,6 +206,7 @@ export const products: Product[] = [
 		id: 'IDNR14',
 		category: 'gear',
 		title: 'DECK STAR OY',
+		sizes: ['8.0"', '8.25"', '8.5"'],
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR14/produkt7_deck_starOY.webp', alt: 'Deck Star OY – Ansicht' },
@@ -231,6 +242,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR17',
 		category: 'bottoms',
+		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'JEANS BAGGY BLUE',
 		price: 120,
 		images: [
@@ -245,6 +257,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR18',
 		category: 'bottoms',
+		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'JEANS BAGGY GREEN',
 		price: 120,
 		images: [
@@ -259,6 +272,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR19',
 		category: 'bottoms',
+		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'JEANS BAGGY ASPHALT',
 		price: 120,
 		images: [

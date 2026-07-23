@@ -13,11 +13,11 @@ const editorials = [
 
 const chosen = [
 	{ closeUp: '/landingpage/close_up1.webp', product: '/landingpage/product1.webp', title:'DECK STAR BB', price:'120' },
-	{ closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp' },
-	{ closeUp: '/landingpage/close_up3.webp', product: '/landingpage/product3.webp' },
-	{ closeUp: '/landingpage/close_up4.webp', product: '/landingpage/product4.webp' },
-	{ closeUp: '/landingpage/close_up5.webp', product: '/landingpage/product5.webp' },
-	{ closeUp: '/landingpage/close_up6.webp', product: '/landingpage/product6.webp' },
+	{ closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp', title:'JEANS BAGGY ASPHALT', price:'120' },
+	{ closeUp: '/landingpage/close_up3.webp', product: '/landingpage/product3.webp', title:'SHIRT DRK BW', price:'120' },
+	{ closeUp: '/landingpage/close_up4.webp', product: '/landingpage/product4.webp', title:'SWEATER STR RED', price:'120' },
+	{ closeUp: '/landingpage/close_up5.webp', product: '/landingpage/product5.webp', title:'BEANIE STAR BEIGE', price:'120' },
+	{ closeUp: '/landingpage/close_up6.webp', product: '/landingpage/product6.webp', title:'COW BELT', price:'120' },
 ];
 ---
 
@@ -28,10 +28,18 @@ const chosen = [
 				<img src={src} alt="" />
 			))}
 		</div>
-		<div class="ediorial-track-options">
-			<div class="ediorial-track-options-pause--resume">PAUSE</div>
-			<div class="ediorial-track-options-faster">FASTER</div>
-			<div class="ediorial-track-options-slower">SLOWER</div>
+		<div class="options">
+			<div class="color-changer">
+				<div class="color" id="green"></div>
+				<div class="color" id="blue"></div>
+				<div class="color" id="red"></div>
+				<div class="color" id="black"></div>
+			</div>
+			<div class="ediorial-track-options">
+				<div class="ediorial-track-options-pause--resume">PAUSE</div>
+				<div class="ediorial-track-options-faster">FASTER</div>
+				<div class="ediorial-track-options-slower">SLOWER</div>
+			</div>
 		</div>
 	</section>
 	<div class="chosen-products">
@@ -41,7 +49,6 @@ const chosen = [
 				<img class="product-full" src={c.product} alt="" />
 				<div class="product-info">
 					<span class="title">{c.title}</span>
-					<span>€{c.price}</span>
 				</div>
 			</div>
 		))}
@@ -60,13 +67,38 @@ const chosen = [
 </Layout>
 
 <script>
+	import { setColor } from '../scripts/color';
+
+	// color changer
+	const colorMessages: Record<string, string> = {
+		green: 'my fav ;-)',
+		blue: 'feeling blue',
+		red: 'danger!!',
+		black: 'ugh really?',
+	};
+
+	// color changer
+	const dot = document.querySelector('.cursor-dot');
+	const dotMeta = document.getElementById('dot-meta');
+	document.querySelectorAll<HTMLElement>('.color-changer .color').forEach((sw) => {
+		sw.addEventListener('click', () => setColor(sw.id));
+
+		sw.addEventListener('mouseenter', () => {
+			if (dotMeta) dotMeta.textContent = colorMessages[sw.id] ?? '';
+			dot?.classList.add('active');
+		});
+
+		sw.addEventListener('mouseleave', () => {
+			if (dotMeta) dotMeta.textContent = '';
+			dot?.classList.remove('active');
+		});
+	});
 	const track = document.querySelector('.editorial-track')!;
 	const anim = track.getAnimations()[0];
 
-	// der Track enthaelt die Bilder doppelt, also ist die Haelfte die echte Anzahl
+	// der Track enthaelt die Bilder doppelt
 	const count = track.children.length / 2;
 
-	// manuell pausiert -> hover-leave soll nicht heimlich weiterlaufen lassen
 	let paused = false;
 
 	document.querySelectorAll('.chosen-product').forEach((el, i) => {
@@ -87,7 +119,6 @@ const chosen = [
 		pauseBtn.textContent = paused ? 'RESUME' : 'PAUSE';
 	});
 
-	// playbackRate ueberlebt pause/play, kollidiert also nicht mit dem hover-scrub
 	document.querySelector('.ediorial-track-options-faster')!.addEventListener('click', () => { 
 		anim.playbackRate *= 1.5; 
 	});
@@ -108,4 +139,10 @@ const chosen = [
 
 	tick();
 	setInterval(tick, 1000);
+
+	// füge dem dot die click klasse hinzu
+    window.addEventListener('click', () => {
+        dot?.classList.add('click');
+        setTimeout(() => dot?.classList.remove('click'), 400);
+    });
 </script>
