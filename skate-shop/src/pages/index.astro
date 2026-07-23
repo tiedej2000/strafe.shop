@@ -25,7 +25,7 @@ const chosen = [
 	<section class="editorial-loop">
 		<div class="editorial-track">
 			{[...editorials, ...editorials].map((src) => (
-				<img src={src} alt="" />
+				<img src={src} alt="" decoding="async" />
 			))}
 		</div>
 		<div class="options">
@@ -45,8 +45,8 @@ const chosen = [
 	<div class="chosen-products">
 		{chosen.map((c) => (
 			<div class="chosen-product">
-				<img class="product-close" src={c.closeUp} alt="" />
-				<img class="product-full" src={c.product} alt="" />
+				<img class="product-close" src={c.closeUp} alt="" decoding="async" />
+				<img class="product-full" src={c.product} alt="" loading="lazy" decoding="async" />
 				<div class="product-info">
 					<span class="title">{c.title}</span>
 				</div>
@@ -94,7 +94,14 @@ const chosen = [
 		});
 	});
 	const track = document.querySelector('.editorial-track')!;
-	const anim = track.getAnimations()[0];
+
+	// NUR die scroll-animation greifen, nicht die transitions (globales
+	// * { transition: all } liefert getAnimations() sonst auch zurueck, und
+	// [0] koennte eine transition sein). getter -> bei jeder interaktion frisch.
+	const getAnim = () =>
+		track.getAnimations().find(
+			(a) => (a as CSSAnimation).animationName === 'editorial-scroll',
+		) as CSSAnimation | undefined;
 
 	// der Track enthaelt die Bilder doppelt
 	const count = track.children.length / 2;
@@ -103,28 +110,34 @@ const chosen = [
 
 	document.querySelectorAll('.chosen-product').forEach((el, i) => {
 		el.addEventListener('mouseenter', () => {
+			const anim = getAnim();
+			if (!anim) return;
 			anim.pause();
 			anim.currentTime = (i % count) / count * Number(anim.effect!.getTiming().duration);
 		});
 
-		el.addEventListener('mouseleave', () => { if (!paused) anim.play(); });
+		el.addEventListener('mouseleave', () => { if (!paused) getAnim()?.play(); });
 	});
 
 	// track-optionen: pause/resume + tempo
 	const pauseBtn = document.querySelector('.ediorial-track-options-pause--resume')!;
 	pauseBtn.addEventListener('click', () => {
+		const anim = getAnim();
+		if (!anim) return;
 		paused = !paused;
 		if (paused) anim.pause();
 		else anim.play();
 		pauseBtn.textContent = paused ? 'RESUME' : 'PAUSE';
 	});
 
-	document.querySelector('.ediorial-track-options-faster')!.addEventListener('click', () => { 
-		anim.playbackRate *= 1.5; 
+	document.querySelector('.ediorial-track-options-faster')!.addEventListener('click', () => {
+		const anim = getAnim();
+		if (anim) anim.playbackRate *= 1.5;
 	});
 
-	document.querySelector('.ediorial-track-options-slower')!.addEventListener('click', () => { 
-		anim.playbackRate /= 1.5; 
+	document.querySelector('.ediorial-track-options-slower')!.addEventListener('click', () => {
+		const anim = getAnim();
+		if (anim) anim.playbackRate /= 1.5;
 	});
 
 	// datum, zeit 
