@@ -184,6 +184,8 @@ export const products: Product[] = [
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR12/produkt7_deck_starBB.webp', alt: 'Deck Star BB – Ansicht' },
+			{ type: 'back', src: '/products/IDNR12/produkt7_deck_starBB_back.webp', alt: 'Deck Star BB – Ansicht' },
+			{ type: 'closeup', src: '/products/IDNR12/produkt7_deck_starBB_closeup.webp', alt: 'Deck Star BB – Ansicht' },
 		],
 		description: 'Seven-ply maple deck with the Star graphic in black on blue. Medium concave, steep kicks, a shape that works for street and park alike.',
 		productDetails: '7-ply hard rock maple, epoxy pressed. Widths 8.0", 8.25" and 8.5". Medium concave, 14.25" wheelbase. Heat-transfer graphic on the bottom, laser-etched logo on the top ply. Made in the USA.',
@@ -197,6 +199,8 @@ export const products: Product[] = [
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR13/produkt7_deck_starRW.webp', alt: 'Deck Star RW – Ansicht' },
+			{ type: 'back', src: '/products/IDNR13/produkt7_deck_starRW_back.webp', alt: 'Deck Star BB – Ansicht' },
+			{ type: 'closeup', src: '/products/IDNR13/produkt7_deck_starRW_closeup.webp', alt: 'Deck Star BB – Ansicht' },
 		],
 		description: 'Seven-ply maple deck with the Star graphic in white on red. Medium concave, steep kicks, a shape that works for street and park alike.',
 		productDetails: '7-ply hard rock maple, epoxy pressed. Widths 8.0", 8.25" and 8.5". Medium concave, 14.25" wheelbase. Heat-transfer graphic on the bottom, laser-etched logo on the top ply. Made in the USA.',
@@ -304,6 +308,8 @@ export const products: Product[] = [
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR21/produkt11_beanistar_beige.webp', alt: 'Beanie Star Beige – Ansicht' },
+			{ type: 'back', src: '/products/IDNR21/produkt11_beanistar_beige_back.webp', alt: 'Beanie Star Beige – Ansicht' },
+			{ type: 'closeup', src: '/products/IDNR21/produkt11_beanistar_beige_closeup.webp', alt: 'Beanie Star Beige – Ansicht' },
 		],
 		description: 'Ribbed beanie in beige with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.',
 		productDetails: '50% merino wool, 50% acrylic. Fine rib knit, double layered, folded cuff. One size fits most. Embroidered Star patch on the cuff. Made in Italy.',
@@ -328,6 +334,30 @@ export const products: Product[] = [
 		price: 120,
 		images: [
 			{ type: 'front', src: '/products/IDNR23/produkt11_beanistar_blue.webp', alt: 'Beanie Star Blau – Ansicht' },
+		],
+		description: 'Ribbed beanie in blue with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.',
+		productDetails: '50% merino wool, 50% acrylic. Fine rib knit, double layered, folded cuff. One size fits most. Embroidered Star patch on the cuff. Made in Italy.',
+		productCare: 'Hand wash cold or machine wash on the wool cycle at 30°C. Do not bleach. Reshape while damp and dry flat, never hang. Do not tumble dry.',
+	},
+	{
+		id: 'IDNR24',
+		category: 'tops',
+		title: 'SHIRT DRK BW',
+		price: 120,
+		images: [
+			{ type: 'front', src: '/products/IDNR24/produkt12_shirt_black.webp', alt: 'Beanie Star Blau – Ansicht' },
+		],
+		description: 'Ribbed beanie in blue with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.',
+		productDetails: '50% merino wool, 50% acrylic. Fine rib knit, double layered, folded cuff. One size fits most. Embroidered Star patch on the cuff. Made in Italy.',
+		productCare: 'Hand wash cold or machine wash on the wool cycle at 30°C. Do not bleach. Reshape while damp and dry flat, never hang. Do not tumble dry.',
+	},
+	{
+		id: 'IDNR25',
+		category: 'accessories',
+		title: 'CREW SOCK STAR BLACK',
+		price: 120,
+		images: [
+			{ type: 'front', src: '/products/IDNR25/produkt13_socks_black.webp', alt: 'Beanie Star Blau – Ansicht' },
 		],
 		description: 'Ribbed beanie in blue with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.',
 		productDetails: '50% merino wool, 50% acrylic. Fine rib knit, double layered, folded cuff. One size fits most. Embroidered Star patch on the cuff. Made in Italy.',
