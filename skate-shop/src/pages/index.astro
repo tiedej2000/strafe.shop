@@ -12,16 +12,23 @@ const editorials = [
 ];
 
 const chosen = [
-	{ closeUp: '/landingpage/close_up1.webp', product: '/landingpage/product1.webp', title:'DECK STAR BB', price:'120' },
-	{ closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp', title:'JEANS BAGGY ASPHALT', price:'120' },
-	{ closeUp: '/landingpage/close_up3.webp', product: '/landingpage/product3.webp', title:'SHIRT DRK BW', price:'120' },
-	{ closeUp: '/landingpage/close_up4.webp', product: '/landingpage/product4.webp', title:'SWEATER STR RED', price:'120' },
-	{ closeUp: '/landingpage/close_up5.webp', product: '/landingpage/product5.webp', title:'BEANIE STAR BEIGE', price:'120' },
-	{ closeUp: '/landingpage/close_up6.webp', product: '/landingpage/product6.webp', title:'COW BELT', price:'120' },
+	{ closeUp: '/landingpage/close_up1.webp', product: '/landingpage/product1.webp', title:'DECK STAR BB', price:'120', id: 'IDNR12'},
+	{ closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp', title:'JEANS BAGGY ASPHALT', price:'120', id: 'IDNR19' },
+	{ closeUp: '/landingpage/close_up3.webp', product: '/landingpage/product3.webp', title:'SHIRT DRK BW', price:'120', id: 'IDNR24' },
+	{ closeUp: '/landingpage/close_up4.webp', product: '/landingpage/product4.webp', title:'SWEATER STR RED', price:'120', id: 'IDNR3' },
+	{ closeUp: '/landingpage/close_up5.webp', product: '/landingpage/product5.webp', title:'BEANIE STAR BEIGE', price:'120', id: 'IDNR21' },
+	{ closeUp: '/landingpage/close_up6.webp', product: '/landingpage/product6.webp', title:'COW BELT', price:'120', id: 'IDNR6' },
 ];
 ---
 
 <Layout title="strafe.shop">
+	<div class="loader" id="loader">
+		<div class="loader-stack">
+			{editorials.map((src, i) => (
+				<img src={src} alt="" decoding="async" style={`--rot: ${(i - 2.5) * 4}deg; animation-delay: ${(i * 0.25).toFixed(2)}s`} />
+			))}
+		</div>
+	</div>
 	<section class="editorial-loop">
 		<div class="editorial-track">
 			{[...editorials, ...editorials].map((src) => (
@@ -42,10 +49,11 @@ const chosen = [
 			</div>
 		</div>
 	</section>
+	<section class="link-site" id="link-site"></section>
 	<div class="chosen-products">
 		{chosen.map((c) => (
 			<div class="chosen-product">
-				<img class="product-close" src={c.closeUp} alt="" decoding="async" />
+				<a href=`/products/${c.id}`><img class="product-close" src={c.closeUp} alt="" decoding="async" /></a>
 				<img class="product-full" src={c.product} alt="" loading="lazy" decoding="async" />
 				<div class="product-info">
 					<span class="title">{c.title}</span>
@@ -67,9 +75,19 @@ const chosen = [
 </Layout>
 
 <script>
+	import { navigate } from 'astro:transitions/client';
 	import { setColor } from '../scripts/color';
 
-	// color changer
+	// overlay, lade bildschirm
+	const loader = document.getElementById('loader');
+	if (loader) {
+		const bilder = loader.querySelectorAll('img').length;
+		const dauer = (bilder - 1) * 250 + 500;
+		setTimeout(() => loader.classList.add('done'), dauer + 500);
+		setTimeout(() => loader.remove(), dauer + 500 + 400);
+	}
+
+	// color changer text hovers
 	const colorMessages: Record<string, string> = {
 		green: 'my fav ;-)',
 		blue: 'feeling blue',
@@ -156,4 +174,21 @@ const chosen = [
         dot?.classList.add('click');
         setTimeout(() => dot?.classList.remove('click'), 400);
     });
+
+	// link zu collection im unteren Bereich der Seite
+	const linkCollection = document.getElementById('link-site');
+
+	linkCollection?.addEventListener('mouseenter', () => {
+		if (dotMeta) dotMeta.textContent = 'enter collection';
+		dot?.classList.add('active');
+	});
+
+	linkCollection?.addEventListener('mouseleave', () => {
+		if (dotMeta) dotMeta.textContent = '';
+		dot?.classList.remove('active');
+	});
+
+	linkCollection?.addEventListener('click', () => {
+		navigate('/collection');
+	});
 </script>

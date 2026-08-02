@@ -24,6 +24,9 @@ function categoryIndex(category: string) {
 const sortedProducts = [...products].sort((a, b) => {
 	return categoryIndex(a.category) - categoryIndex(b.category);
 });
+
+// alle kategorien die es in den produkten gibt (ohne doppelte), plus "all"
+const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
 ---
 
 <Layout title="collection">
@@ -35,7 +38,7 @@ const sortedProducts = [...products].sort((a, b) => {
     
                 const shots = p.images.filter((img) => img !== front); 
                 return (
-                <a href={`/products/${p.id}`}>
+                <a href={`/products/${p.id}`} data-category={p.category}>
                     <article class="product-card">
                         <div class="product-img">
                             <img
@@ -79,8 +82,8 @@ const sortedProducts = [...products].sort((a, b) => {
                 <div class="nav-button active" id="model-view">worn</div>
             </div>
             <div class="tag-buttons">
-                <div class="nav-button active" id="tag-off">hide tags</div>
-                <div class="nav-button" id="tag-on">show tags</div>
+                <div class="nav-button active" id="tag-off">no tags</div>
+                <div class="nav-button" id="tag-on">tags</div>
             </div>
             <div class="info">
                 <div class="nav-button" id="nav-expand">more</div>
@@ -104,7 +107,11 @@ const sortedProducts = [...products].sort((a, b) => {
                     <div class="titles"><span>strafe.site</span><span> made by JT</span></div>
                 </div>
                 <div class="panel-section" data-panel="grid">
-                    
+                    <div class="category-filter">
+                        {categories.map((c) => (
+                            <button class={`filter-btn ${c === 'all' ? 'active' : ''}`} data-category={c}>{c}</button>
+                        ))}
+                    </div>
                 </div>
                 <div class="panel-section" data-panel="cart">
                     
@@ -184,21 +191,25 @@ import { initCartUI } from '../scripts/cart';
 	    localStorage.setItem('col-grid', 'single-btn');
 	    grid.classList.add('single');
 	    window.scrollTo({ top: 0, behavior: 'instant' });
+        grid.style.gap = '20px';
     });
     document.getElementById('min-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'min-btn');
 	    grid.classList.remove('single');
 	    grid.style.setProperty('--cols', '3');
+        grid.style.gap = '20px';
     });
     document.getElementById('mid-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'mid-btn');
 	    grid.classList.remove('single');
 	    grid.style.setProperty('--cols', '4');
+        grid.style.gap = '10px';
     });
     document.getElementById('max-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'max-btn');
 	    grid.classList.remove('single');
 	    grid.style.setProperty('--cols', '5');
+        grid.style.gap = '10px';
     });
 
     // wenn single view, mappe vertical scroll auf horizontal
@@ -306,9 +317,11 @@ import { initCartUI } from '../scripts/cart';
         section.classList.toggle('active', !wasOpen);
     }
 
-    document.getElementById('nav-expand')!.addEventListener('click', () => 
-        openPanel('grid')
-    );
+    const moreBtn = document.getElementById('nav-expand')!;
+    moreBtn.addEventListener('click', () => {
+        openPanel('grid');
+        moreBtn.classList.toggle('active');
+    });
 
     const menuBtn = document.querySelector('.main-icon')!;
     menuBtn.addEventListener('click', () => {
@@ -328,5 +341,23 @@ import { initCartUI } from '../scripts/cart';
         cartBtn as HTMLElement,
         products,
     );
+
+    // filter + produkte anzeigen lassen
+    const filterButtons = document.querySelectorAll<HTMLElement>('.filter-btn');
+    const productLinks = document.querySelectorAll<HTMLElement>('#grid > a');
+
+    filterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const category = btn.dataset.category;
+
+            filterButtons.forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            productLinks.forEach((link) => {
+                const passt = category === 'all' || link.dataset.category === category;
+                link.style.display = passt ? '' : 'none';
+            });
+        });
+    });
 
 </script>

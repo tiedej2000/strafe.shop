@@ -27,7 +27,7 @@ button{
 
 body,
 body *{
-    cursor: none;
+    cursor: default;
 }
 
 .cursor{
@@ -64,6 +64,9 @@ body *{
             opacity: 0;
             transform: translate(12px,12px);
             transition: all 0.3s ease-in-out;
+            background-color: rgba(255,255,255,0.2);
+            padding: 4px;
+            backdrop-filter: blur(20px);
         }
 
         &.active{
@@ -121,26 +124,30 @@ body *{
 .editorial-loop{
     --editorial-speed: 40s;
 
-    height: 100vh;
+    height: 75vh;
     overflow: hidden;
-    position: relative; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
 
     &::after{
         content: '';
+        height: 100%;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 75vh; 
         z-index: 3;
         background-image: url('/landingpage/strafe_alternative_white.svg');
         background-size: 100%;
-        background-position: 50% 0%;
+        background-position: 50% -20%;
         background-repeat: no-repeat;
         pointer-events: none;
     }
 
     .editorial-track{
+        flex: 1;
+        min-height: 0;
         display: flex;
         flex-direction: row;
         width: max-content;
@@ -148,7 +155,7 @@ body *{
     }
 
     img{
-        height: 75vh;
+        height: 100%;
         object-fit: cover;
         flex-shrink: 0;
         user-select: none;
@@ -156,6 +163,9 @@ body *{
     }
 
     .options{
+        position: relative;
+        z-index: 4;
+
         display: flex;
         justify-content: space-between;
         padding: 10px;
@@ -199,6 +209,10 @@ body *{
     
 }
 
+.link-site{
+    height: 25vh;
+}
+
 @keyframes editorial-scroll{
     to{
         transform: translateX(-50%);
@@ -216,8 +230,8 @@ body *{
     z-index: 2;
 
     .product-close{
-        height: 45px;
-        width: 75px;
+        height: 60px;
+        width: 120px;
         object-fit: cover;
         position: relative;
         z-index: 2;
@@ -227,7 +241,7 @@ body *{
         position: fixed;
         bottom: 20px;
         right: 20px;
-        height: 15vh;
+        height: 20vh;
         object-fit: contain;
         z-index: 1;
         opacity: 0;
@@ -242,8 +256,6 @@ body *{
         bottom: 20px;
         left: 20px;
         opacity: 0;
-        // sonst faengt das unsichtbare (opacity:0) info-panel den hover ab und
-        // triggert .chosen-product:hover von der linken seite aus
         pointer-events: none;
         max-width: 20vw;
 
@@ -278,7 +290,7 @@ body *{
         // single view
         &.single{
             display: flex;
-            height: calc(100vh - 40px); 
+            height: calc(100vh - 90px); 
             overflow-x: auto;
             overflow-y: hidden;
             scrollbar-width: none;
@@ -335,19 +347,21 @@ body *{
 
                 .product-shots{
                     display: flex;
-                    gap: 8px;
+                    flex-direction: column;
+                    gap: 10px;
                     position: absolute;
                     top: 10px;
                     right: 10px;
                     opacity: 0;
                     pointer-events: none;
                     transition: opacity 0.3s ease;
-                    height: 12.5%;
+                    height: auto;
+                    width: 15%;
 
                     img{
                         height: 100%;
                         object-fit: cover;
-                        outline: 1px solid var(--white);
+                        border: 1px solid var(--white);
                         box-shadow: 0 0 5px rgba(0,0,0,0.05);
                     }
                 }
@@ -379,12 +393,12 @@ body *{
     display: flex;
     flex-direction: column;
     position: relative;
-    height: calc(100vh - 20px);
+    height: 100vh;
 
     .size-picker-wrapper{
         position: absolute;
         bottom: 20px;
-        right: 40px;
+        right: 20px;
         z-index: 1;
     }
 
@@ -393,9 +407,10 @@ body *{
         bottom: -10px;
         left: -10px;
         width: calc(100% + 20px);
-        background-color: var(--white);
-        z-index: -1; 
-        padding: 10px 10px 70px; 
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        z-index: -1;
+        padding: 10px 10px 70px;
         box-shadow: 0 0 8px rgba(0,0,0,0.1);
 
         display: flex;
@@ -435,10 +450,23 @@ body *{
         font-family: var(--ibm);
         font-size: 12px;
         border: 1px solid var(--currentcolor);
+        position: relative;
 
         &:hover{
             background-color: var(--currentcolor);
             color: var(--white);
+        }
+
+        &::before{
+            content: '';
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            width: calc(100% + 20px);
+            height: calc(100% + 20px);
+            top: -10px;
+            left: -10px;
+            position: absolute;
+            z-index: -5;
         }
     }
 
@@ -446,13 +474,12 @@ body *{
         display: flex;
         flex-direction: row;
         overflow-x: auto;
-        margin: 0 20px;
         flex: 1;
         min-width: 0;
         scrollbar-width: none;
 
         img{
-            height: 100%;
+            height: calc(100% - 70px);
             width: auto;
             max-width: none; 
             object-fit: cover;
@@ -511,9 +538,9 @@ body *{
 }
 
 .nav-start, .links{
-    width: calc(75px * 6);
+    width: calc(120px * 6);
     position: fixed;
-    bottom: 110px;
+    bottom: 125px;
     left: 50%;
     transform: translateX(-50%);
 
@@ -551,7 +578,7 @@ body *{
 }
 
 .links{
-    width: calc(75px * 6);
+    width: calc(120px * 6);
     bottom: 20px;
     flex-direction: row;
     justify-content: space-between;
@@ -563,7 +590,7 @@ body *{
 
 .nav-collection, .nav-products{
     position: sticky;
-    bottom: 40px;
+    bottom: 20px;
     width: fit-content;
     margin: 0 auto;
     display: flex;
@@ -572,6 +599,18 @@ body *{
     font-size: 12px;
     height: 30px;
     user-select: none;
+
+    &::before{
+        content: '';
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(20px);
+        width: calc(100% + 20px);
+        height: calc(100% + 20px);
+        top: -10px;
+        left: -10px;
+        position: absolute;
+        z-index: -5;
+    }
 
     .nav-main{
         position: relative;
@@ -617,6 +656,7 @@ body *{
             background-color: var(--currentcolor);
             color: var(--white);
         }
+
     }
 
     .nav-grid, .nav-product{
@@ -624,7 +664,6 @@ body *{
         gap: 10px;
         justify-content: space-between;
         width: fit-content;
-        position: relative;
 
         .nav-button{
             display: grid;
@@ -667,7 +706,8 @@ body *{
             left: -10px;
             height: auto;
             width: calc(100% + 20px);
-            background-color: var(--white);
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
             z-index: -1;
             padding: 10px 10px 50px;
             display: none;
@@ -686,6 +726,27 @@ body *{
                 }
             }
 
+            .category-filter{
+                display: flex;
+                flex-wrap: wrap;
+                gap: 14px;
+
+                .filter-btn{
+                    width: fit-content;
+                    padding: 0;
+                    border: none;
+                    background: none;
+                    text-align: left;
+                    font-family: var(--satoshi);
+                    font-size: 14px;
+
+                    &:hover,
+                    &.active{
+                        text-decoration: underline;
+                    }
+                }
+            }
+
             .panel-section[data-panel="main"]{
                 background-position: 100% 0%;
                 background-size: 100% 20%;
@@ -694,10 +755,10 @@ body *{
                 img{
                     display: block;
                     width: calc(100% + 20px);
-                    margin: -10px -10px 0;
+                    height: 90px;
+                    margin: -10px -10px 8px;
                     max-width: none;
                     object-fit: cover;
-                    margin-bottom: 8px;
                 }
 
                 .nav-options{
@@ -741,8 +802,6 @@ body *{
                     }
                 }
 
-                
-
                 a[aria-current="page"]{
                     text-decoration: underline;
                 }
@@ -757,13 +816,33 @@ body *{
                 }
             }
 
-            // produkt-infos (description/details/care/size) im panel
             .panel-section[data-panel="description"],
             .panel-section[data-panel="details"],
             .panel-section[data-panel="care"],
             .panel-section[data-panel="size"]{
                 font-family: var(--ibm);
                 font-size: 12px;
+                padding-bottom: 20px;
+            }
+
+            .panel-eyebrow{
+                display: flex;
+                justify-content: space-between;
+                font-family: var(--ibm);
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: var(--currentcolor);
+                padding-bottom: 8px;
+                margin-bottom: 12px;
+                border-bottom: 1px solid var(--currentcolor);
+            }
+
+            .panel-text{
+                font-family: var(--ibm);
+                font-size: 12px;
+                line-height: 1.7;
+                max-width: 60ch;
             }
 
             .panel-section[data-panel="size"] .size-row{
@@ -794,7 +873,8 @@ body *{
                 .cart-img{
                     display: block;
                     width: calc(100% + 20px);
-                    margin: -10px -10px 0;
+                    height: 90px;
+                    margin: -10px -10px 8px;
                     max-width: none;
                     object-fit: cover;
                 }
@@ -811,7 +891,7 @@ body *{
                     }
 
                     img{
-                        height: 45px;
+                        height: 40px;
                         object-fit: contain;
                     }
 
@@ -834,22 +914,25 @@ body *{
                 .cart-total{
                     display: flex;
                     justify-content: space-between;
-                    padding-top: 10px;
+                    padding: 10px 0 12px;
                     font-weight: 700;
-                    margin-bottom: 30px;
                 }
 
                 .cart-checkout{
                     display: block;
                     width: 100%;
-                    padding: 6px 0;
+                    padding: 9px 0;
                     border: 1px solid var(--currentcolor);
-                    background: var(--white);
+                    background: var(--currentcolor);
+                    color: var(--white);
                     font-family: var(--ibm);
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.02em;
 
                     &:hover{
-                        background: var(--currentcolor);
-                        color: var(--white);
+                        background: var(--white);
+                        color: var(--currentcolor);
                     }
                 }
 
@@ -868,8 +951,9 @@ body *{
 }
 
 .back-button{
-    position: absolute;  
-    height: 100%;
+    position: fixed;
+    z-index: 5;
+    height: 100vh;
     width: 5vw;
     top: 0;
     left: 0;
@@ -885,7 +969,50 @@ body *{
     &:hover{
         opacity: 1;
         box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
-        background-color: white;
+        background-color: rgba(255,255,255,0.05);
+        backdrop-filter: blur(10px);
+    }
+}
+
+.loader{
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-content: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    transition: opacity 0.4s ease;
+
+    &.done{
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .loader-stack{
+        position: relative;
+        width: 160px;
+        height: 200px;
+
+        img{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+            opacity: 0;
+            animation: loader-in 0.5s ease forwards;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+    }
+}
+
+@keyframes loader-in{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
     }
 }
 
@@ -933,5 +1060,4 @@ body *{
         display: none;
     }
 }
-
     

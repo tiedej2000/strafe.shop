@@ -60,18 +60,36 @@ const path = Astro.url.pathname;
             <div class="nav-expanded" id="nav-panel">
                 <div class="panel-section" data-panel="main">
                     <img src="/collection/banner_menu.webp" alt="">
-                    <ul>
-                        <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
-                        <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
-                        <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
-                    </ul>
+                    <div class="nav-options">
+                        <ul>
+                            <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
+                            <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
+                            <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
+                        </ul>
+                        <div class="color-changer">
+                            <div class="color" id="green"></div>
+                            <div class="color" id="blue"></div>
+                            <div class="color" id="red"></div>
+                            <div class="color" id="black"></div>
+                        </div>
+                    </div>
                     <div class="titles"><span>strafe.site</span><span> made by JT</span></div>
                 </div>
 
-                <div class="panel-section" data-panel="description">{product.description}</div>
-                <div class="panel-section" data-panel="details">{product.productDetails}</div>
-                <div class="panel-section" data-panel="care">{product.productCare}</div>
+                <div class="panel-section" data-panel="description">
+                    <span class="panel-eyebrow"><span>description</span><span>{product.title}</span></span>
+                    <p class="panel-text">{product.description}</p>
+                </div>
+                <div class="panel-section" data-panel="details">
+                    <span class="panel-eyebrow"><span>details</span><span>{product.title}</span></span>
+                    <p class="panel-text">{product.productDetails}</p>
+                </div>
+                <div class="panel-section" data-panel="care">
+                    <span class="panel-eyebrow"><span>care</span><span>{product.title}</span></span>
+                    <p class="panel-text">{product.productCare}</p>
+                </div>
                 <div class="panel-section" data-panel="size">
+                    <span class="panel-eyebrow"><span>size guide</span><span>{product.title}</span></span>
                     <div class="size-row"><span>size</span><span>chest</span><span>length</span></div>
                     <div class="size-row"><span>s</span><span>54 cm</span><span>68 cm</span></div>
                     <div class="size-row"><span>m</span><span>57 cm</span><span>70 cm</span></div>
@@ -90,6 +108,7 @@ const path = Astro.url.pathname;
 	import { addToCart, initCartUI } from '../../scripts/cart';
 	import { products } from '../../data/products';
 	import { navigate } from "astro:transitions/client";
+	import { setColor } from '../../scripts/color';
 
 	const btn = document.getElementById('add-to-cart')!;
 	const sizePicker = document.getElementById('size-picker');
@@ -215,6 +234,28 @@ const path = Astro.url.pathname;
 		document.querySelector<HTMLElement>('.cart-expand-button')!,
 		products,
 	);
+
+	// color changer (gleich wie auf der collection)
+	const colorMessages: Record<string, string> = {
+		green: 'my fav ;-)',
+		blue: 'feeling blue',
+		red: 'danger!!',
+		black: 'ugh really?',
+	};
+
+	document.querySelectorAll<HTMLElement>('.color-changer .color').forEach((sw) => {
+		sw.addEventListener('click', () => setColor(sw.id));
+
+		sw.addEventListener('mouseenter', () => {
+			if (dotMeta) dotMeta.textContent = colorMessages[sw.id] ?? '';
+			dot?.classList.add('active');
+		});
+
+		sw.addEventListener('mouseleave', () => {
+			if (dotMeta) dotMeta.textContent = '';
+			dot?.classList.remove('active');
+		});
+	});
 
 	// back button (dotMeta/dot sind oben schon deklariert)
     const backBtn = document.getElementById('back-button-collection')
