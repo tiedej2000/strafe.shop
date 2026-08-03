@@ -84,7 +84,7 @@ export const products: Product[] = [
 		price: 55,
 		images: [
 			{ type: 'front', src: '/products/IDNR5/produkt3_belt_snake.webp', alt: 'Gürtel Snake – Vorderansicht' },
-			{ type: 'closeup', src: '/products/IDNR5/produkt3_belt_snake_closeup.webp', alt: 'Gürtel Snake – Detail' },
+			{ type: 'modell', src: '/products/IDNR5/produkt3_belt_snake_closeup.webp', alt: 'Gürtel Snake – Detail' },
 			{ type: 'rolled', src: '/products/IDNR5/produkt3_belt_snake_rolled.webp', alt: 'Gürtel Snake – gerollt' },
 		],
 		description: 'Leather belt with a snake print finish and a brushed metal buckle. Slim enough to sit clean in the loops, loud enough to notice.',
@@ -98,7 +98,7 @@ export const products: Product[] = [
 		price: 60,
 		images: [
 			{ type: 'front', src: '/products/IDNR6/produkt3_belt_cow.webp', alt: 'Gürtel Cow – Vorderansicht' },
-			{ type: 'closeup', src: '/products/IDNR6/produkt3_belt_cow_closeup.webp', alt: 'Gürtel Cow – Detail' },
+			{ type: 'modell', src: '/products/IDNR6/produkt3_belt_cow_closeup.webp', alt: 'Gürtel Cow – Detail' },
 			{ type: 'rolled', src: '/products/IDNR6/produkt3_belt_cow_rolled.webp', alt: 'Gürtel Cow – gerollt' },
 		],
 		description: 'Leather belt in a black and white cow pattern with a brushed metal buckle. A plain pair of jeans is all it needs.',
@@ -119,21 +119,6 @@ export const products: Product[] = [
 		description: 'Heavy cotton tee in blue with the Liz artwork screen printed front and back. Boxy body, wide sleeves, holds its shape wash after wash.',
 		productDetails: '100% organic cotton, 240 gsm single jersey. Boxy fit, dropped shoulders, ribbed crew neck, twin-needle hem. Water-based screen print front and back. Made in Portugal.',
 		productCare: 'Machine wash cold at 30°C, inside out. Do not bleach. Tumble dry low or hang dry. Iron on low, never directly on the print. Do not dry clean.',
-	},
-	{
-		id: 'IDNR8',
-		category: 'tops',
-		sizes: ['s', 'm', 'l', 'xl'],
-		title: 'TEE LIZ BLACK',
-		price: 45,
-		images: [
-			{ type: 'front', src: '/products/IDNR8/produkt4_tee_lizblack.webp', alt: 'Tee Liz Schwarz – Vorderansicht' },
-			{ type: 'back', src: '/products/IDNR8/produkt4_tee_liz_back.webp', alt: 'Tee Liz Schwarz – Rückansicht' },
-			{ type: 'modell', src: '/products/IDNR8/produkt4_tee_liz_modell.webp', alt: 'Tee Liz Schwarz – am Modell' },
-		],
-		description: 'Heavy cotton tee in black with the Liz artwork screen printed front and back. Boxy body, wide sleeves, holds its shape wash after wash.',
-		productDetails: '100% organic cotton, 240 gsm single jersey. Boxy fit, dropped shoulders, ribbed crew neck, twin-needle hem. Water-based screen print front and back. Made in Portugal.',
-		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Tumble dry low or hang dry. Iron on low, never directly on the print. Do not dry clean.',
 	},
 	{
 		id: 'IDNR9',
@@ -226,6 +211,8 @@ export const products: Product[] = [
 		price: 18,
 		images: [
 			{ type: 'front', src: '/products/IDNR15/produkt8_mag_issue07.webp', alt: 'Magazin Issue 07 – Cover' },
+			{ type: 'modell', src: '/products/IDNR15/produkt8_mag_issue07_rack.webp', alt: 'Magazin Issue 07 – Cover' },
+
 		],
 		description: 'Issue 07 of the magazine. Photo sections, interviews and trip reports from a year on the road, printed large and on paper worth keeping.',
 		productDetails: '128 pages, 240 × 320 mm. Offset printed on 120 gsm uncoated paper, 300 gsm cover, perfect bound. English and German. Limited run of 1000 copies, unnumbered.',
@@ -238,6 +225,8 @@ export const products: Product[] = [
 		price: 18,
 		images: [
 			{ type: 'front', src: '/products/IDNR16/produkt8_mag_issue08.webp', alt: 'Magazin Issue 08 – Cover' },
+			{ type: 'modell', src: '/products/IDNR16/produkt8_mag_issue08_rack.webp', alt: 'Magazin Issue 08 – Cover' },
+
 		],
 		description: 'Issue 08 of the magazine. New photo sections, interviews and a long feature on the spots that did not survive the year.',
 		productDetails: '132 pages, 240 × 320 mm. Offset printed on 120 gsm uncoated paper, 300 gsm cover, perfect bound. English and German. Limited run of 1000 copies, unnumbered.',
