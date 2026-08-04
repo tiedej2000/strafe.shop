@@ -2,14 +2,12 @@
     --black: #191a1b;
     --white: #ffffff;
     --lightgrey: #dedede;
-    --green: green;
-    --red: red;
-    --blue: blue;
-    --currentcolor: var(--currentcolor);
+
+    --currentcolor: var(--black);
 
     --titleFS: clamp(2rem, 4vw, 8rem);
 
-    --satoshi: 'Satoshi', sans-serif; 
+    --satoshi: 'Satoshi', sans-serif;
     --ibm: "IBM Plex Mono", monospace;
 
     --cursor-color: var(--currentcolor);
@@ -84,6 +82,57 @@ body *{
     }
 }
 
+.help{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 5;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-content: center;
+    border: 1px solid var(--currentcolor);
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+
+    svg{
+        width: 16px;
+        height: 16px;
+        fill: var(--currentcolor);
+    }
+
+    &:hover{
+        background-color: var(--currentcolor);
+    }
+
+    &:hover svg{
+        fill: var(--white);
+    }
+
+    &::after{
+        content: "you're helping test strafe.shop.\A click around, open a product, drop a few things in the cart.\A then tell us what felt off. that's the whole study.";
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        width: 300px;
+        text-align: left;
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        font-family: var(--ibm);
+        font-size: 12px;
+        line-height: 1.5;
+        color: var(--currentcolor);
+        display: none;
+        z-index: -1;
+    }
+
+    &:hover::after{
+        display: block;
+    }
+}
+
 *{
     // outline: 1px solid red;
     transition:  all 0.3s ease;
@@ -130,24 +179,27 @@ body *{
     display: flex;
     flex-direction: column;
 
-    &::after{
-        content: '';
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 3;
-        background-image: url('/landingpage/strafe_alternative_white.svg');
-        background-size: 100%;
-        background-position: 50% -20%;
-        background-repeat: no-repeat;
-        pointer-events: none;
+    .editorial-viewport{
+        flex: 1;
+        min-height: 0;
+        position: relative;
+        overflow: hidden;
+
+        &::after{
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            background-image: url('/landingpage/strafe_alternative_white.svg');
+            background-size: 100%;
+            background-position: 50% -20%;
+            background-repeat: no-repeat;
+            pointer-events: none;
+        }
     }
 
     .editorial-track{
-        flex: 1;
-        min-height: 0;
+        height: 100%;
         display: flex;
         flex-direction: row;
         width: max-content;
@@ -167,7 +219,7 @@ body *{
         z-index: 4;
 
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         padding: 10px;
 
         .ediorial-track-options{
@@ -175,32 +227,9 @@ body *{
             gap: 10px;
             font-family: var(--ibm);
             font-size: 12px;
-    
+
             >:hover{
                 text-decoration: underline;
-            }
-        }
-
-        .color-changer{
-            display: flex;
-            gap: 2px;
-
-            .color{
-                width: 12px;
-                height: 12px;
-            }
-
-            #red{
-                background-color: var(--red);
-            }
-            #black{
-                background-color: var(--black);
-            }
-            #blue{
-                background-color: var(--blue);
-            }
-            #green{
-                background-color: var(--green);
             }
         }
     }
@@ -238,19 +267,22 @@ body *{
     }
 
     .product-full{
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        height: 20vh;
+        height: 15vh;
+        max-width: 100%;
         object-fit: contain;
-        z-index: 1;
-        opacity: 0;
-        pointer-events: none;
+        object-position: left;
+        align-self: flex-start;
+        margin-bottom: 12px;
+
+        img{
+            height: 100%;
+        }
     }
 
     .product-info{
         display: flex;
         flex-direction: column;
+        justify-content: flex-end;
         gap: 10px;
         position: fixed;
         bottom: 20px;
@@ -258,17 +290,24 @@ body *{
         opacity: 0;
         pointer-events: none;
         max-width: 20vw;
+        height: 25vh;
 
         .title{
-            font-size: clamp(2rem,3vw,6rem);
+            font-size: clamp(1rem,1.5vw,3rem);
             line-height: 1;
             font-family: var(--satoshi); 
             font-weight: 900; 
             text-wrap: pretty;
         }
+
+        .desc{
+            font-family: var(--ibm);
+            font-size: 12px;
+            text-align: justify;
+        }
     }
 
-    .chosen-product:hover .product-full, .chosen-product:hover .product-info{
+    .chosen-product:hover .product-info{
         opacity: 1;
     }
 }
@@ -398,7 +437,7 @@ body *{
     .size-picker-wrapper{
         position: absolute;
         bottom: 20px;
-        right: 20px;
+        left: 20px;
         z-index: 1;
     }
 
@@ -431,7 +470,6 @@ body *{
             padding: 6px 0;
             text-align: center;
             border: 1px solid var(--currentcolor);
-            background: var(--white);
             font-family: var(--ibm);
             font-size: 12px;
             text-transform: uppercase;
@@ -776,30 +814,6 @@ body *{
                             text-decoration: underline;
                         }
                     }
-
-                    .color-changer{
-                        display: flex;
-                        flex-direction: column;
-                        gap: 2px;
-
-                        .color{
-                            width: 12px;
-                            height: 12px;
-                        }
-
-                        #red{
-                            background-color: var(--red);
-                        }
-                        #black{
-                            background-color: var(--black);
-                        }
-                        #blue{
-                            background-color: var(--blue);
-                        }
-                        #green{
-                            background-color: var(--green);
-                        }
-                    }
                 }
 
                 a[aria-current="page"]{
@@ -884,7 +898,7 @@ body *{
                     align-items: center;
                     gap: 10px;
                     padding: 8px 0;
-                    border-bottom: 1px solid var(--lightgrey);
+                    border-bottom: 1px solid var(--black);
 
                     &:first-child{
                         padding-top: 0px;
@@ -914,7 +928,7 @@ body *{
                 .cart-total{
                     display: flex;
                     justify-content: space-between;
-                    padding: 10px 0 12px;
+                    padding: 10px 0 60px;
                     font-weight: 700;
                 }
 
@@ -923,16 +937,15 @@ body *{
                     width: 100%;
                     padding: 9px 0;
                     border: 1px solid var(--currentcolor);
-                    background: var(--currentcolor);
-                    color: var(--white);
+                    color: var(--black);
                     font-family: var(--ibm);
                     font-size: 12px;
                     text-transform: uppercase;
                     letter-spacing: 0.02em;
 
                     &:hover{
-                        background: var(--white);
-                        color: var(--currentcolor);
+                        background: var(--black);
+                        color: var(--white);
                     }
                 }
 
@@ -954,7 +967,7 @@ body *{
     position: fixed;
     z-index: 5;
     height: 100vh;
-    width: 5vw;
+    width: 3vw;
     top: 0;
     left: 0;
     display: grid;

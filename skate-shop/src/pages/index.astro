@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Weitere Bilder einfach hier anhaengen
 const editorials = [
 	'/landingpage/editiorial_strafe_1.webp',
 	'/landingpage/editiorial_strafe_2.webp',
@@ -12,12 +11,12 @@ const editorials = [
 ];
 
 const chosen = [
-	{ closeUp: '/landingpage/close_up1.webp', product: '/landingpage/product1.webp', title:'DECK STAR BB', price:'120', id: 'IDNR12'},
-	{ closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp', title:'JEANS BAGGY ASPHALT', price:'120', id: 'IDNR19' },
-	{ closeUp: '/landingpage/close_up3.webp', product: '/landingpage/product3.webp', title:'SHIRT DRK BW', price:'120', id: 'IDNR24' },
-	{ closeUp: '/landingpage/close_up4.webp', product: '/landingpage/product4.webp', title:'SWEATER STR RED', price:'120', id: 'IDNR3' },
-	{ closeUp: '/landingpage/close_up5.webp', product: '/landingpage/product5.webp', title:'BEANIE STAR BEIGE', price:'120', id: 'IDNR21' },
-	{ closeUp: '/landingpage/close_up6.webp', product: '/landingpage/product6.webp', title:'COW BELT', price:'120', id: 'IDNR6' },
+	{ closeUp: '/landingpage/close_up1.webp', product: '/landingpage/product1.webp', title:'DECK STAR BB', price:'120', id: 'IDNR12', description: 'Seven-ply maple deck with the Star graphic in black on blue. Medium concave, steep kicks, a shape that works for street and park alike.' },
+	{ closeUp: '/landingpage/close_up2.webp', product: '/landingpage/product2.webp', title:'JEANS BAGGY ASPHALT', price:'120', id: 'IDNR19', description: 'Baggy five-pocket jeans in asphalt grey. Wide through the leg from hip to hem with a low rise and plenty of room to move.' },
+	{ closeUp: '/landingpage/close_up3.webp', product: '/landingpage/product3.webp', title:'SHIRT DRK BW', price:'120', id: 'IDNR24', description: 'Striped cotton shirt in black and white with an oversized graphic print across the chest. Boxy fit, worn open over a tee or buttoned all the way.' },
+	{ closeUp: '/landingpage/close_up4.webp', product: '/landingpage/product4.webp', title:'SWEATER STR RED', price:'120', id: 'IDNR3', description: 'Heavyweight zip hoodie in deep red. Boxy cut with dropped shoulders, a deep hood and a full-length metal zip. Built for cold sessions and everything after.' },
+	{ closeUp: '/landingpage/close_up5.webp', product: '/landingpage/product5.webp', title:'BEANIE STAR BEIGE', price:'120', id: 'IDNR21', description: 'Ribbed beanie in beige with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.' },
+	{ closeUp: '/landingpage/close_up6.webp', product: '/landingpage/product6.webp', title:'COW BELT', price:'120', id: 'IDNR6', description: 'Leather belt in a black and white cow pattern with a brushed metal buckle. A plain pair of jeans is all it needs.' },
 ];
 ---
 
@@ -30,18 +29,14 @@ const chosen = [
 		</div>
 	</div>
 	<section class="editorial-loop">
-		<div class="editorial-track">
-			{[...editorials, ...editorials].map((src) => (
-				<img src={src} alt="" decoding="async" />
-			))}
+		<div class="editorial-viewport">
+			<div class="editorial-track">
+				{[...editorials, ...editorials].map((src) => (
+					<img src={src} alt="" decoding="async" />
+				))}
+			</div>
 		</div>
 		<div class="options">
-			<div class="color-changer">
-				<div class="color" id="green"></div>
-				<div class="color" id="blue"></div>
-				<div class="color" id="red"></div>
-				<div class="color" id="black"></div>
-			</div>
 			<div class="ediorial-track-options">
 				<div class="ediorial-track-options-pause--resume">PAUSE</div>
 				<div class="ediorial-track-options-faster">FASTER</div>
@@ -54,9 +49,10 @@ const chosen = [
 		{chosen.map((c) => (
 			<div class="chosen-product">
 				<a href=`/products/${c.id}`><img class="product-close" src={c.closeUp} alt="" decoding="async" /></a>
-				<img class="product-full" src={c.product} alt="" loading="lazy" decoding="async" />
 				<div class="product-info">
+					<img class="product-full" src={c.product} alt="" decoding="async" />
 					<span class="title">{c.title}</span>
+					<span class="desc">{c.description}</span>
 				</div>
 			</div>
 		))}
@@ -76,7 +72,6 @@ const chosen = [
 
 <script>
 	import { navigate } from 'astro:transitions/client';
-	import { setColor } from '../scripts/color';
 
 	// overlay, lade bildschirm
 	const loader = document.getElementById('loader');
@@ -87,30 +82,9 @@ const chosen = [
 		setTimeout(() => loader.remove(), dauer + 500 + 400);
 	}
 
-	// color changer text hovers
-	const colorMessages: Record<string, string> = {
-		green: 'my fav ;-)',
-		blue: 'feeling blue',
-		red: 'danger!!',
-		black: 'ugh really?',
-	};
-
-	// color changer
 	const dot = document.querySelector('.cursor-dot');
 	const dotMeta = document.getElementById('dot-meta');
-	document.querySelectorAll<HTMLElement>('.color-changer .color').forEach((sw) => {
-		sw.addEventListener('click', () => setColor(sw.id));
 
-		sw.addEventListener('mouseenter', () => {
-			if (dotMeta) dotMeta.textContent = colorMessages[sw.id] ?? '';
-			dot?.classList.add('active');
-		});
-
-		sw.addEventListener('mouseleave', () => {
-			if (dotMeta) dotMeta.textContent = '';
-			dot?.classList.remove('active');
-		});
-	});
 	const track = document.querySelector('.editorial-track')!;
 
 	// die scroll-animation vom track holen (nicht die transitions)

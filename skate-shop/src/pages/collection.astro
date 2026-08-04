@@ -35,8 +35,10 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
             {sortedProducts.map((p) => {
                 const front = p.images.find((img) => img.type === 'front') ?? p.images[0];
                 const modell = p.images.find((img) => img.type === 'modell');
-    
-                const shots = p.images.filter((img) => img !== front); 
+
+                // hauptbild ist modell (worn) sonst front; die vorschau zeigt alles andere
+                const main = modell ?? front;
+                const shots = p.images.filter((img) => img !== main);
                 return (
                 <a href={`/products/${p.id}`} data-category={p.category}>
                     <article class="product-card">
@@ -86,7 +88,7 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
                 <div class="nav-button" id="tag-on">tags</div>
             </div>
             <div class="info">
-                <div class="nav-button" id="nav-expand">more</div>
+                <div class="nav-button" id="nav-expand">filter</div>
             </div>
             <div class="nav-expanded" id="nav-panel">
                 <div class="panel-section" data-panel="main">
@@ -97,12 +99,6 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
                             <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
                             <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
                         </ul>
-                        <div class="color-changer">
-                            <div class="color" id="green"></div>
-                            <div class="color" id="blue"></div>
-                            <div class="color" id="red"></div>
-                            <div class="color" id="black"></div>
-			            </div>
                     </div>
                     <div class="titles"><span>strafe.site</span><span> made by JT</span></div>
                 </div>
@@ -161,30 +157,6 @@ import { initCartUI } from '../scripts/cart';
         })
     })
 
-    import { setColor } from '../scripts/color';
-
-	// msg pro farbe im cursor
-	const colorMessages: Record<string, string> = {
-		green: 'my fav ;-)',
-		blue: 'feeling blue',
-		red: 'danger!!',
-		black: 'ugh really?',
-	};
-
-	// color changer
-	document.querySelectorAll<HTMLElement>('.color-changer .color').forEach((sw) => {
-		sw.addEventListener('click', () => setColor(sw.id));
-
-		sw.addEventListener('mouseenter', () => {
-			if (dotMeta) dotMeta.textContent = colorMessages[sw.id] ?? '';
-			dot?.classList.add('active');
-		});
-
-		sw.addEventListener('mouseleave', () => {
-			if (dotMeta) dotMeta.textContent = '';
-			dot?.classList.remove('active');
-		});
-	});
 
     // grid view änderung 
     document.getElementById('single-btn')!.addEventListener('click', () => {
