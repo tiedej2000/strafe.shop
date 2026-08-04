@@ -1,5 +1,11 @@
 type ProductImage = { type: string; src: string; alt: string };
 
+type SizeGuide = {
+	columns?: string[];
+	rows?: string[][];
+	note?: string;
+};
+
 type Product = {
 	id: string;
 	category: string;
@@ -10,6 +16,7 @@ type Product = {
 	description?: string;
 	productDetails?: string;
 	productCare?: string;
+	sizeGuide?: SizeGuide;
 };
 
 export const products: Product[] = [
@@ -28,6 +35,16 @@ export const products: Product[] = [
 		description: 'Heavyweight zip hoodie in black. Boxy cut with dropped shoulders, a deep hood and a full-length metal zip. Built for cold sessions and everything after.',
 		productDetails: '80% cotton, 20% recycled polyester. 400 gsm brushed fleece. Boxy fit, dropped shoulders. Full-length metal zip, lined hood, ribbed cuffs and hem. Embroidered logo on the chest, print on the back. Made in Portugal.',
 		productCare: 'Machine wash cold at 30°C, inside out. Do not bleach. Tumble dry low or hang dry. Iron on low, avoid prints and embroidery. Do not dry clean.',
+		sizeGuide: {
+			columns: ['size', 'chest', 'length'],
+			rows: [
+				['s', '58 cm', '66 cm'],
+				['m', '61 cm', '68 cm'],
+				['l', '64 cm', '70 cm'],
+				['xl', '67 cm', '72 cm'],
+			],
+			note: 'Boxy heavyweight fit, measured flat across the chest. Take your usual size for the roomy look, size down for a cleaner cut.',
+		},
 	},
 	{
 		id: 'IDNR2',
@@ -44,6 +61,16 @@ export const products: Product[] = [
 		description: 'Heavyweight zip hoodie in washed blue. Boxy cut with dropped shoulders, a deep hood and a full-length metal zip. Built for cold sessions and everything after.',
 		productDetails: '80% cotton, 20% recycled polyester. 400 gsm brushed fleece. Boxy fit, dropped shoulders. Full-length metal zip, lined hood, ribbed cuffs and hem. Embroidered logo on the chest, print on the back. Made in Portugal.',
 		productCare: 'Machine wash cold at 30°C, inside out. Do not bleach. Tumble dry low or hang dry. Iron on low, avoid prints and embroidery. Do not dry clean.',
+		sizeGuide: {
+			columns: ['size', 'chest', 'length'],
+			rows: [
+				['s', '58 cm', '66 cm'],
+				['m', '61 cm', '68 cm'],
+				['l', '64 cm', '70 cm'],
+				['xl', '67 cm', '72 cm'],
+			],
+			note: 'Boxy heavyweight fit, measured flat across the chest. Take your usual size for the roomy look, size down for a cleaner cut.',
+		},
 	},
 	{
 		id: 'IDNR3',
@@ -60,6 +87,16 @@ export const products: Product[] = [
 		description: 'Heavyweight zip hoodie in deep red. Boxy cut with dropped shoulders, a deep hood and a full-length metal zip. Built for cold sessions and everything after.',
 		productDetails: '80% cotton, 20% recycled polyester. 400 gsm brushed fleece. Boxy fit, dropped shoulders. Full-length metal zip, lined hood, ribbed cuffs and hem. Embroidered logo on the chest, print on the back. Made in Portugal.',
 		productCare: 'Machine wash cold at 30°C, inside out. Wash separately the first few times, the red may bleed. Do not bleach. Tumble dry low or hang dry. Iron on low, avoid prints and embroidery.',
+		sizeGuide: {
+			columns: ['size', 'chest', 'length'],
+			rows: [
+				['s', '58 cm', '66 cm'],
+				['m', '61 cm', '68 cm'],
+				['l', '64 cm', '70 cm'],
+				['xl', '67 cm', '72 cm'],
+			],
+			note: 'Boxy heavyweight fit, measured flat across the chest. Take your usual size for the roomy look, size down for a cleaner cut.',
+		},
 	},
 	{
 		id: 'IDNR4',
@@ -76,6 +113,16 @@ export const products: Product[] = [
 		description: 'Straight-leg five-pocket jeans in rigid denim. Mid rise, roomy through the thigh, cut long so they stack over the shoe. Breaks in fast and only gets better.',
 		productDetails: '100% cotton, 14 oz rigid denim. Mid rise, straight leg. Five-pocket construction, button fly, triple-stitched inseam, reinforced bar tacks at the stress points. Woven label at the back waist. Made in Turkey.',
 		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Hang dry. Wash rarely to keep the fades and the fit. Do not tumble dry.',
+		sizeGuide: {
+			columns: ['size', 'waist', 'inseam'],
+			rows: [
+				['s', '76 cm', '82 cm'],
+				['m', '80 cm', '83 cm'],
+				['l', '84 cm', '84 cm'],
+				['xl', '88 cm', '85 cm'],
+			],
+			note: 'Rigid denim, mid rise, cut long to stack over the shoe. It relaxes about half a size with wear, so size down if you want them snug from day one.',
+		},
 	},
 	{
 		id: 'IDNR5',
@@ -90,6 +137,15 @@ export const products: Product[] = [
 		description: 'Leather belt with a snake print finish and a brushed metal buckle. Slim enough to sit clean in the loops, loud enough to notice.',
 		productDetails: '100% cowhide leather with printed snake finish, textile backing. 3.5 cm wide. Brushed silver-tone buckle, five adjustment holes, single keeper loop. Available in sizes 80 to 100 cm.',
 		productCare: 'Wipe with a soft dry cloth. Keep away from water and direct heat. Treat occasionally with a colourless leather balm. Store rolled or hanging, never folded.',
+		sizeGuide: {
+			columns: ['size', 'total length', 'fits waist'],
+			rows: [
+				['80', '95 cm', '70–80 cm'],
+				['90', '105 cm', '80–90 cm'],
+				['100', '115 cm', '90–100 cm'],
+			],
+			note: 'Size is the length in cm from the buckle to the middle hole. Measure a belt you already wear, buckle to the hole you use, and match the closest number.',
+		},
 	},
 	{
 		id: 'IDNR6',
@@ -104,6 +160,15 @@ export const products: Product[] = [
 		description: 'Leather belt in a black and white cow pattern with a brushed metal buckle. A plain pair of jeans is all it needs.',
 		productDetails: '100% cowhide leather with hair-on cow finish, textile backing. 3.5 cm wide. Brushed silver-tone buckle, five adjustment holes, single keeper loop. Available in sizes 80 to 100 cm. Every belt is cut individually, so the pattern is never the same twice.',
 		productCare: 'Brush lightly in the direction of the hair. Wipe with a soft dry cloth. Keep away from water and direct heat. Store rolled or hanging, never folded.',
+		sizeGuide: {
+			columns: ['size', 'total length', 'fits waist'],
+			rows: [
+				['80', '95 cm', '70–80 cm'],
+				['90', '105 cm', '80–90 cm'],
+				['100', '115 cm', '90–100 cm'],
+			],
+			note: 'Size is the length in cm from the buckle to the middle hole. Measure a belt you already wear, buckle to the hole you use, and match the closest number.',
+		},
 	},
 	{
 		id: 'IDNR7',
@@ -119,6 +184,16 @@ export const products: Product[] = [
 		description: 'Heavy cotton tee in blue with the Liz artwork screen printed front and back. Boxy body, wide sleeves, holds its shape wash after wash.',
 		productDetails: '100% organic cotton, 240 gsm single jersey. Boxy fit, dropped shoulders, ribbed crew neck, twin-needle hem. Water-based screen print front and back. Made in Portugal.',
 		productCare: 'Machine wash cold at 30°C, inside out. Do not bleach. Tumble dry low or hang dry. Iron on low, never directly on the print. Do not dry clean.',
+		sizeGuide: {
+			columns: ['size', 'chest', 'length'],
+			rows: [
+				['s', '54 cm', '68 cm'],
+				['m', '57 cm', '70 cm'],
+				['l', '60 cm', '72 cm'],
+				['xl', '63 cm', '74 cm'],
+			],
+			note: 'Boxy fit with dropped shoulders, half-chest measured flat. Between two sizes, size down for a boxier look.',
+		},
 	},
 	{
 		id: 'IDNR9',
@@ -134,6 +209,16 @@ export const products: Product[] = [
 		description: 'Long-body cotton tee in black with an oversized Liz back print. Longer through the body than the classic cut, so it layers under anything.',
 		productDetails: '100% organic cotton, 220 gsm single jersey. Relaxed fit, extended body length, ribbed crew neck, twin-needle hem. Small chest print, oversized water-based back print. Made in Portugal.',
 		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Tumble dry low or hang dry. Iron on low, never directly on the print. Do not dry clean.',
+		sizeGuide: {
+			columns: ['size', 'chest', 'length'],
+			rows: [
+				['s', '55 cm', '72 cm'],
+				['m', '58 cm', '74 cm'],
+				['l', '61 cm', '76 cm'],
+				['xl', '64 cm', '78 cm'],
+			],
+			note: 'Longer in the body than a classic tee, made to layer under things. Relaxed fit, measured flat, runs long by design.',
+		},
 	},
 	{
 		id: 'IDNR10',
@@ -147,6 +232,9 @@ export const products: Product[] = [
 		description: 'Skate wax in red, moulded with the Liz face. Hard enough to last a whole session, soft enough to lay down on any ledge, rail or curb.',
 		productDetails: 'Paraffin and beeswax blend, colour pigment. Approx. 90 g. Moulded Liz relief on the front, embossed logo on the back. Fits in the palm and in a front pocket. Made in Germany.',
 		productCare: 'Store below 25°C and out of direct sunlight. Keep away from clothing, the pigment can transfer. Not edible.',
+		sizeGuide: {
+			note: 'No sizing here. One bar, about 90 g, palm sized and pocket sized. Rub it along the ledge or rail until the board starts to slide.',
+		},
 	},
 	{
 		id: 'IDNR11',
@@ -160,6 +248,9 @@ export const products: Product[] = [
 		description: 'Skate wax in blue, moulded with the Liz face. Hard enough to last a whole session, soft enough to lay down on any ledge, rail or curb.',
 		productDetails: 'Paraffin and beeswax blend, colour pigment. Approx. 90 g. Moulded Liz relief on the front, embossed logo on the back. Fits in the palm and in a front pocket. Made in Germany.',
 		productCare: 'Store below 25°C and out of direct sunlight. Keep away from clothing, the pigment can transfer. Not edible.',
+		sizeGuide: {
+			note: 'No sizing here. One bar, about 90 g, palm sized and pocket sized. Rub it along the ledge or rail until the board starts to slide.',
+		},
 	},
 	{
 		id: 'IDNR12',
@@ -175,6 +266,15 @@ export const products: Product[] = [
 		description: 'Seven-ply maple deck with the Star graphic in black on blue. Medium concave, steep kicks, a shape that works for street and park alike.',
 		productDetails: '7-ply hard rock maple, epoxy pressed. Widths 8.0", 8.25" and 8.5". Medium concave, 14.25" wheelbase. Heat-transfer graphic on the bottom, laser-etched logo on the top ply. Made in the USA.',
 		productCare: 'Keep dry, water delaminates the plies. Do not store in a hot car or against a radiator. Rotate the deck to even out wear and check for cracks before every session.',
+		sizeGuide: {
+			columns: ['size', 'width', 'length', 'wheelbase'],
+			rows: [
+				['8.0"', '8.0"', '31.75"', '14.25"'],
+				['8.25"', '8.25"', '31.85"', '14.25"'],
+				['8.5"', '8.5"', '32.0"', '14.25"'],
+			],
+			note: 'Width is the call, not length. 8.0" for technical street, 8.5" for transition and bigger feet, 8.25" sits right in between.',
+		},
 	},
 	{
 		id: 'IDNR13',
@@ -190,6 +290,15 @@ export const products: Product[] = [
 		description: 'Seven-ply maple deck with the Star graphic in white on red. Medium concave, steep kicks, a shape that works for street and park alike.',
 		productDetails: '7-ply hard rock maple, epoxy pressed. Widths 8.0", 8.25" and 8.5". Medium concave, 14.25" wheelbase. Heat-transfer graphic on the bottom, laser-etched logo on the top ply. Made in the USA.',
 		productCare: 'Keep dry, water delaminates the plies. Do not store in a hot car or against a radiator. Rotate the deck to even out wear and check for cracks before every session.',
+		sizeGuide: {
+			columns: ['size', 'width', 'length', 'wheelbase'],
+			rows: [
+				['8.0"', '8.0"', '31.75"', '14.25"'],
+				['8.25"', '8.25"', '31.85"', '14.25"'],
+				['8.5"', '8.5"', '32.0"', '14.25"'],
+			],
+			note: 'Width is the call, not length. 8.0" for technical street, 8.5" for transition and bigger feet, 8.25" sits right in between.',
+		},
 	},
 	{
 		id: 'IDNR14',
@@ -203,6 +312,15 @@ export const products: Product[] = [
 		description: 'Seven-ply maple deck with the Star graphic in orange and yellow. Medium concave, steep kicks, a shape that works for street and park alike.',
 		productDetails: '7-ply hard rock maple, epoxy pressed. Widths 8.0", 8.25" and 8.5". Medium concave, 14.25" wheelbase. Heat-transfer graphic on the bottom, laser-etched logo on the top ply. Made in the USA.',
 		productCare: 'Keep dry, water delaminates the plies. Do not store in a hot car or against a radiator. Rotate the deck to even out wear and check for cracks before every session.',
+		sizeGuide: {
+			columns: ['size', 'width', 'length', 'wheelbase'],
+			rows: [
+				['8.0"', '8.0"', '31.75"', '14.25"'],
+				['8.25"', '8.25"', '31.85"', '14.25"'],
+				['8.5"', '8.5"', '32.0"', '14.25"'],
+			],
+			note: 'Width is the call, not length. 8.0" for technical street, 8.5" for transition and bigger feet, 8.25" sits right in between.',
+		},
 	},
 	{
 		id: 'IDNR15',
@@ -217,6 +335,9 @@ export const products: Product[] = [
 		description: 'Issue 07 of the magazine. Photo sections, interviews and trip reports from a year on the road, printed large and on paper worth keeping.',
 		productDetails: '128 pages, 240 × 320 mm. Offset printed on 120 gsm uncoated paper, 300 gsm cover, perfect bound. English and German. Limited run of 1000 copies, unnumbered.',
 		productCare: 'Store upright and out of direct sunlight to keep the cover from fading. Keep dry. Uncoated paper marks easily, that is part of it.',
+		sizeGuide: {
+			note: 'Not a size, a format: 240 × 320 mm, 128 pages, perfect bound. Issue 07, one size fits every shelf.',
+		},
 	},
 	{
 		id: 'IDNR16',
@@ -231,6 +352,9 @@ export const products: Product[] = [
 		description: 'Issue 08 of the magazine. New photo sections, interviews and a long feature on the spots that did not survive the year.',
 		productDetails: '132 pages, 240 × 320 mm. Offset printed on 120 gsm uncoated paper, 300 gsm cover, perfect bound. English and German. Limited run of 1000 copies, unnumbered.',
 		productCare: 'Store upright and out of direct sunlight to keep the cover from fading. Keep dry. Uncoated paper marks easily, that is part of it.',
+		sizeGuide: {
+			note: 'Not a size, a format: 240 × 320 mm, 132 pages, perfect bound. Issue 08, one size fits every shelf.',
+		},
 	},
 	{
 		id: 'IDNR17',
@@ -246,6 +370,16 @@ export const products: Product[] = [
 		description: 'Baggy five-pocket jeans in mid blue. Wide through the leg from hip to hem with a low rise and plenty of room to move.',
 		productDetails: '100% cotton, 13.5 oz denim. Low rise, baggy leg, wide opening. Five-pocket construction, zip fly, triple-stitched inseam, reinforced bar tacks. Woven label at the back waist. Made in Turkey.',
 		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Hang dry. Wash rarely to keep the fades and the fit. Do not tumble dry.',
+		sizeGuide: {
+			columns: ['size', 'waist', 'leg opening'],
+			rows: [
+				['s', '78 cm', '24 cm'],
+				['m', '82 cm', '25 cm'],
+				['l', '86 cm', '26 cm'],
+				['xl', '90 cm', '27 cm'],
+			],
+			note: 'Low rise and baggy through the whole leg. Sits below the waist, so take your usual size for the wide look or size down for less volume.',
+		},
 	},
 	{
 		id: 'IDNR18',
@@ -261,6 +395,16 @@ export const products: Product[] = [
 		description: 'Baggy five-pocket jeans in washed green. Wide through the leg from hip to hem with a low rise and plenty of room to move.',
 		productDetails: '100% cotton, 13.5 oz denim, garment dyed. Low rise, baggy leg, wide opening. Five-pocket construction, zip fly, triple-stitched inseam, reinforced bar tacks. Woven label at the back waist. Made in Turkey.',
 		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Hang dry. Garment dyed, so the colour will soften over time. Do not tumble dry.',
+		sizeGuide: {
+			columns: ['size', 'waist', 'leg opening'],
+			rows: [
+				['s', '78 cm', '24 cm'],
+				['m', '82 cm', '25 cm'],
+				['l', '86 cm', '26 cm'],
+				['xl', '90 cm', '27 cm'],
+			],
+			note: 'Low rise and baggy through the whole leg. Sits below the waist, so take your usual size for the wide look or size down for less volume.',
+		},
 	},
 	{
 		id: 'IDNR19',
@@ -276,6 +420,16 @@ export const products: Product[] = [
 		description: 'Baggy five-pocket jeans in asphalt grey. Wide through the leg from hip to hem with a low rise and plenty of room to move.',
 		productDetails: '100% cotton, 13.5 oz denim, garment dyed. Low rise, baggy leg, wide opening. Five-pocket construction, zip fly, triple-stitched inseam, reinforced bar tacks. Woven label at the back waist. Made in Turkey.',
 		productCare: 'Machine wash cold at 30°C, inside out, with like colours. Do not bleach. Hang dry. Garment dyed, so the colour will soften over time. Do not tumble dry.',
+		sizeGuide: {
+			columns: ['size', 'waist', 'leg opening'],
+			rows: [
+				['s', '78 cm', '24 cm'],
+				['m', '82 cm', '25 cm'],
+				['l', '86 cm', '26 cm'],
+				['xl', '90 cm', '27 cm'],
+			],
+			note: 'Low rise and baggy through the whole leg. Sits below the waist, so take your usual size for the wide look or size down for less volume.',
+		},
 	},
 	{
 		id: 'IDNR20',
@@ -289,6 +443,9 @@ export const products: Product[] = [
 		description: 'Set of three hand-poured candles in the house colours. Unscented, long burning, and they look right on a windowsill full of clutter.',
 		productDetails: 'Set of three. 100% natural soy wax with cotton wicks, unscented. Approx. 180 g each, burn time around 30 hours per candle. Poured and finished by hand in Germany, so small marks and colour shifts are normal.',
 		productCare: 'Trim the wick to 5 mm before each burn. Burn on a heat-resistant surface, away from anything flammable. Never leave a burning candle unattended. Keep away from children and pets.',
+		sizeGuide: {
+			note: 'Nothing to size. Set of three, about 180 g and 8 cm tall each, roughly 30 hours of burn per candle.',
+		},
 	},
 	{
 		id: 'IDNR21',
@@ -303,6 +460,9 @@ export const products: Product[] = [
 		description: 'Ribbed beanie in beige with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.',
 		productDetails: '50% merino wool, 50% acrylic. Fine rib knit, double layered, folded cuff. One size fits most. Embroidered Star patch on the cuff. Made in Italy.',
 		productCare: 'Hand wash cold or machine wash on the wool cycle at 30°C. Do not bleach. Reshape while damp and dry flat, never hang. Do not tumble dry.',
+		sizeGuide: {
+			note: 'One size. The fine rib knit stretches to fit most heads, about 20 cm across flat and 26 cm tall. Fold the cuff once or wear it slouched, nothing to pick here.',
+		},
 	},
 	{
 		id: 'IDNR22',
@@ -317,6 +477,9 @@ export const products: Product[] = [
 		description: 'Ribbed beanie in black with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.',
 		productDetails: '50% merino wool, 50% acrylic. Fine rib knit, double layered, folded cuff. One size fits most. Embroidered Star patch on the cuff. Made in Italy.',
 		productCare: 'Hand wash cold or machine wash on the wool cycle at 30°C. Do not bleach. Reshape while damp and dry flat, never hang. Do not tumble dry.',
+		sizeGuide: {
+			note: 'One size. The fine rib knit stretches to fit most heads, about 20 cm across flat and 26 cm tall. Fold the cuff once or wear it slouched, nothing to pick here.',
+		},
 	},
 	{
 		id: 'IDNR23',
@@ -331,6 +494,9 @@ export const products: Product[] = [
 		description: 'Ribbed beanie in blue with an embroidered Star patch on the cuff. Long enough to fold once or wear slouched.',
 		productDetails: '50% merino wool, 50% acrylic. Fine rib knit, double layered, folded cuff. One size fits most. Embroidered Star patch on the cuff. Made in Italy.',
 		productCare: 'Hand wash cold or machine wash on the wool cycle at 30°C. Do not bleach. Reshape while damp and dry flat, never hang. Do not tumble dry.',
+		sizeGuide: {
+			note: 'One size. The fine rib knit stretches to fit most heads, about 20 cm across flat and 26 cm tall. Fold the cuff once or wear it slouched, nothing to pick here.',
+		},
 	},
 	{
 		id: 'IDNR24',
@@ -345,6 +511,16 @@ export const products: Product[] = [
 		description: 'Striped cotton shirt in black and white with an oversized graphic print across the chest. Boxy fit, worn open over a tee or buttoned all the way.',
 		productDetails: '100% cotton poplin, yarn-dyed black and white stripe. Boxy fit, dropped shoulders, spread collar, single-button cuffs, curved hem. Large screen print on the chest. Made in Portugal.',
 		productCare: 'Machine wash cold at 30°C, inside out. Do not bleach. Hang dry or tumble dry low. Iron on medium, never directly on the print. Do not dry clean.',
+		sizeGuide: {
+			columns: ['size', 'chest', 'length'],
+			rows: [
+				['s', '58 cm', '74 cm'],
+				['m', '61 cm', '76 cm'],
+				['l', '64 cm', '78 cm'],
+				['xl', '67 cm', '80 cm'],
+			],
+			note: 'Boxy poplin, made to wear open over a tee. Chest is pit to pit doubled, measured flat.',
+		},
 	},
 	{
 		id: 'IDNR25',
@@ -358,6 +534,9 @@ export const products: Product[] = [
 		description: 'Ribbed crew socks in black with an embroidered Star patch on the cuff. Cushioned sole, stays up through a full session.',
 		productDetails: '80% combed cotton, 17% polyamide, 3% elastane. Ribbed crew length, cushioned footbed, reinforced heel and toe. Embroidered Star patch on the cuff. One size fits 40–45. Made in Portugal.',
 		productCare: 'Machine wash cold at 30°C with like colours. Do not bleach. Tumble dry low or hang dry. Do not iron the embroidery.',
+		sizeGuide: {
+			note: 'One size, fits EU 40–45. The ribbed cuff and a touch of elastane stretch to your foot. Crew height sits mid-calf, cushioned underfoot.',
+		},
 	},
 	{
 		id: 'IDNR26',
@@ -371,6 +550,9 @@ export const products: Product[] = [
 		description: 'Ribbed crew socks in heather grey with an embroidered Star patch on the cuff. Cushioned sole, stays up through a full session.',
 		productDetails: '80% combed cotton, 17% polyamide, 3% elastane. Ribbed crew length, cushioned footbed, reinforced heel and toe. Embroidered Star patch on the cuff. One size fits 40–45. Made in Portugal.',
 		productCare: 'Machine wash cold at 30°C with like colours. Do not bleach. Tumble dry low or hang dry. Do not iron the embroidery.',
+		sizeGuide: {
+			note: 'One size, fits EU 40–45. The ribbed cuff and a touch of elastane stretch to your foot. Crew height sits mid-calf, cushioned underfoot.',
+		},
 	},
 	{
 		id: 'IDNR27',
@@ -384,5 +566,8 @@ export const products: Product[] = [
 		description: 'Ribbed crew socks in white with a blue embroidered Star patch on the cuff. Cushioned sole, stays up through a full session.',
 		productDetails: '80% combed cotton, 17% polyamide, 3% elastane. Ribbed crew length, cushioned footbed, reinforced heel and toe. Embroidered Star patch on the cuff. One size fits 40–45. Made in Portugal.',
 		productCare: 'Machine wash cold at 30°C with like colours. Do not bleach. Tumble dry low or hang dry. Do not iron the embroidery.',
+		sizeGuide: {
+			note: 'One size, fits EU 40–45. The ribbed cuff and a touch of elastane stretch to your foot. Crew height sits mid-calf, cushioned underfoot.',
+		},
 	},
 ]

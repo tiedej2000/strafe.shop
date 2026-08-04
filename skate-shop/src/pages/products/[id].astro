@@ -84,11 +84,19 @@ const path = Astro.url.pathname;
                 </div>
                 <div class="panel-section" data-panel="size">
                     <span class="panel-eyebrow"><span>size guide</span><span>{product.title}</span></span>
-                    <div class="size-row"><span>size</span><span>chest</span><span>length</span></div>
-                    <div class="size-row"><span>s</span><span>54 cm</span><span>68 cm</span></div>
-                    <div class="size-row"><span>m</span><span>57 cm</span><span>70 cm</span></div>
-                    <div class="size-row"><span>l</span><span>60 cm</span><span>72 cm</span></div>
-                    <div class="size-row"><span>xl</span><span>63 cm</span><span>74 cm</span></div>
+                    {product.sizeGuide?.columns && (
+                        <div class="size-row size-head">
+                            {product.sizeGuide.columns.map((col) => (<span>{col}</span>))}
+                        </div>
+                    )}
+                    {product.sizeGuide?.rows?.map((row) => (
+                        <div class="size-row">
+                            {row.map((cell) => (<span>{cell}</span>))}
+                        </div>
+                    ))}
+                    {product.sizeGuide?.note && (
+                        <p class="panel-text size-note">{product.sizeGuide.note}</p>
+                    )}
                 </div>
 
                 <div class="panel-section" data-panel="cart"></div>

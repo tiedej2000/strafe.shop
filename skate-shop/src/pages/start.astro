@@ -1,16 +1,144 @@
 ---
 import Layout from '../layouts/Layout.astro';
 ---
-<Layout title="Start">
 
+<Layout title="Usability Test">
+    <section class="start">
+        <div class="card" id="main-card">
+            <div class="top">
+                <span class="badge" id="badge"></span>
+                <span class="step" id="step"></span>
+            </div>
+
+            <h1 class="title" id="title"></h1>
+            <p class="desc" id="description"></p>
+
+            <div class="context" id="context"></div>
+
+            <div class="foot">
+                <button class="btn" id="prev-btn">
+                    <svg class="svg-prev" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path></svg>
+                    <span id="prev-label"></span>
+                </button>
+
+                <div class="dots" id="dots"></div>
+
+                <button class="btn" id="next-btn">
+                    <span id="next-label"></span>
+                    <svg class="svg-next" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </section>
 </Layout>
 
 <script>
-	const dot = document.querySelector('.cursor-dot');
+    const slides = [
+        {
+            title: "Los geht's!",
+            description: "Schön, dass du dabei bist. Gleich landest du in einem Mode-Onlineshop. Vorab ein paar kurze Hinweise — dann kann’s losgehen. ",
+            contextType: "none",
+            nextLabel: "Weiter",
+        },
+        {
+            title: "Deine Aufgabe",
+            description: "Such diese Artikel im Shop, leg sie in den Warenkorb und simuliere den Kauf — damit ist die Aufgabe abgeschlossen. ",
+            contextType: "list",
+            items: ["Hose", "T-Shirt", "Hoodie", "Kopfbedeckung"],
+            nextLabel: "Weiter",
+        },
+        {
+            title: "Denk laut mit",
+            description: "Sprich laut aus, was du denkst. Was dir auffällt, wo du zögerst, was du vermisst. Kein richtig, kein falsch — wir testen die Website, nicht dich.",
+            contextType: "none",
+            nextLabel: "Weiter",
+        },
+        {
+            title: "Noch kurz",
+            description: "Diese Sitzung wird aufgezeichnet — Bildschirm, Klickverhalten und ggf. Audio. Danach folgt noch ein kurzer Fragebogen (ca. 5 Minuten). ",
+            contextType: "none",
+            nextLabel: "Zum Shop",
+        }
+    ];
 
-	// füge dem dot die click klasse hinzu
-    window.addEventListener('click', () => {
-        dot?.classList.add('click');
-        setTimeout(() => dot?.classList.remove('click'), 400);
+    let currentStep = 0;
+
+    const titleEl = document.getElementById("title")!;
+    const descriptionEl = document.getElementById("description")!;
+    const badgeEl = document.getElementById("badge")!;
+    const stepEl = document.getElementById("step")!;
+    const dotsContainer = document.getElementById("dots")!;
+    const contextEl = document.getElementById("context")!;
+
+    const prevLabel = document.getElementById("prev-label")!;
+    const nextLabel = document.getElementById("next-label")!;
+    const prevBtn = document.getElementById("prev-btn") as HTMLButtonElement;
+    const nextBtn = document.getElementById("next-btn") as HTMLButtonElement;
+
+    badgeEl.textContent = "USABILITY-TEST";
+
+    // dots erzeugen
+    for (let i = 0; i < slides.length; i++) {
+        const dot = document.createElement("span");
+        dot.classList.add("dot");
+        dotsContainer.appendChild(dot);
+    }
+
+    // karte nach currentStep füllen
+    function render() {
+        const slide = slides[currentStep];
+
+        titleEl.textContent = slide.title;
+        descriptionEl.textContent = slide.description;
+
+        const aktuell = String(currentStep + 1).padStart(2, "0");
+        const gesamt = String(slides.length).padStart(2, "0");
+        stepEl.textContent = `${aktuell} / ${gesamt}`;
+
+        prevLabel.textContent = "Zurück";
+        nextLabel.textContent = slide.nextLabel;
+
+        // aktiven dot markieren
+        const dots = dotsContainer.children;
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].classList.toggle("on", i === currentStep);
+        }
+
+        // zurück am anfang sperren, weiter bleibt immer klickbar
+        prevBtn.disabled = (currentStep === 0);
+
+        // context füllen
+        contextEl.innerHTML = "";
+
+        if (slide.contextType === "list") {
+            const ul = document.createElement("ul");
+            ul.classList.add("list");
+
+            for (let i = 0; i < slide.items!.length; i++) {
+                const li = document.createElement("li");
+                li.textContent = slide.items![i];
+                ul.appendChild(li);
+            }
+
+            contextEl.appendChild(ul);
+        }
+    }
+
+    render();
+
+    nextBtn.addEventListener('click', () => {
+        if (currentStep < slides.length - 1) {
+            currentStep++;
+            render();
+        } else {
+            window.location.href = '/';
+        }
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentStep > 0) {
+            currentStep--;
+            render();
+        }
     });
 </script>
