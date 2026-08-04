@@ -43,8 +43,9 @@ const { title = 'strafe.shop' } = Astro.props;
 				cursor.style.setProperty('--cursor-y', e.clientY + 'px');
 			});
 
-			const projectId = "xx3ugmyhk1"
-			Clarity.init(projectId);
+			if (import.meta.env.PROD) {
+   			 Clarity.init("xx3ugmyhk1");
+			}
 
 		</script>
 	</body>
