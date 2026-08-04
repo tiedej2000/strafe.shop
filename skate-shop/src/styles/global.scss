@@ -87,33 +87,36 @@ body *{
     bottom: 20px;
     right: 20px;
     z-index: 5;
-    width: 28px;
-    height: 28px;
-    display: grid;
-    place-content: center;
-    border: 1px solid var(--currentcolor);
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
 
-    svg{
-        width: 16px;
-        height: 16px;
-        fill: var(--currentcolor);
+    .help-toggle{
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-content: center;
+        border: 1px solid var(--currentcolor);
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+
+        svg{
+            width: 16px;
+            height: 16px;
+            fill: var(--currentcolor);
+        }
     }
 
-    &:hover{
+    &:hover .help-toggle{
         background-color: var(--currentcolor);
+        border-color: var(--black);
     }
 
-    &:hover svg{
+    &:hover .help-toggle svg{
         fill: var(--white);
     }
 
-    &::after{
-        content: "you're helping test strafe.shop.\A click around, open a product, drop a few things in the cart.\A then tell us what felt off. that's the whole study.";
+    .help-tip{
         position: absolute;
-        bottom: -10px;
-        right: -10px;
+        bottom: 0;
+        right: calc(100% + 10px);
         width: 300px;
         text-align: left;
         background-color: rgba(255, 255, 255, 0.2);
@@ -125,10 +128,9 @@ body *{
         line-height: 1.5;
         color: var(--currentcolor);
         display: none;
-        z-index: -1;
     }
 
-    &:hover::after{
+    &:hover .help-tip{
         display: block;
     }
 }
@@ -790,15 +792,6 @@ body *{
                 background-size: 100% 20%;
                 background-repeat: no-repeat;
 
-                img{
-                    display: block;
-                    width: calc(100% + 20px);
-                    height: 90px;
-                    margin: -10px -10px 8px;
-                    max-width: none;
-                    object-fit: cover;
-                }
-
                 .nav-options{
                     display: flex;
                     justify-content: space-between;
@@ -808,10 +801,19 @@ body *{
                         flex-direction: column;
                         gap: 4px;
                         margin-bottom: 60px;
-                        font-size: 14px;
+                        font-size: 16px;
 
                         a:hover{
                             text-decoration: underline;
+                        }
+                    }
+
+                    .logo{
+                        height: 32px;
+                        width: 32px;
+                        animation: spin 7s infinite linear;
+                        img{
+                            height: 100%;
                         }
                     }
                 }
@@ -1029,6 +1031,14 @@ body *{
     }
 }
 
+@keyframes spin{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
 @media(max-width:599px){
     .cursor{
         display: none;

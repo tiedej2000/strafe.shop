@@ -54,7 +54,7 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 		}
 
 		panel.innerHTML = items.length
-			? `<img class="cart-img" src="/collection/banner_menu.webp" alt="">`
+			? ``
 				+ items.map((p) => `
 				<div class="cart-row">
 					<img src="${p.images[0].src}" alt="">

@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Start">
+
+</Layout>
+
+<script>
+	const dot = document.querySelector('.cursor-dot');
+
+	// füge dem dot die click klasse hinzu
+    window.addEventListener('click', () => {
+        dot?.classList.add('click');
+        setTimeout(() => dot?.classList.remove('click'), 400);
+    });
+</script>

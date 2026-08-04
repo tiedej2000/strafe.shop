@@ -92,13 +92,13 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
             </div>
             <div class="nav-expanded" id="nav-panel">
                 <div class="panel-section" data-panel="main">
-                    <img src="/collection/banner_menu.webp" alt="">
                     <div class="nav-options">
                         <ul>
                             <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
                             <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
                             <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
                         </ul>
+                    <div class="logo"><img src="/favicon/favicon.svg" alt=""></div>
                     </div>
                     <div class="titles"><span>strafe.site</span><span> made by JT</span></div>
                 </div>
