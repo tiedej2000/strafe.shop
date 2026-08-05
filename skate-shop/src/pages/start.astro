@@ -139,11 +139,18 @@ import Layout from '../layouts/Layout.astro';
             label.appendChild(text);
             contextEl.appendChild(label);
 
-            // einwilligung nach checkend der box, consent setzen damit clarity cookies setzen kann
+            // sobald angehakt: einwilligung merken und clarity direkt erlauben,
+            // damit das cookie noch auf der start-seite gesetzt wird (bevor navigiert wird)
             box.checked = localStorage.getItem(CONSENT_KEY) === "granted";
             nextBtn.disabled = !box.checked;
             box.addEventListener("change", () => {
                 nextBtn.disabled = !box.checked;
+                if (box.checked) {
+                    localStorage.setItem(CONSENT_KEY, "granted");
+                    if (import.meta.env.PROD) {
+                        (window as any).clarity?.("consentv2", { ad_Storage: "denied", analytics_Storage: "granted" });
+                    }
+                }
             });
         }
     }
