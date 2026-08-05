@@ -1197,7 +1197,7 @@ body *{
     display: grid;
     place-content: center;
     background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(40px);
     transition: opacity 0.4s ease;
 
     &.done{
@@ -1218,7 +1218,7 @@ body *{
             transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
             opacity: 0;
             animation: loader-in 0.5s ease forwards;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
     }
 }
@@ -1240,6 +1240,7 @@ body *{
         transform: rotate(360deg);
     }
 }
+
 @media(max-width:599px){
     .cursor{
         display: none;
