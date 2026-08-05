@@ -33,6 +33,14 @@ const { title = 'strafe.shop' } = Astro.props;
 
 		<slot />
 
+		<div class="consent" id="consent" hidden>
+			<p class="consent-text">Diese Seite nutzt Cookies für anonyme Nutzungsanalyse (Microsoft Clarity), um sie im Rahmen einer Studie auszuwerten und zu verbessern. Mehr dazu in der <a href="/impressum">Datenschutzerklärung</a>.</p>
+			<div class="consent-actions">
+				<button class="consent-btn" id="consent-decline">Ablehnen</button>
+				<button class="consent-btn consent-accept" id="consent-accept">Akzeptieren</button>
+			</div>
+		</div>
+
 		<script>
 			import Clarity from '@microsoft/clarity';
 
@@ -43,11 +51,37 @@ const { title = 'strafe.shop' } = Astro.props;
 				cursor.style.setProperty('--cursor-y', e.clientY + 'px');
 			});
 
-			if (import.meta.env.PROD) {
-				Clarity.init("xx3ugmyhk1");
-				Clarity.consentV2({ ad_Storage: "granted", analytics_Storage: "granted" });
+			// clarity läuft nur in produktion
+			const CONSENT_KEY = 'cookie-consent';
+
+			function grantConsent() {
+				Clarity.consentV2({ ad_Storage: 'denied', analytics_Storage: 'granted' });
 			}
 
+			if (import.meta.env.PROD) {
+				Clarity.init('xx3ugmyhk1');
+				// bei früherer zustimmung direkt cookies erlauben
+				if (localStorage.getItem(CONSENT_KEY) === 'granted') {
+					grantConsent();
+				}
+			}
+
+			// consent banner nur zeigen, wenn noch keine wahl getroffen wurde
+			const banner = document.getElementById('consent');
+			if (!localStorage.getItem(CONSENT_KEY)) {
+				banner.hidden = false;
+			}
+
+			document.getElementById('consent-accept').addEventListener('click', () => {
+				localStorage.setItem(CONSENT_KEY, 'granted');
+				if (import.meta.env.PROD) grantConsent();
+				banner.hidden = true;
+			});
+
+			document.getElementById('consent-decline').addEventListener('click', () => {
+				localStorage.setItem(CONSENT_KEY, 'denied');
+				banner.hidden = true;
+			});
 		</script>
 	</body>
 </html>

@@ -84,6 +84,72 @@ body *{
     }
 }
 
+.consent{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 14px 20px;
+    border-top: 1px solid var(--currentcolor);
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    font-family: var(--ibm);
+    color: var(--currentcolor);
+
+    &[hidden]{
+        display: none;
+    }
+
+    .consent-text{
+        font-size: 12px;
+        line-height: 1.5;
+        max-width: 70ch;
+
+        a{
+            color: var(--currentcolor);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+    }
+
+    .consent-actions{
+        display: flex;
+        gap: 10px;
+    }
+
+    .consent-btn{
+        padding: 8px 16px;
+        border: 1px solid var(--currentcolor);
+        background-color: transparent;
+        color: var(--currentcolor);
+        font-family: var(--ibm);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+
+        &:hover{
+            background-color: var(--currentcolor);
+            color: var(--white);
+        }
+    }
+
+    .consent-accept{
+        background-color: var(--currentcolor);
+        color: var(--white);
+
+        &:hover{
+            opacity: 0.85;
+        }
+    }
+}
+
 .help{
     position: fixed;
     bottom: 20px;
