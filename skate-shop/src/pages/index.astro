@@ -49,11 +49,11 @@ const chosen = [
 		{chosen.map((c) => (
 			<div class="chosen-product">
 				<a href=`/products/${c.id}`><img class="product-close" src={c.closeUp} alt="" decoding="async" /></a>
-				<div class="product-info">
-					<img class="product-full" src={c.product} alt="" decoding="async" />
-					<span class="title">{c.title}</span>
-					<span class="desc">{c.description}</span>
-				</div>
+			</div>
+			<div class="product-info">
+				<img class="product-full" src={c.product} alt="" decoding="async" />
+				<span class="title">{c.title}</span>
+				<span class="desc">{c.description}</span>
 			</div>
 		))}
 	</div>

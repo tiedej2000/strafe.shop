@@ -336,18 +336,6 @@ body *{
         z-index: 2;
     }
 
-    .product-full{
-        height: 15vh;
-        max-width: 100%;
-        object-fit: contain;
-        object-position: left;
-        align-self: flex-start;
-        margin-bottom: 12px;
-
-        img{
-            height: 100%;
-        }
-    }
 
     .product-info{
         display: flex;
@@ -365,8 +353,8 @@ body *{
         .title{
             font-size: clamp(1rem,1.5vw,3rem);
             line-height: 1;
-            font-family: var(--satoshi); 
-            font-weight: 900; 
+            font-family: var(--satoshi);
+            font-weight: 900;
             text-wrap: pretty;
         }
 
@@ -375,9 +363,18 @@ body *{
             font-size: 12px;
             text-align: justify;
         }
+
+        .product-full{
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            object-fit: contain;
+            object-position: left;
+            margin-bottom: 12px;
+        }
     }
 
-    .chosen-product:hover .product-info{
+    .chosen-product:hover + .product-info{
         opacity: 1;
     }
 }
