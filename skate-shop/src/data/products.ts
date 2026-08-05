@@ -507,6 +507,7 @@ export const products: Product[] = [
 		images: [
 			{ type: 'front', src: '/products/IDNR24/produkt12_shirt_blue.webp', alt: 'Shirt DRK BW – Ansicht' },
 			{ type: 'back', src: '/products/IDNR24/produkt12_shirt_blue_back.webp', alt: 'Shirt DRK BW – Ansicht' },
+			{ type: 'modell', src: '/products/IDNR24/produkt12_shirt_blue_modell.webp', alt: 'Shirt DRK BW – Ansicht' },
 		],
 		description: 'Striped cotton shirt in black and white with an oversized graphic print across the chest. Boxy fit, worn open over a tee or buttoned all the way.',
 		productDetails: '100% cotton poplin, yarn-dyed black and white stripe. Boxy fit, dropped shoulders, spread collar, single-button cuffs, curved hem. Large screen print on the chest. Made in Portugal.',
