@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Usability Test">
+<Layout title="strafe.shop">
     <section class="start">
         <div class="card" id="main-card">
             <div class="top">
@@ -35,27 +35,26 @@ import Layout from '../layouts/Layout.astro';
 <script>
     const slides = [
         {
-            title: "Los geht's!",
-            description: "Schön, dass du dabei bist. Gleich landest du in einem Mode-Onlineshop. Vorab ein paar kurze Hinweise — dann kann’s losgehen. ",
+            title: "Willkommen",
+            description: "Schön, dass du dabei bist. Du schaust dir gleich einen Online-Shop an, den ich für ein Studienprojekt gebaut habe. Vorab ein paar kurze Hinweise, dann geht’s los.",
+            contextType: "none",
+            nextLabel: "Weiter",
+        },
+        {
+            title: "Denk laut mit",
+            description: "Das Wichtigste zuerst: Schau dich in Ruhe <u>genau um</u> und probier <u>so viel wie möglich</u> aus. Klick dich durch, öffne Produkte, teste die Seite. <u>Sprich dabei laut aus, was dir durch den Kopf geht</u> – was dir auffällt, wo du zögerst, was dir gefällt oder fehlt. Es gibt kein richtig oder falsch.",
             contextType: "none",
             nextLabel: "Weiter",
         },
         {
             title: "Deine Aufgabe",
-            description: "Such diese Artikel im Shop, leg sie in den Warenkorb und simuliere den Kauf — damit ist die Aufgabe abgeschlossen. ",
-            contextType: "list",
-            items: ["Hose", "T-Shirt", "Hoodie", "Kopfbedeckung"],
-            nextLabel: "Weiter",
-        },
-        {
-            title: "Denk laut mit",
-            description: "Sprich laut aus, was du denkst. Was dir auffällt, wo du zögerst, was du vermisst. Kein richtig, kein falsch — wir testen die Website, nicht dich.",
+            description: "Stell dir vor, du stellst dir ein komplettes Outfit für die neue Saison zusammen. Stöber durch den Shop und leg dir <u>mindestens fünf Artikel in den Warenkorb</u> – welche das sind, ist ganz dir überlassen. Am Ende <u>schließt du den Kauf ab</u>.",
             contextType: "none",
             nextLabel: "Weiter",
         },
         {
-            title: "Noch kurz",
-            description: "Diese Sitzung wird aufgezeichnet — Bildschirm, Klickverhalten und ggf. Audio. Danach folgt noch ein kurzer Fragebogen (ca. 5 Minuten). ",
+            title: "Kurz noch",
+            description: "Damit ich dein lautes Mitdenken später auswerten kann, wird die Sitzung <u>aufgezeichnet</u> – Bildschirm, Klicks und Ton. Das bleibt natürlich intern und wird <u>ausschließlich für diese Studie verwendet</u>. :-)",
             contextType: "none",
             nextLabel: "Zum Shop",
         }
@@ -75,7 +74,7 @@ import Layout from '../layouts/Layout.astro';
     const prevBtn = document.getElementById("prev-btn") as HTMLButtonElement;
     const nextBtn = document.getElementById("next-btn") as HTMLButtonElement;
 
-    badgeEl.textContent = "USABILITY-TEST";
+    badgeEl.textContent = "GUIDE";
 
     // dots erzeugen
     for (let i = 0; i < slides.length; i++) {
@@ -89,7 +88,7 @@ import Layout from '../layouts/Layout.astro';
         const slide = slides[currentStep];
 
         titleEl.textContent = slide.title;
-        descriptionEl.textContent = slide.description;
+        descriptionEl.innerHTML = slide.description;
 
         const aktuell = String(currentStep + 1).padStart(2, "0");
         const gesamt = String(slides.length).padStart(2, "0");
