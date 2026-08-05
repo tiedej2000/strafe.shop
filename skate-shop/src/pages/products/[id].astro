@@ -211,23 +211,25 @@ const path = Astro.url.pathname;
 		return !wasOpen;
 	}
 
-	// produkt-info buttons: oeffnen ihre sektion, active folgt dem panel-zustand
-	const infoBtns = document.querySelectorAll<HTMLElement>('.product-buttons .nav-button');
+	// alle nav buttons einsammeln, jeweils mit ihrem panel
+	const navButtons: { el: HTMLElement; panel: string }[] = [];
 
-	infoBtns.forEach((b) => {
-		b.addEventListener('click', () => {
-			const offen = openPanel(b.dataset.panel!);
-			infoBtns.forEach((o) => o.classList.remove('active'));
-			b.classList.toggle('active', offen);
-		});
+	navButtons.push({ el: document.querySelector<HTMLElement>('.main-icon')!, panel: 'main' });
+
+	document.querySelectorAll<HTMLElement>('.product-buttons .nav-button').forEach((el) => {
+		navButtons.push({ el, panel: el.dataset.panel! });
 	});
 
-	document.querySelector('.main-icon')!.addEventListener('click', () => 
-		openPanel('main')
-	);
-	document.querySelector('.cart-expand-button')!.addEventListener('click', () => 
-	openPanel('cart')
-	);
+	navButtons.push({ el: document.querySelector<HTMLElement>('.cart-expand-button')!, panel: 'cart' });
+
+	// klick: panel togglen und active bei allen anderen buttons entfernen
+	navButtons.forEach(({ el, panel }) => {
+		el.addEventListener('click', () => {
+			const offen = openPanel(panel);
+			navButtons.forEach((b) => b.el.classList.remove('active'));
+			el.classList.toggle('active', offen);
+		});
+	});
 
 	// cart panel (gemeinsames rendering aus cart.ts)
 	initCartUI(
