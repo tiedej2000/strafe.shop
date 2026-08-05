@@ -44,7 +44,8 @@ const { title = 'strafe.shop' } = Astro.props;
 			});
 
 			if (import.meta.env.PROD) {
-   			 Clarity.init("xx3ugmyhk1");
+				Clarity.init("xx3ugmyhk1");
+				Clarity.consentV2({ ad_Storage: "granted", analytics_Storage: "granted" });
 			}
 
 		</script>
