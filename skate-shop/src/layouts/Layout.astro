@@ -30,16 +30,11 @@ const { title = 'strafe.shop' } = Astro.props;
 				Zur Erinnerung lege <u>mindestens 5 Artikel in den Warenkorb</u>.
 			</div>
 		</div>
+		<div class="random-color" id="random-color">
+			<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M48,64a8,8,0,0,1,8-8H72V40a8,8,0,0,1,16,0V56h16a8,8,0,0,1,0,16H88V88a8,8,0,0,1-16,0V72H56A8,8,0,0,1,48,64ZM184,192h-8v-8a8,8,0,0,0-16,0v8h-8a8,8,0,0,0,0,16h8v8a8,8,0,0,0,16,0v-8h8a8,8,0,0,0,0-16Zm56-48H224V128a8,8,0,0,0-16,0v16H192a8,8,0,0,0,0,16h16v16a8,8,0,0,0,16,0V160h16a8,8,0,0,0,0-16ZM219.31,80,80,219.31a16,16,0,0,1-22.62,0L36.68,198.63a16,16,0,0,1,0-22.63L176,36.69a16,16,0,0,1,22.63,0l20.68,20.68A16,16,0,0,1,219.31,80Zm-54.63,32L144,91.31l-96,96L68.68,208ZM208,68.69,187.31,48l-32,32L176,100.69Z"></path></svg>
+		</div>
 
 		<slot />
-
-		<div class="consent" id="consent" hidden>
-			<p class="consent-text">Diese Seite nutzt Cookies für anonyme Nutzungsanalyse (Microsoft Clarity), um sie im Rahmen einer Studie auszuwerten und zu verbessern. Mehr dazu in der <a href="/impressum">Datenschutzerklärung</a>.</p>
-			<div class="consent-actions">
-				<button class="consent-btn" id="consent-decline">Ablehnen</button>
-				<button class="consent-btn consent-accept" id="consent-accept">Akzeptieren</button>
-			</div>
-		</div>
 
 		<script>
 			import Clarity from '@microsoft/clarity';
@@ -51,37 +46,39 @@ const { title = 'strafe.shop' } = Astro.props;
 				cursor.style.setProperty('--cursor-y', e.clientY + 'px');
 			});
 
-			// clarity läuft nur in produktion
-			const CONSENT_KEY = 'cookie-consent';
+			const randomColor = document.getElementById('random-color');
+			const COLOR_KEY = 'random-color';
 
-			function grantConsent() {
-				Clarity.consentV2({ ad_Storage: 'denied', analytics_Storage: 'granted' });
+			const savedColor = localStorage.getItem(COLOR_KEY);
+			let colored = !!savedColor;
+			if (savedColor) {
+				document.documentElement.style.setProperty('--currentcolor', savedColor);
+				randomColor?.classList.add('colored');
 			}
+
+			randomColor?.addEventListener('click', () => {
+				colored = !colored;
+				if (colored) {
+					const dunkel = () => Math.floor(Math.random() * 128).toString(16).padStart(2, '0');
+					const farbe = '#' + dunkel() + dunkel() + dunkel();
+					localStorage.setItem(COLOR_KEY, farbe);
+					document.documentElement.style.setProperty('--currentcolor', farbe);
+				} else {
+					localStorage.removeItem(COLOR_KEY);
+					document.documentElement.style.setProperty('--currentcolor', 'var(--black)');
+				}
+				randomColor!.classList.toggle('colored', colored);
+			});
+
+			// einwilligung key clarity
+			const CONSENT_KEY = 'cookie-consent';
 
 			if (import.meta.env.PROD) {
 				Clarity.init('xx3ugmyhk1');
-				// bei früherer zustimmung direkt cookies erlauben
 				if (localStorage.getItem(CONSENT_KEY) === 'granted') {
-					grantConsent();
+					Clarity.consentV2({ ad_Storage: 'denied', analytics_Storage: 'granted' });
 				}
 			}
-
-			// consent banner nur zeigen, wenn noch keine wahl getroffen wurde
-			const banner = document.getElementById('consent');
-			if (!localStorage.getItem(CONSENT_KEY)) {
-				banner.hidden = false;
-			}
-
-			document.getElementById('consent-accept').addEventListener('click', () => {
-				localStorage.setItem(CONSENT_KEY, 'granted');
-				if (import.meta.env.PROD) grantConsent();
-				banner.hidden = true;
-			});
-
-			document.getElementById('consent-decline').addEventListener('click', () => {
-				localStorage.setItem(CONSENT_KEY, 'denied');
-				banner.hidden = true;
-			});
 		</script>
 	</body>
 </html>
