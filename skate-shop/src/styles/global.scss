@@ -270,7 +270,7 @@ body *{
 .editorial-loop{
     --editorial-speed: 40s;
 
-    height: 75vh;
+    height: 65vh;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -288,8 +288,8 @@ body *{
             inset: 0;
             z-index: 3;
             background-image: url('/landingpage/strafe_alternative_white.svg');
-            background-size: 100%;
-            background-position: 50% -20%;
+            background-size: 45%;
+            background-position: 50% 50%;
             background-repeat: no-repeat;
             pointer-events: none;
         }
@@ -357,7 +357,7 @@ body *{
 
     .product-close{
         height: 60px;
-        width: 120px;
+        width: 6.5vw;
         object-fit: cover;
         position: relative;
         z-index: 2;
@@ -375,7 +375,7 @@ body *{
         opacity: 0;
         pointer-events: none;
         max-width: 20vw;
-        height: 25vh;
+        height: 35vh;
 
         .title{
             font-size: clamp(1rem,1.5vw,3rem);
@@ -397,7 +397,7 @@ body *{
             width: 100%;
             object-fit: contain;
             object-position: left;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
     }
 
@@ -674,7 +674,7 @@ body *{
 }
 
 .nav-start, .links{
-    width: calc(120px * 6);
+    width: calc(6.5vw * 6);
     position: fixed;
     bottom: 125px;
     left: 50%;
@@ -714,7 +714,7 @@ body *{
 }
 
 .links{
-    width: calc(120px * 6);
+    width: calc(6.5vw * 6);
     bottom: 20px;
     flex-direction: row;
     justify-content: space-between;
