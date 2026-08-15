@@ -30,9 +30,13 @@ const { title = 'strafe.shop' } = Astro.props;
 				Zur Erinnerung lege <u>mindestens 5 Artikel in den Warenkorb</u>.
 			</div>
 		</div>
-		<div class="random-color" id="random-color">
-			<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M48,64a8,8,0,0,1,8-8H72V40a8,8,0,0,1,16,0V56h16a8,8,0,0,1,0,16H88V88a8,8,0,0,1-16,0V72H56A8,8,0,0,1,48,64ZM184,192h-8v-8a8,8,0,0,0-16,0v8h-8a8,8,0,0,0,0,16h8v8a8,8,0,0,0,16,0v-8h8a8,8,0,0,0,0-16Zm56-48H224V128a8,8,0,0,0-16,0v16H192a8,8,0,0,0,0,16h16v16a8,8,0,0,0,16,0V160h16a8,8,0,0,0,0-16ZM219.31,80,80,219.31a16,16,0,0,1-22.62,0L36.68,198.63a16,16,0,0,1,0-22.63L176,36.69a16,16,0,0,1,22.63,0l20.68,20.68A16,16,0,0,1,219.31,80Zm-54.63,32L144,91.31l-96,96L68.68,208ZM208,68.69,187.31,48l-32,32L176,100.69Z"></path></svg>
+		<div class="color-bars" id="color-bars">
+			<button class="color-bar" data-color="#18181b" style="background-color:#18181b" aria-label="ink"></button>
+			<button class="color-bar" data-color="#d24317" style="background-color:#d24317" aria-label="rust"></button>
+			<button class="color-bar" data-color="#0f8272" style="background-color:#0f8272" aria-label="teal"></button>
+			<button class="color-bar" data-color="#5a2ea6" style="background-color:#5a2ea6" aria-label="violet"></button>
 		</div>
+		<div class="random-color" id="random-color"></div>
 
 		<slot />
 
@@ -47,37 +51,39 @@ const { title = 'strafe.shop' } = Astro.props;
 			});
 
 			const randomColor = document.getElementById('random-color');
+			const colorBars = document.getElementById('color-bars');
 			const COLOR_KEY = 'random-color';
 
-			const savedColor = localStorage.getItem(COLOR_KEY);
-			let colored = !!savedColor;
-			if (savedColor) {
-				document.documentElement.style.setProperty('--currentcolor', savedColor);
-				randomColor?.classList.add('colored');
+			// gewählte farbe setzen (das quadrat wird über --currentcolor gefüllt)
+			function applyColor(color: string) {
+				document.documentElement.style.setProperty('--currentcolor', color);
 			}
 
+			const savedColor = localStorage.getItem(COLOR_KEY);
+			if (savedColor) applyColor(savedColor);
+
+			// button öffnet/schließt die farbbalken
 			randomColor?.addEventListener('click', () => {
-				colored = !colored;
-				if (colored) {
-					const dunkel = () => Math.floor(Math.random() * 128).toString(16).padStart(2, '0');
-					const farbe = '#' + dunkel() + dunkel() + dunkel();
-					localStorage.setItem(COLOR_KEY, farbe);
-					document.documentElement.style.setProperty('--currentcolor', farbe);
-				} else {
-					localStorage.removeItem(COLOR_KEY);
-					document.documentElement.style.setProperty('--currentcolor', 'var(--black)');
-				}
-				randomColor!.classList.toggle('colored', colored);
+				colorBars?.classList.toggle('open');
 			});
 
-			// einwilligung key clarity
+			// balken klick: farbe setzen und in den localstorage schreiben
+			colorBars?.querySelectorAll<HTMLElement>('.color-bar').forEach((bar) => {
+				bar.addEventListener('click', () => {
+					const color = bar.dataset.color!;
+					localStorage.setItem(COLOR_KEY, color);
+					applyColor(color);
+					colorBars.classList.remove('open');
+				});
+			});
+
+			// clarity erst starten wenn die einwilligung vorliegt – sonst wird
+			// schon vor dem consent aufgezeichnet
 			const CONSENT_KEY = 'cookie-consent';
 
-			if (import.meta.env.PROD) {
+			if (import.meta.env.PROD && localStorage.getItem(CONSENT_KEY) === 'granted') {
 				Clarity.init('xx3ugmyhk1');
-				if (localStorage.getItem(CONSENT_KEY) === 'granted') {
-					Clarity.consentV2({ ad_Storage: 'denied', analytics_Storage: 'granted' });
-				}
+				Clarity.consentV2({ ad_Storage: 'denied', analytics_Storage: 'granted' });
 			}
 		</script>
 	</body>

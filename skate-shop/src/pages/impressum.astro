@@ -1,15 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const path = Astro.url.pathname;
+
+const editorials = [
+	'/landingpage/editiorial_strafe_1.webp',
+	'/landingpage/editiorial_strafe_2.webp',
+	'/landingpage/editiorial_strafe_3.webp',
+	'/landingpage/editiorial_strafe_4.webp',
+	'/landingpage/editiorial_strafe_5.webp',
+	'/landingpage/editiorial_strafe_6.webp',
+];
 ---
 
 <Layout title="Impressum & Datenschutz">
     <section class="impressum-page">
         <div class="back-button" id="back-button-collection"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M205.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L131.31,128ZM51.31,128l74.35-74.34a8,8,0,0,0-11.32-11.32l-80,80a8,8,0,0,0,0,11.32l80,80a8,8,0,0,0,11.32-11.32Z"></path></svg></div>
         <article class="impressum_datenschutz-img">
-            <img src="/landingpage/editiorial_strafe_3.webp" alt="">
+            <div class="editorial-loop-vertical">
+                <div class="editorial-track-vertical">
+                    {[...editorials, ...editorials].map((src) => (
+                        <img src={src} alt="" decoding="async" />
+                    ))}
+                </div>
+            </div>
         </article>
         <article class="impressum_datenschutz">
-            <div class="datenschutzerklärung_header">Impressum</div>
+            <div class="datenschutzerklärung_header" id="impressum-section">Impressum</div>
 
             <div class="datenschutzerklärung__text">strafe skatewear.<br />
             Justin Tiede<br />
@@ -21,7 +38,7 @@ import Layout from '../layouts/Layout.astro';
             E-Mail: <a href="mailto:info@strafe.de">info@strafe.de</a> </div>
 
 
-            <div class="datenschutzerklärung_header" style="margin-top: 40px;">Datenschutzerklärung</div>
+            <div class="datenschutzerklärung_header" id="datenschutz-section" style="margin-top: 40px;">Datenschutzerklärung</div>
 
             <div class="datenschutzerklärung__big_header">1. Datenschutz auf einen Blick</div>
 
@@ -124,13 +141,82 @@ import Layout from '../layouts/Layout.astro';
             <p class="datenschutzerklärung__text">Quelle: <a href="https://www.e-recht24.de" target="_blank" rel="noopener noreferrer">https://www.e-recht24.de</a></p>
         </article>
     </section>
+    <div class="nav-impressum">
+        <div class="nav-main">
+            <div class="main-icon">menu</div>
+        </div>
+        <div class="nav-product">
+            <div class="product-buttons">
+                <div class="nav-button" id="impressum-btn">impressum</div>
+                <div class="nav-button" id="datenschutz-btn">datenschutz</div>
+            </div>
+            <div class="nav-expanded" id="nav-panel">
+                <div class="panel-section" data-panel="main">
+                    <div class="nav-options">
+                        <ul>
+                            <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
+                            <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
+                            <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
+                        </ul>
+                        <div class="logo"><img src="/favicon/favicon.svg" alt=""></div>
+                    </div>
+                    <div class="titles"><span>strafe.site</span><span> made by JT</span></div>
+                </div>
+                <div class="panel-section" data-panel="cart"></div>
+            </div>
+        </div>
+        <div class="cart-expand-button">cart (0)</div>
+    </div>
+    <div class="notification" id="notification"></div>
 </Layout>
 
 <script>
 	import { navigate } from "astro:transitions/client";
+	import { initCartUI } from '../scripts/cart';
+	import { products } from '../data/products';
 
     const dotMeta = document.getElementById('dot-meta');
 	const dot = document.querySelector('.cursor-dot');
+
+    // impressum + datenschutz buttons scrollen zur jeweiligen sektion
+    document.getElementById('impressum-btn')?.addEventListener('click', () => {
+        document.getElementById('impressum-section')?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('datenschutz-btn')?.addEventListener('click', () => {
+        document.getElementById('datenschutz-section')?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // ein panel für alle: zeigt die gewählte sektion, gleicher klick schließt
+    const navPanel = document.getElementById('nav-panel')!;
+
+    function openPanel(name: string) {
+        const section = navPanel.querySelector(`[data-panel="${name}"]`)!;
+        const wasOpen = section.classList.contains('active');
+        navPanel.querySelectorAll('.panel-section').forEach((s) => s.classList.remove('active'));
+        navPanel.classList.toggle('active', !wasOpen);
+        section.classList.toggle('active', !wasOpen);
+        return !wasOpen;
+    }
+
+    const menuBtn = document.querySelector('.main-icon')!;
+    menuBtn.addEventListener('click', () => {
+        const offen = openPanel('main');
+        menuBtn.classList.toggle('active', offen);
+    });
+
+    const cartBtn = document.querySelector('.cart-expand-button')!;
+    cartBtn.addEventListener('click', () => {
+        const offen = openPanel('cart');
+        cartBtn.classList.toggle('active', offen);
+    });
+
+    // cart panel (gemeinsames rendering aus cart.ts)
+    initCartUI(
+        navPanel.querySelector<HTMLElement>('[data-panel="cart"]')!,
+        cartBtn as HTMLElement,
+        products,
+    );
     // back button (dotMeta/dot sind oben schon deklariert)
     const backBtn = document.getElementById('back-button-collection')
     backBtn?.addEventListener('click', () =>{

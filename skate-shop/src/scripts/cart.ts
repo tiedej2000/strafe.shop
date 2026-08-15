@@ -69,11 +69,38 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 		cartBtn.textContent = cartCount() ? `cart (${cartCount()})` : 'cart (0)';
 	};
 
-	// ein listener fuer alle remove-buttons (auch nach re-render)
+	// notification-container (zeigt kurze meldungen an)
+	const notification = document.getElementById('notification');
+	let notifyTimer: number | undefined;
+	const notify = (text: string) => {
+		if (!notification) return;
+		notification.textContent = text;
+		notification.classList.add('show');
+		clearTimeout(notifyTimer);
+		notifyTimer = window.setTimeout(() => notification.classList.remove('show'), 1600);
+	};
+
+	// mindestens 5 verschiedene artikel im warenkorb pflicht fuer den checkout
+	const MIN_ITEMS = 5;
+
+	// ein listener fuer alle buttons im panel (auch nach re-render)
 	panel.addEventListener('click', (e) => {
-		const btn = (e.target as HTMLElement).closest<HTMLElement>('.cart-remove');
+		const removeBtn = (e.target as HTMLElement).closest<HTMLElement>('.cart-remove');
 		// leeres data-size wieder zu undefined machen (zeile ohne groesse)
-		if (btn) removeFromCart(btn.dataset.id!, btn.dataset.size || undefined);
+		if (removeBtn) {
+			removeFromCart(removeBtn.dataset.id!, removeBtn.dataset.size || undefined);
+			return;
+		}
+
+		const checkoutBtn = (e.target as HTMLElement).closest('.cart-checkout');
+		if (checkoutBtn) {
+			const items = getCart().length;
+			if (items >= MIN_ITEMS) {
+				window.location.href = '/checkout';
+			} else {
+				notify('add more items!');
+			}
+		}
 	});
 
 	window.addEventListener('cart-change', render);

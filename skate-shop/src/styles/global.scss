@@ -156,25 +156,27 @@ body *{
     right: 20px;
     width: 28px;
     height: 28px;
-    display: grid;
-    place-content: center;
-    border: 1px solid var(--currentcolor);
-    background-color: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
+    background-color: var(--currentcolor);
     z-index: 21;
+}
 
-    svg{
-        width: 16px;
-        height: 16px;
-        fill: var(--currentcolor);
+.color-bars{
+    position: fixed;
+    right: 20px;
+    bottom: 60px;
+    z-index: 21;
+    display: none;
+    flex-direction: column;
+
+    &.open{
+        display: flex;
     }
 
-    &.colored{
-        background-color: var(--currentcolor);
-
-        svg{
-            fill: var(--white);
-        }
+    .color-bar{
+        width: 28px;
+        height: 50px;
+        border: none;
+        padding: 0;
     }
 }
 
@@ -346,6 +348,12 @@ body *{
     }
 }
 
+@keyframes editorial-scroll-vertical{
+    to{
+        transform: translateY(-50%);
+    }
+}
+
 .chosen-products{
     position: absolute;
     bottom: 50px;
@@ -416,9 +424,10 @@ body *{
     background-color: var(--white);
     padding: 20px 20px;
     z-index: 20;
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 20px;
+    pointer-events: none;
 
 
     span{
@@ -764,7 +773,7 @@ body *{
     }
 }
 
-.nav-collection, .nav-products{
+.nav-collection, .nav-products, .nav-impressum{
     position: sticky;
     bottom: 20px;
     width: fit-content;
@@ -945,12 +954,13 @@ body *{
                     }
 
                     .logo{
-                        height: 32px;
-                        width: 32px;
+                        height: 34px;
+                        width: 34px;
                         animation: spin 7s infinite linear;
                         
-                        img{
+                        svg{
                             height: 100%;
+                            fill: var(--currentcolor);
                         }
                     }
                 }
@@ -1080,14 +1090,14 @@ body *{
                     width: 100%;
                     padding: 7px 0;
                     border: 1px solid var(--currentcolor);
-                    color: var(--black);
+                    color: var(--currentcolor);
                     font-family: var(--ibm);
                     font-size: 12px;
                     text-transform: uppercase;
                     letter-spacing: 0.02em;
 
                     &:hover{
-                        background: var(--black);
+                        background: var(--currentcolor);
                         color: var(--white);
                     }
                 }
@@ -1168,14 +1178,31 @@ body *{
 
     .impressum_datenschutz-img{
         width: 35vw;
+        flex-shrink: 0;
+
+        .editorial-loop-vertical{
+            --editorial-speed: 40s;
+
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .editorial-track-vertical{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            animation: editorial-scroll-vertical var(--editorial-speed) linear infinite;
+        }
 
         img{
-            height: 100vh;
             width: 100%;
-            position: sticky;
-            left: 0;
-            top: 0;
-            object-fit: cover;
+            height: auto;
+            display: block;
+            flex-shrink: 0;
+            user-select: none;
+            pointer-events: none;
         }
     }
 
@@ -1367,6 +1394,65 @@ body *{
             width: auto;
             fill: var(--currentcolor);
             transition: transform 0.3s ease;
+        }
+    }
+}
+
+.checkout{
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+    padding: 20px;
+    font-family: var(--ibm);
+    color: var(--currentcolor);
+    text-align: center;
+
+    .card{
+        width: 35vw;
+        min-width: 320px;
+        max-width: 600px;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .checkout-title{
+        font-family: var(--satoshi);
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    .checkout-text{
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    .checkout-btn{
+        margin-top: 16px;
+        padding: 10px 20px;
+        border: 1px solid var(--currentcolor);
+        color: var(--currentcolor);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        &:hover{
+            background-color: var(--currentcolor);
+            color: var(--white);
+        }
+    }
+
+    .checkout-back{
+        font-size: 12px;
+        color: var(--currentcolor);
+        text-decoration: underline;
+
+        &:hover{
+            opacity: 0.6;
         }
     }
 }
