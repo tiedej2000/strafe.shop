@@ -42,6 +42,10 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
                 return (
                 <a href={`/products/${p.id}`} data-category={p.category}>
                     <article class="product-card">
+                        <div class="product-card-info hidden">
+                            <span class="title">{p.title}</span>
+                            <span class="price">€{p.price}</span>
+                        </div>
                         <div class="product-img">
                             <img
                                 src={modell?.src ?? front.src}
@@ -55,12 +59,7 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
                                     <img src={s.src} alt={s.alt} loading="lazy" />
                                 ))}
                             </div>
-                        </div>
-                        <div class="product-card-info hidden">
-                            <span class="title">{p.title}</span>
-                            <span class="price">€{p.price}</span>
-                        </div>
-                        
+                        </div>                        
                     </article>
                 </a>
                 );
@@ -97,7 +96,7 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
                             <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
                             <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
                             <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
-                            <li>other</li>
+                            <li>other (coming soon)</li>
                         </ul>
                     <div class="logo"><img src="/favicon/favicon.svg" alt=""></div>
                     </div>
@@ -117,6 +116,7 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
         </div>
         <div class="cart-expand-button">cart</div>
     </div>
+    <div class="notification" id="notification"></div>
 </Layout>
 
 <script>
@@ -128,6 +128,18 @@ import { initCartUI } from '../scripts/cart';
     const gridBtns = document.querySelectorAll('.grid-buttons .nav-button');
     const viewBtns = document.querySelectorAll('.view-buttons .nav-button');
     const tagBtns = document.querySelectorAll('.tag-buttons .nav-button');
+
+    const notification = document.getElementById('notification')!;
+    let notifyTimer: number | undefined;
+    const notify = (text: string) => {
+        notification.textContent = text;
+        notification.classList.add('show');
+        clearTimeout(notifyTimer);
+        notifyTimer = window.setTimeout(() => notification.classList.remove('show'), 1600);
+    };
+
+    // erst nach dem wiederherstellen der gespeicherten ansicht sollen notifications kommen
+    let ready = false;
 
 
     //zuweisung active klassen im nav
@@ -165,24 +177,28 @@ import { initCartUI } from '../scripts/cart';
 	    grid.classList.add('single');
 	    window.scrollTo({ top: 0, behavior: 'instant' });
         grid.style.gap = '20px';
+        if (ready) notify('scroll →');
     });
     document.getElementById('min-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'min-btn');
 	    grid.classList.remove('single');
 	    grid.style.setProperty('--cols', '3');
         grid.style.gap = '20px';
+        if (ready) notify('scroll ↓');
     });
     document.getElementById('mid-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'mid-btn');
 	    grid.classList.remove('single');
 	    grid.style.setProperty('--cols', '4');
         grid.style.gap = '10px';
+        if (ready) notify('scroll ↓');
     });
     document.getElementById('max-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'max-btn');
 	    grid.classList.remove('single');
 	    grid.style.setProperty('--cols', '5');
         grid.style.gap = '10px';
+        if (ready) notify('scroll ↓');
     });
 
     // wenn single view, mappe vertical scroll auf horizontal
@@ -234,6 +250,8 @@ import { initCartUI } from '../scripts/cart';
         const id = localStorage.getItem(key);
         if (id) document.getElementById(id)?.click();
     });
+
+    ready = true;
 
 
     // beim hovern eines produktbilds den titel in die cursor-meta schreiben

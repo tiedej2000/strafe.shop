@@ -104,6 +104,7 @@ const path = Astro.url.pathname;
         </div>
         <div class="cart-expand-button">cart (0)</div>
     </div>
+    <div class="notification" id="notification"></div>
 </Layout>
 
 <script>
@@ -113,6 +114,15 @@ const path = Astro.url.pathname;
 
 	const btn = document.getElementById('add-to-cart')!;
 	const sizePicker = document.getElementById('size-picker');
+
+	const notification = document.getElementById('notification')!;
+	let notifyTimer: number | undefined;
+	const notify = (text: string) => {
+		notification.textContent = text;
+		notification.classList.add('show');
+		clearTimeout(notifyTimer);
+		notifyTimer = window.setTimeout(() => notification.classList.remove('show'), 1600);
+	};
 
 	const sizeOptions = sizePicker
 		? [...sizePicker.querySelectorAll<HTMLElement>('.size-option')]
@@ -129,6 +139,7 @@ const path = Astro.url.pathname;
 	btn.addEventListener('click', () => {
 		if (!sizePicker) {
 			addToCart(btn.dataset.id!);
+			notify('thank you!');
 			btn.textContent = 'added';
 			setTimeout(() => { btn.textContent = 'add to cart'; }, 800);
 			return;
@@ -145,6 +156,7 @@ const path = Astro.url.pathname;
 		}
 
 		addToCart(btn.dataset.id!, selectedSize);
+		notify('thank you!');
 		resetPicker();
 		btn.textContent = 'added';
 		setTimeout(() => { btn.textContent = 'choose size'; }, 800);
@@ -190,6 +202,7 @@ const path = Astro.url.pathname;
 			}
 
 			addToCart(btn.dataset.id!);
+			notify('thank you!');
 			if (dotMeta) {
 				dotMeta.textContent = 'added';
 				setTimeout(() => {

@@ -159,8 +159,9 @@ body *{
     display: grid;
     place-content: center;
     border: 1px solid var(--currentcolor);
-    background-color: transparent;
-    z-index: 5;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    z-index: 21;
 
     svg{
         width: 16px;
@@ -181,7 +182,7 @@ body *{
     position: fixed;
     bottom: 20px;
     right: 60px;
-    z-index: 5;
+    z-index: 21;
 
     .help-toggle{
         width: 28px;
@@ -189,7 +190,7 @@ body *{
         display: grid;
         place-content: center;
         border: 1px solid var(--currentcolor);
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(10px);
 
         svg{
@@ -270,7 +271,7 @@ body *{
 .editorial-loop{
     --editorial-speed: 40s;
 
-    height: 65vh;
+    height: 75vh;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -288,8 +289,8 @@ body *{
             inset: 0;
             z-index: 3;
             background-image: url('/landingpage/strafe_alternative_white.svg');
-            background-size: 45%;
-            background-position: 50% 50%;
+            background-size: 100%;
+            background-position: 0% 50px;
             background-repeat: no-repeat;
             pointer-events: none;
         }
@@ -375,7 +376,7 @@ body *{
         opacity: 0;
         pointer-events: none;
         max-width: 20vw;
-        height: 35vh;
+        height: 25vh;
 
         .title{
             font-size: clamp(1rem,1.5vw,3rem);
@@ -406,6 +407,49 @@ body *{
     }
 }
 
+.shop-enter{
+    position: fixed;
+    bottom: calc(25vh - 110px);
+    right: 10px;
+    width: 20vw;
+    height: fit-content;
+    background-color: var(--white);
+    padding: 20px 20px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+
+    span{
+        width: 100%;
+        font-family: var(--satoshi);
+        font-weight: 700;
+        font-size: clamp(1rem, 1vw, 3rem);
+        line-height: 1.05;
+        color: var(--white);
+    }
+
+    .svg{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        svg{
+            height: 30px;
+            fill: var(--black);
+            width: auto;
+        }
+    }
+
+    &:hover{
+        background-color: var(--black);
+
+        svg{
+            fill: var(--white);
+        }
+    }
+}
+
 :root:has(.collection-grid.single){
     overflow: hidden;
 }
@@ -431,7 +475,6 @@ body *{
             .product-card{
                 height: 100%;
                 aspect-ratio: 3 / 4;
-                flex-direction: column-reverse;
             }
 
             .product-img{
@@ -511,7 +554,7 @@ body *{
                 font-family: var(--ibm);
                 font-size: 12px;
                 text-transform: uppercase;
-                padding-top: 8px;
+                padding-bottom: 8px;
 
                 &.hidden{
                     opacity: 0;
@@ -543,12 +586,13 @@ body *{
         background-color: rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(10px);
         z-index: -1;
-        padding: 10px 10px 70px;
+        padding: 10px 10px 60px;
         box-shadow: 0 0 8px rgba(0,0,0,0.1);
 
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
+        justify-content: space-between;
 
         opacity: 0;
         pointer-events: none;
@@ -560,18 +604,14 @@ body *{
         }
 
         .size-option{
-            width: 100%;
-            padding: 6px 0;
-            text-align: center;
-            border: 1px solid var(--currentcolor);
+            padding: 0;
             font-family: var(--ibm);
             font-size: 12px;
             text-transform: uppercase;
 
             &:hover,
             &.selected{
-                background-color: var(--currentcolor);
-                color: var(--white);
+                text-decoration: underline;
             }
         }
     }
@@ -848,7 +888,7 @@ body *{
             padding: 10px 10px 50px;
             display: none;
             box-shadow: 0 0 8px rgba(0,0,0,0.1);
-            font-family: var(--satoshi);
+            font-family: var(--ibm);
 
             &.active{
                 display: block;
@@ -897,7 +937,7 @@ body *{
                         flex-direction: column;
                         gap: 4px;
                         margin-bottom: 60px;
-                        font-size: 16px;
+                        font-size: 12px;
 
                         a:hover{
                             text-decoration: underline;
@@ -1038,7 +1078,7 @@ body *{
                 .cart-checkout{
                     display: block;
                     width: 100%;
-                    padding: 9px 0;
+                    padding: 7px 0;
                     border: 1px solid var(--currentcolor);
                     color: var(--black);
                     font-family: var(--ibm);
@@ -1070,7 +1110,7 @@ body *{
     position: fixed;
     z-index: 5;
     height: 100vh;
-    width: 3vw;
+    width: 4vw;
     top: 0;
     left: 0;
     display: grid;
@@ -1087,6 +1127,36 @@ body *{
         box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
         background-color: rgba(255,255,255,0.05);
         backdrop-filter: blur(10px);
+    }
+}
+
+.product-page:has(.size-picker.open) .back-button{
+    pointer-events: none;
+    opacity: 0;
+}
+
+.notification{
+    position: fixed;
+    bottom: 20px;
+    left: 200px;
+    z-index: 10;
+    width: 10vw;
+    display: grid;
+    place-content: center;
+    padding: 6px 16px;
+    border: 1px solid var(--currentcolor);
+    font-family: var(--ibm);
+    font-size: 12px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border: 1px solid var(--currentcolor);
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.05);
+
+    &.show{
+        opacity: 1;
     }
 }
 
@@ -1318,14 +1388,14 @@ body *{
 
     .loader-stack{
         position: relative;
-        width: 160px;
-        height: 200px;
+        width: 320px;
+        height: 400px;
 
         img{
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 140px;
+            width: 280px;
             transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
             opacity: 0;
             animation: loader-in 0.5s ease forwards;
