@@ -292,7 +292,7 @@ body *{
             z-index: 3;
             background-image: url('/landingpage/strafe_alternative_white.svg');
             background-size: 100%;
-            background-position: 0% 50px;
+            background-position: 0% 20%;
             background-repeat: no-repeat;
             pointer-events: none;
         }
@@ -469,21 +469,36 @@ body *{
 
     .collection-grid {
         display: grid;
-        grid-template-columns: repeat(var(--cols, 4), 1fr);
+        // safari unterstützt kein var() als repeat-anzahl -> literale zahl,
+        // die spaltenzahl wird per js über grid-template-columns gesetzt
+        grid-template-columns: repeat(4, 1fr);
         gap: 20px;
         position: relative;
 
         // single view
         &.single{
             display: flex;
-            height: calc(100vh - 90px); 
+            height: calc(100vh - 90px);
             overflow-x: auto;
             overflow-y: hidden;
             scrollbar-width: none;
 
+            // safari leitet die breite eines flex-items nicht aus aspect-ratio ab
+            // (item schrumpft zu dünnen streifen) -> flex-item (<a>) nicht schrumpfen
+            // lassen und breite explizit aus der höhe (3:4) berechnen.
+            // min-width als harte untergrenze, damit safari das item auch während
+            // des grid->flex-umbaus nie zu streifen zusammenfallen lässt.
+            // calc direkt (kein var), um var-auflösungs-timing in safari zu umgehen.
+            > a{
+                flex: 0 0 auto;
+                height: 100%;
+                width: calc((100vh - 90px) * 3 / 4);
+                min-width: calc((100vh - 90px) * 3 / 4);
+            }
+
             .product-card{
                 height: 100%;
-                aspect-ratio: 3 / 4;
+                width: 100%;
             }
 
             .product-img{

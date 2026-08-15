@@ -182,6 +182,9 @@ import { initCartUI } from '../scripts/cart';
     // grid view änderung 
     document.getElementById('single-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'single-btn');
+	    // inline grid-styles der spalten-ansicht entfernen, damit safari den
+	    // flex-container nicht mit resten der grid-ansicht neu berechnet
+	    grid.style.gridTemplateColumns = '';
 	    grid.classList.add('single');
 	    window.scrollTo({ top: 0, behavior: 'instant' });
         grid.style.gap = '20px';
@@ -190,21 +193,21 @@ import { initCartUI } from '../scripts/cart';
     document.getElementById('min-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'min-btn');
 	    grid.classList.remove('single');
-	    grid.style.setProperty('--cols', '3');
+	    grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
         grid.style.gap = '20px';
         if (ready) notify('scroll ↓');
     });
     document.getElementById('mid-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'mid-btn');
 	    grid.classList.remove('single');
-	    grid.style.setProperty('--cols', '4');
+	    grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
         grid.style.gap = '10px';
         if (ready) notify('scroll ↓');
     });
     document.getElementById('max-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'max-btn');
 	    grid.classList.remove('single');
-	    grid.style.setProperty('--cols', '5');
+	    grid.style.gridTemplateColumns = 'repeat(5, 1fr)';
         grid.style.gap = '10px';
         if (ready) notify('scroll ↓');
     });
