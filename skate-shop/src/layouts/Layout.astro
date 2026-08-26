@@ -30,14 +30,6 @@ const { title = 'strafe.shop' } = Astro.props;
 				Zur Erinnerung lege <u>mindestens 5 Artikel in den Warenkorb</u>.
 			</div>
 		</div>
-		<div class="color-bars" id="color-bars">
-			<button class="color-bar" data-color="#18181b" style="background-color:#18181b" aria-label="ink"></button>
-			<button class="color-bar" data-color="#d24317" style="background-color:#d24317" aria-label="rust"></button>
-			<button class="color-bar" data-color="#0f8272" style="background-color:#0f8272" aria-label="teal"></button>
-			<button class="color-bar" data-color="#5a2ea6" style="background-color:#5a2ea6" aria-label="violet"></button>
-		</div>
-		<div class="random-color" id="random-color"></div>
-
 		<slot />
 
 		<script>
@@ -48,33 +40,6 @@ const { title = 'strafe.shop' } = Astro.props;
 			window.addEventListener('mousemove', (e) => {
 				cursor.style.setProperty('--cursor-x', e.clientX + 'px');
 				cursor.style.setProperty('--cursor-y', e.clientY + 'px');
-			});
-
-			const randomColor = document.getElementById('random-color');
-			const colorBars = document.getElementById('color-bars');
-			const COLOR_KEY = 'random-color';
-
-			// gewählte farbe setzen (das quadrat wird über --currentcolor gefüllt)
-			function applyColor(color: string) {
-				document.documentElement.style.setProperty('--currentcolor', color);
-			}
-
-			const savedColor = localStorage.getItem(COLOR_KEY);
-			if (savedColor) applyColor(savedColor);
-
-			// button öffnet/schließt die farbbalken
-			randomColor?.addEventListener('click', () => {
-				colorBars?.classList.toggle('open');
-			});
-
-			// balken klick: farbe setzen und in den localstorage schreiben
-			colorBars?.querySelectorAll<HTMLElement>('.color-bar').forEach((bar) => {
-				bar.addEventListener('click', () => {
-					const color = bar.dataset.color!;
-					localStorage.setItem(COLOR_KEY, color);
-					applyColor(color);
-					colorBars.classList.remove('open');
-				});
 			});
 
 			// clarity erst starten wenn die einwilligung vorliegt – sonst wird

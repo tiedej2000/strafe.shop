@@ -42,7 +42,7 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
                 return (
                 <a href={`/products/${p.id}`} data-category={p.category}>
                     <article class="product-card">
-                        <div class="product-card-info hidden">
+                        <div class="product-card-info">
                             <span class="title">{p.title}</span>
                             <span class="price">€{p.price}</span>
                         </div>
@@ -54,18 +54,20 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
                                 data-modell={modell?.src}
                                 loading="lazy"
                             />
+                            {p.video && (
+                                <video class="product-video" src={p.video} muted loop playsinline preload="metadata"></video>
+                            )}
                             <div class="product-shots">
                                 {shots.map((s) => (
                                     <img src={s.src} alt={s.alt} loading="lazy" />
                                 ))}
                             </div>
-                        </div>                        
+                        </div>
                     </article>
                 </a>
                 );
             })}
         </div>
-        <div class="back-button" id="back-button-start"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M205.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L131.31,128ZM51.31,128l74.35-74.34a8,8,0,0,0-11.32-11.32l-80,80a8,8,0,0,0,0,11.32l80,80a8,8,0,0,0,11.32-11.32Z"></path></svg></div>
     </section>
     <div class="nav-collection">
         <div class="nav-main">
@@ -83,8 +85,8 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
                 <div class="nav-button active" id="model-view">worn</div>
             </div>
             <div class="tag-buttons">
-                <div class="nav-button active" id="tag-off">no tags</div>
-                <div class="nav-button" id="tag-on">tags</div>
+                <div class="nav-button" id="tag-off">no tags</div>
+                <div class="nav-button active" id="tag-on">tags</div>
             </div>
             <div class="info">
                 <div class="nav-button" id="nav-expand">filter</div>
@@ -124,7 +126,6 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
         </div>
         <div class="cart-expand-button">cart</div>
     </div>
-    <div class="notification" id="notification"></div>
 </Layout>
 
 <script>
@@ -136,19 +137,6 @@ import { initCartUI } from '../scripts/cart';
     const gridBtns = document.querySelectorAll('.grid-buttons .nav-button');
     const viewBtns = document.querySelectorAll('.view-buttons .nav-button');
     const tagBtns = document.querySelectorAll('.tag-buttons .nav-button');
-
-    const notification = document.getElementById('notification')!;
-    let notifyTimer: number | undefined;
-    const notify = (text: string) => {
-        notification.textContent = text;
-        notification.classList.add('show');
-        clearTimeout(notifyTimer);
-        notifyTimer = window.setTimeout(() => notification.classList.remove('show'), 1600);
-    };
-
-    // erst nach dem wiederherstellen der gespeicherten ansicht sollen notifications kommen
-    let ready = false;
-
 
     //zuweisung active klassen im nav
     gridBtns.forEach((btn)=>{
@@ -188,29 +176,22 @@ import { initCartUI } from '../scripts/cart';
 	    grid.classList.add('single');
 	    window.scrollTo({ top: 0, behavior: 'instant' });
         grid.style.gap = '20px';
-        if (ready) notify('scroll →');
     });
     document.getElementById('min-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'min-btn');
 	    grid.classList.remove('single');
 	    grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        grid.style.gap = '20px';
-        if (ready) notify('scroll ↓');
-    });
+        grid.style.gap = '20px';    });
     document.getElementById('mid-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'mid-btn');
 	    grid.classList.remove('single');
 	    grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
-        grid.style.gap = '10px';
-        if (ready) notify('scroll ↓');
-    });
+        grid.style.gap = '10px';    });
     document.getElementById('max-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'max-btn');
 	    grid.classList.remove('single');
 	    grid.style.gridTemplateColumns = 'repeat(5, 1fr)';
-        grid.style.gap = '10px';
-        if (ready) notify('scroll ↓');
-    });
+        grid.style.gap = '10px';    });
 
     // wenn single view, mappe vertical scroll auf horizontal
     grid.addEventListener('wheel', (e) => {
@@ -257,12 +238,10 @@ import { initCartUI } from '../scripts/cart';
     });
 
     // gespeicherte nav-einstellungen wiederherstellen
-    ['col-grid', 'col-view', 'col-tags'].forEach((key) => {
+    ['col-grid', 'col-view'].forEach((key) => {
         const id = localStorage.getItem(key);
         if (id) document.getElementById(id)?.click();
     });
-
-    ready = true;
 
 
     // beim hovern eines produktbilds den titel in die cursor-meta schreiben
@@ -274,15 +253,20 @@ import { initCartUI } from '../scripts/cart';
         const title = card.querySelector('.title')?.textContent ?? '';
         if (!img || !dotMeta) return;
 
-        img.addEventListener('mouseenter', () => { 
+        // falls die karte ein video hat: bei hover abspielen, sonst zuruecksetzen
+        const video = card.querySelector<HTMLVideoElement>('.product-video');
+
+        img.addEventListener('mouseenter', () => {
             dotMeta.textContent = title;
             dotMeta.classList.add('active');
             dot?.classList.add('active');
+            video?.play();
         });
-        img.addEventListener('mouseleave', () => { 
-            dotMeta.textContent = ''; 
+        img.addEventListener('mouseleave', () => {
+            dotMeta.textContent = '';
             dotMeta.classList.remove('active');
             dot?.classList.remove('active');
+            if (video) { video.pause(); video.currentTime = 0; }
         });
     });
 
@@ -292,21 +276,6 @@ import { initCartUI } from '../scripts/cart';
         setTimeout(() => dot?.classList.remove('click'), 400);
     });
 
-    //back button
-    const backBtn = document.getElementById('back-button-start')
-    backBtn?.addEventListener('click', () =>{
-        navigate('/');
-    })
-
-    backBtn?.addEventListener('mouseenter', () => { 
-        dotMeta.textContent = 'back';
-        dot?.classList.add('active');
-    });
-
-    backBtn?.addEventListener('mouseleave', () => { 
-        dotMeta.textContent = '';
-        dot?.classList.remove('active');
-    });
 
     // panel based on welches menü
     const navPanel = document.getElementById('nav-panel')!;
@@ -335,6 +304,15 @@ import { initCartUI } from '../scripts/cart';
     cartBtn.addEventListener('click', () => {
         openPanel('cart');
         cartBtn.classList.toggle('active');
+    });
+
+    // beim verlassen der nav schliesst sich das offene panel automatisch
+    document.querySelector<HTMLElement>('.nav-collection')!.addEventListener('mouseleave', () => {
+        navPanel.classList.remove('active');
+        navPanel.querySelectorAll('.panel-section').forEach((s) => s.classList.remove('active'));
+        moreBtn.classList.remove('active');
+        menuBtn.classList.remove('active');
+        cartBtn.classList.remove('active');
     });
 
     // ---- cart panel (gemeinsames rendering aus cart.ts) ----

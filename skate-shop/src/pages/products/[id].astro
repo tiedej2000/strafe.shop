@@ -11,6 +11,13 @@ export function getStaticPaths() {
 
 const { product } = Astro.props;
 const path = Astro.url.pathname;
+
+// magazine: statt "one size" die ausgabe bestaetigen ("issue 07")
+const isMagazine = product.title.startsWith('MAG');
+const issueLabel = product.title.replace('MAG ', '').toLowerCase();
+
+const overlayTitle = product.sizes ? 'choose size' : isMagazine ? 'grab a copy' : 'add to cart';
+const overlayOptions = product.sizes ?? [isMagazine ? issueLabel : 'one size'];
 ---
 
 <Layout title={product.title}>
@@ -27,17 +34,17 @@ const path = Astro.url.pathname;
 				<img src={img.src} alt={img.alt} />
 			))}
 		</div>
-        <div class="back-button" id="back-button-collection"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M205.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L131.31,128ZM51.31,128l74.35-74.34a8,8,0,0,0-11.32-11.32l-80,80a8,8,0,0,0,0,11.32l80,80a8,8,0,0,0,11.32-11.32Z"></path></svg></div>
 
-		<div class="size-picker-wrapper">
-			{product.sizes && (
-				<div class="size-picker" id="size-picker">
-					{product.sizes.map((s) => (
-						<button class="size-option" data-size={s}>{s}</button>
-					))}
-				</div>
-			)}
-			<button class="add-to-cart" id="add-to-cart" data-id={product.id}>{product.sizes ? 'choose size' : 'add to cart'}</button>
+		<a class="go-back" href="/collection">go back</a>
+
+		<div class="size-overlay" id="size-overlay" data-id={product.id}>
+			<span class="size-overlay-title">{overlayTitle}</span>
+			<div class="size-overlay-options">
+			{overlayOptions.map((o) => (
+				<button class="size-overlay-option" data-size={product.sizes ? o : undefined}>{o}</button>
+			))}
+			</div>
+			<button class="size-overlay-option size-overlay-cancel" data-cancel>nevermind</button>
 		</div>
 	</section>
 	<div class="nav-products">
@@ -104,72 +111,12 @@ const path = Astro.url.pathname;
         </div>
         <div class="cart-expand-button">cart (0)</div>
     </div>
-    <div class="notification" id="notification"></div>
 </Layout>
 
 <script>
 	import { addToCart, initCartUI } from '../../scripts/cart';
 	import { products } from '../../data/products';
 	import { navigate } from "astro:transitions/client";
-
-	const btn = document.getElementById('add-to-cart')!;
-	const sizePicker = document.getElementById('size-picker');
-
-	const notification = document.getElementById('notification')!;
-	let notifyTimer: number | undefined;
-	const notify = (text: string) => {
-		notification.textContent = text;
-		notification.classList.add('show');
-		clearTimeout(notifyTimer);
-		notifyTimer = window.setTimeout(() => notification.classList.remove('show'), 1600);
-	};
-
-	const sizeOptions = sizePicker
-		? [...sizePicker.querySelectorAll<HTMLElement>('.size-option')]
-		: [];
-	let selectedSize: string | undefined;
-
-	const resetPicker = () => {
-		sizePicker?.classList.remove('open');
-		sizeOptions.forEach((o) => o.classList.remove('selected'));
-		selectedSize = undefined;
-		if (sizePicker) btn.textContent = 'choose size';
-	};
-
-	btn.addEventListener('click', () => {
-		if (!sizePicker) {
-			addToCart(btn.dataset.id!);
-			notify('thank you!');
-			btn.textContent = 'added';
-			setTimeout(() => { btn.textContent = 'add to cart'; }, 800);
-			return;
-		}
-
-		if (!sizePicker.classList.contains('open')) {
-			sizePicker.classList.add('open');
-			return;
-		}
-
-		if (!selectedSize) {
-			sizePicker.classList.remove('open');
-			return;
-		}
-
-		addToCart(btn.dataset.id!, selectedSize);
-		notify('thank you!');
-		resetPicker();
-		btn.textContent = 'added';
-		setTimeout(() => { btn.textContent = 'choose size'; }, 800);
-	});
-
-	sizeOptions.forEach((o) => {
-		o.addEventListener('click', () => {
-			sizeOptions.forEach((s) => s.classList.remove('selected'));
-			o.classList.add('selected');
-			selectedSize = o.dataset.size;
-			btn.textContent = 'add to cart';
-		});
-	});
 
 	// vertikales mausrad auf horizontales scrollen der bilder mappen
 	const imagesEl = document.querySelector<HTMLElement>('.product-images')!;
@@ -193,23 +140,28 @@ const path = Astro.url.pathname;
 			dot?.classList.remove('active');
 		});
 
-		img.addEventListener('click', () => {
-			// option A: mit groessen oeffnet der bild-klick den size-picker
-			if (sizePicker) {
-				sizePicker.classList.add('open');
-				if (dotMeta) dotMeta.textContent = 'choose size';
-				return;
-			}
-
-			addToCart(btn.dataset.id!);
-			notify('thank you!');
-			if (dotMeta) {
-				dotMeta.textContent = 'added';
-				setTimeout(() => {
-					if (dotMeta.textContent === 'added') dotMeta.textContent = 'add to cart';
-				}, 800);
-			}
+		img.addEventListener('click', (e) => {
+			// bild-klick oeffnet das size-overlay am cursor
+			if (!sizeOverlay) return;
+			sizeOverlay.style.left = e.clientX + 'px';
+			sizeOverlay.style.top = e.clientY + 'px';
+			sizeOverlay.classList.add('open');
 		});
+	});
+
+	// size-overlay: groesse waehlen legt in den cart, nevermind schliesst
+	const sizeOverlay = document.getElementById('size-overlay');
+	sizeOverlay?.addEventListener('click', (e) => {
+		const option = (e.target as HTMLElement).closest<HTMLElement>('.size-overlay-option');
+		if (!option) return;
+
+		if (option.dataset.cancel !== undefined) {
+			sizeOverlay.classList.remove('open');
+			return;
+		}
+
+		addToCart(sizeOverlay.dataset.id!, option.dataset.size);
+		sizeOverlay.classList.remove('open');
 	});
 
 	// ein panel für alle: zeigt die gewählte sektion, gleicher klick schließt
@@ -244,29 +196,19 @@ const path = Astro.url.pathname;
 		});
 	});
 
+	// beim verlassen der nav schliesst sich das offene panel automatisch
+	document.querySelector<HTMLElement>('.nav-products')!.addEventListener('mouseleave', () => {
+		navPanel.classList.remove('active');
+		navPanel.querySelectorAll('.panel-section').forEach((s) => s.classList.remove('active'));
+		navButtons.forEach((b) => b.el.classList.remove('active'));
+	});
+
 	// cart panel (gemeinsames rendering aus cart.ts)
 	initCartUI(
 		navPanel.querySelector<HTMLElement>('[data-panel="cart"]')!,
 		document.querySelector<HTMLElement>('.cart-expand-button')!,
 		products,
 	);
-
-
-	// back button (dotMeta/dot sind oben schon deklariert)
-    const backBtn = document.getElementById('back-button-collection')
-    backBtn?.addEventListener('click', () =>{
-        navigate('/collection');
-    })
-
-    backBtn?.addEventListener('mouseenter', () => {
-        if (dotMeta) dotMeta.textContent = 'back';
-        dot?.classList.add('active');
-    });
-
-    backBtn?.addEventListener('mouseleave', () => {
-        if (dotMeta) dotMeta.textContent = '';
-        dot?.classList.remove('active');
-    });
 
 	// füge dem dot die click klasse hinzu
     window.addEventListener('click', () => {

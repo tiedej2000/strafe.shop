@@ -27,7 +27,15 @@ export function addToCart(id: string, size?: string) {
 }
 
 export function removeFromCart(id: string, size?: string) {
-	save(getCart().filter((i) => !(i.id === id && i.size === size)));
+	const cart = getCart();
+	const item = cart.find((i) => i.id === id && i.size === size);
+	if (!item) return;
+	if (item.qty > 1) {
+		item.qty--;
+		save(cart);
+	} else {
+		save(cart.filter((i) => !(i.id === id && i.size === size)));
+	}
 }
 
 // ---- gemeinsames cart-panel-rendering fuer collection + produktseite ----
@@ -57,8 +65,10 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 			? ``
 				+ items.map((p) => `
 				<div class="cart-row">
-					<img src="${p.images[0].src}" alt="">
-					<span class="cart-title">${p.title}${p.size ? ` (${p.size})` : ''} ×${p.qty}</span>
+					<a class="cart-link" href="/products/${p.id}">
+						<img src="${p.images[0].src}" alt="">
+						<span class="cart-title">${p.title}${p.size ? ` (${p.size})` : ''} ×${p.qty}</span>
+					</a>
 					<span>€${p.price * p.qty}</span>
 					<button class="cart-remove" data-id="${p.id}" data-size="${p.size ?? ''}">remove</button>
 				</div>`).join('')
@@ -67,17 +77,6 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 			: EMPTY_CART_HTML;
 
 		cartBtn.textContent = cartCount() ? `cart (${cartCount()})` : 'cart (0)';
-	};
-
-	// notification-container (zeigt kurze meldungen an)
-	const notification = document.getElementById('notification');
-	let notifyTimer: number | undefined;
-	const notify = (text: string) => {
-		if (!notification) return;
-		notification.textContent = text;
-		notification.classList.add('show');
-		clearTimeout(notifyTimer);
-		notifyTimer = window.setTimeout(() => notification.classList.remove('show'), 1600);
 	};
 
 	// mindestens 5 verschiedene artikel im warenkorb pflicht fuer den checkout
@@ -97,12 +96,23 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 			const items = getCart().length;
 			if (items >= MIN_ITEMS) {
 				window.location.href = '/checkout';
-			} else {
-				notify('add more items!');
 			}
 		}
 	});
 
-	window.addEventListener('cart-change', render);
+	// beim hinzufuegen (menge steigt) kurz aufblinken lassen
+	let prevCount = cartCount();
+	cartBtn.addEventListener('animationend', () => cartBtn.classList.remove('blink'));
+
+	window.addEventListener('cart-change', () => {
+		const now = cartCount();
+		if (now > prevCount) {
+			cartBtn.classList.remove('blink');
+			void cartBtn.offsetWidth; // reflow, damit die animation neu startet
+			cartBtn.classList.add('blink');
+		}
+		prevCount = now;
+		render();
+	});
 	render();
 }

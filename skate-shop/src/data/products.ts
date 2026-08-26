@@ -12,6 +12,7 @@ type Product = {
 	title: string;
 	price: number;
 	images: ProductImage[];
+	video?: string;
 	sizes?: string[];
 	description?: string;
 	productDetails?: string;
@@ -23,6 +24,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR1',
 		category: 'tops',
+		video: '/products/IDNR1/kling_20260822_VIDEO_The_subjec_5612_0.mp4',
 		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'SWEATER STR BLA',
 		price: 130,

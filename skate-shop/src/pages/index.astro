@@ -91,10 +91,15 @@ const chosen = [
 	// overlay, lade bildschirm
 	const loader = document.getElementById('loader');
 	if (loader) {
-		const bilder = loader.querySelectorAll('img').length;
-		const dauer = (bilder - 1) * 250 + 500;
-		setTimeout(() => loader.classList.add('done'), dauer + 500);
-		setTimeout(() => loader.remove(), dauer + 500 + 400);
+		if (localStorage.getItem('loaderShown')) {
+			loader.remove();
+		} else {
+			localStorage.setItem('loaderShown', 'true');
+			const bilder = loader.querySelectorAll('img').length;
+			const dauer = (bilder - 1) * 250 + 500;
+			setTimeout(() => loader.classList.add('done'), dauer + 500);
+			setTimeout(() => loader.remove(), dauer + 500 + 400);
+		}
 	}
 
 	const dot = document.querySelector('.cursor-dot');
