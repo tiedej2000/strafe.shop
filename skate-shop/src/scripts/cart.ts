@@ -76,7 +76,9 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 				+ `<button class="cart-checkout">checkout</button>`
 			: EMPTY_CART_HTML;
 
-		cartBtn.textContent = cartCount() ? `cart (${cartCount()})` : 'cart (0)';
+		// nur das label aktualisieren, damit ein evtl. vorhandenes icon erhalten bleibt
+		const cartLabel = cartBtn.querySelector('.nav-label') ?? cartBtn;
+		cartLabel.textContent = cartCount() ? `cart (${cartCount()})` : 'cart (0)';
 	};
 
 	// mindestens 5 verschiedene artikel im warenkorb pflicht fuer den checkout

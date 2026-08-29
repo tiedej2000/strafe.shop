@@ -51,6 +51,7 @@ export const products: Product[] = [
 	{
 		id: 'IDNR2',
 		category: 'tops',
+		video: '/products/IDNR2/idnr2_video.mp4',
 		sizes: ['s', 'm', 'l', 'xl'],
 		title: 'SWEATER STR BLU',
 		price: 130,
@@ -201,7 +202,7 @@ export const products: Product[] = [
 		id: 'IDNR9',
 		category: 'tops',
 		sizes: ['s', 'm', 'l', 'xl'],
-		title: 'TEE LIZ BLACK ON BLACK',
+		title: 'TEE LIZ BLBL',
 		price: 50,
 		images: [
 			{ type: 'front', src: '/products/IDNR9/produkt5_tee_lizblack.webp', alt: 'Tee Liz Schwarz – Vorderansicht' },
