@@ -243,7 +243,6 @@ body *{
 .editorial-loop{
     --editorial-speed: 40s;
 
-    // 5vh an den collection-link-button abgegeben (vorher 75vh)
     height: 70vh;
     overflow: hidden;
     position: relative;
@@ -322,7 +321,8 @@ body *{
 }
 
 .collection-link{
-    height: 5vh;
+    height: 3.5vh;
+    min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -347,13 +347,18 @@ body *{
         display: inline-flex;
         align-items: center;
         gap: 0.6em;
-        font-size: clamp(14px, 2.4vh, 26px);
+        font-size: clamp(0.8rem, 1vw, 1rem);
         font-weight: 700;
-        letter-spacing: 0.02em;
         white-space: nowrap;
 
         .arrow{
             display: inline-block;
+
+            svg{
+                fill: var(--white);
+                height: 14px;
+                width: auto;
+            }
         }
     }
 
@@ -1557,6 +1562,12 @@ body *{
 }
 
 @media(max-width:599px){
+    // completely hide elements
+    .options, .collection-link-meta, .links, .help-toggle{
+        display: none;
+        opacity: 0;
+    }
+
     .cursor{
         display: none;
         opacity: 0;
@@ -1565,29 +1576,31 @@ body *{
     body{
         max-width: 100vw;
         overflow: hidden;
+        cursor: default;
     }
 
     //landingpage
     .editorial-loop {
-        img{
-            height: 90dvh;
-        }
+        height: 85dvh;
 
         .ediorial-track-options{
             display: none;
         }
 
-        &::after{
-            height: 90dvh;
-            background-position-y: 50%;
-            background-size: 75%;
+        .editorial-viewport::after{
+            background-size: 65%;
         }
+    }
+
+    .collection-link{
+        display: flex;
+        justify-content: center;
     }
 
     .nav-start{
         width: 100vw;
         padding: 0 10px;
-        top: calc(90vh + 20px);
+        bottom: 10px;
     }
 
     .links{
