@@ -76,6 +76,7 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
         <div class="nav-grid">
             <div class="grid-buttons">
                 <div class="nav-button active" id="single-btn">1row</div>
+                <div class="nav-button" id="two-btn">2col</div>
                 <div class="nav-button" id="min-btn">3col</div>
                 <div class="nav-button " id="mid-btn">4col</div>
                 <div class="nav-button" id="max-btn">5col</div>
@@ -83,10 +84,6 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
             <div class="view-buttons">
                 <div class="nav-button" id="product-view">flat</div>
                 <div class="nav-button active" id="model-view">worn</div>
-            </div>
-            <div class="tag-buttons">
-                <div class="nav-button" id="tag-off">no tags</div>
-                <div class="nav-button active" id="tag-on">tags</div>
             </div>
             <div class="info">
                 <div class="nav-button" id="nav-expand">filter</div>
@@ -136,7 +133,6 @@ import { initCartUI } from '../scripts/cart';
     const grid = document.getElementById('grid')!;
     const gridBtns = document.querySelectorAll('.grid-buttons .nav-button');
     const viewBtns = document.querySelectorAll('.view-buttons .nav-button');
-    const tagBtns = document.querySelectorAll('.tag-buttons .nav-button');
 
     //zuweisung active klassen im nav
     gridBtns.forEach((btn)=>{
@@ -157,26 +153,20 @@ import { initCartUI } from '../scripts/cart';
         })
     })
 
-    tagBtns.forEach((btn)=>{
-        btn.addEventListener('click',() =>{
-            tagBtns.forEach((b)=>{
-                b.classList.remove('active')
-            })
-            btn.classList.add('active');
-        })
-    })
 
-
-    // grid view änderung 
+    // grid view änderung
     document.getElementById('single-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'single-btn');
-	    // inline grid-styles der spalten-ansicht entfernen, damit safari den
-	    // flex-container nicht mit resten der grid-ansicht neu berechnet
 	    grid.style.gridTemplateColumns = '';
 	    grid.classList.add('single');
 	    window.scrollTo({ top: 0, behavior: 'instant' });
         grid.style.gap = '20px';
     });
+    document.getElementById('two-btn')!.addEventListener('click', () => {
+	    localStorage.setItem('col-grid', 'two-btn');
+	    grid.classList.remove('single');
+	    grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        grid.style.gap = '10px';    });
     document.getElementById('min-btn')!.addEventListener('click', () => {
 	    localStorage.setItem('col-grid', 'min-btn');
 	    grid.classList.remove('single');
@@ -194,8 +184,10 @@ import { initCartUI } from '../scripts/cart';
         grid.style.gap = '10px';    });
 
     // wenn single view, mappe vertical scroll auf horizontal
+    // nur desktop! mobile scrollt horiz mit snap
+    const isMobile = window.matchMedia('(max-width: 599px)');
     grid.addEventListener('wheel', (e) => {
-        if (!grid.classList.contains('single') || e.deltaY === 0) return;
+        if (isMobile.matches || !grid.classList.contains('single') || e.deltaY === 0) return;
         e.preventDefault();
         grid.scrollLeft += e.deltaY;
     }, { passive: false });
@@ -218,23 +210,6 @@ import { initCartUI } from '../scripts/cart';
         cardImages.forEach((img) => {
             img.src = img.dataset.modell ?? img.dataset.front!;
         });
-    });
-
-    //product tags view
-    const cardInfos = document.querySelectorAll('.product-card-info')
-
-    document.getElementById('tag-off')!.addEventListener('click',()=>{
-        localStorage.setItem('col-tags', 'tag-off');
-        cardInfos.forEach((card)=>{
-            card.classList.add('hidden')
-        })
-    })
-
-    document.getElementById('tag-on')!.addEventListener('click',()=>{
-        localStorage.setItem('col-tags', 'tag-on');
-        cardInfos.forEach((card)=>{
-            card.classList.remove('hidden')
-        })
     });
 
     // gespeicherte nav-einstellungen wiederherstellen
