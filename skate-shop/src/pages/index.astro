@@ -1,5 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { products } from '../data/products';
+
+// anzahl + kategorien für den collection-link-button (dynamisch aus den produkten)
+const pieceCount = products.length;
+const catLabels: Record<string, string> = { accessories: 'ACC', collectible: 'DECKS' };
+const catLine = [...new Set(products.map((p) => p.category))]
+	.map((c) => (catLabels[c] ?? c).toUpperCase())
+	.join(' ');
 
 const editorials = [
 	'/landingpage/editiorial_strafe_1.webp',
@@ -46,14 +54,16 @@ const chosen = [
 			</div>
 		</div>
 	</section>
-	<section class="link-site" id="link-site"></section>
+	<a class="collection-link" id="collection-link" href="/collection">
+		<span class="collection-link-meta">{pieceCount} pieces — {catLine}</span>
+		<span class="collection-link-cta">enter collection <span class="arrow">→</span></span>
+	</a>
 	<div class="chosen-products">
 		{chosen.map((c) => (
 			<div class="chosen-product">
 				<a href=`/products/${c.id}`><img class="product-close" src={c.closeUp} alt="" decoding="async" /></a>
 			</div>
 			<div class="product-info">
-				<img class="product-full" src={c.product} alt="" decoding="async" />
 				<span class="title">{c.title}</span>
 				<span class="desc">{c.description}</span>
 			</div>
@@ -86,8 +96,6 @@ const chosen = [
 </Layout>
 
 <script>
-	import { navigate } from 'astro:transitions/client';
-
 	// overlay, lade bildschirm
 	const loader = document.getElementById('loader');
 	if (loader) {
@@ -103,7 +111,6 @@ const chosen = [
 	}
 
 	const dot = document.querySelector('.cursor-dot');
-	const dotMeta = document.getElementById('dot-meta');
 
 	const track = document.querySelector('.editorial-track')!;
 
@@ -116,17 +123,36 @@ const chosen = [
 	// der Track enthaelt die Bilder doppelt
 	const count = track.children.length / 2;
 
+	// scroll-fortschritt (0..1), der bild i mittig im viewport zeigt.
+	// die animation läuft translateX(0) -> translateX(-50%), also -p * halbeTrackbreite.
+	function centerProgress(i: number) {
+		const imgs = [...track.children] as HTMLElement[];
+		const halfWidth = imgs.slice(0, count).reduce((sum, el) => sum + el.offsetWidth, 0);
+		const before = imgs.slice(0, i).reduce((sum, el) => sum + el.offsetWidth, 0);
+		const centerI = before + imgs[i].offsetWidth / 2;
+		const viewport = (track.parentElement as HTMLElement).clientWidth;
+		const p = (centerI - viewport / 2) / halfWidth;
+		return ((p % 1) + 1) % 1; // in [0,1) halten (loop ist nahtlos wegen duplikat)
+	}
+
 	let paused = false;
 
 	document.querySelectorAll('.chosen-product').forEach((el, i) => {
 		el.addEventListener('mouseenter', () => {
+			// nur das passende editorial-bild (index i und sein duplikat i+count) in farbe
+			track.children[i]?.classList.add('color');
+			track.children[i + count]?.classList.add('color');
 			const anim = getAnim();
 			if (!anim) return;
 			anim.pause();
-			anim.currentTime = (i % count) / count * Number(anim.effect!.getTiming().duration);
+			anim.currentTime = centerProgress(i) * Number(anim.effect!.getTiming().duration);
 		});
 
-		el.addEventListener('mouseleave', () => { if (!paused) getAnim()?.play(); });
+		el.addEventListener('mouseleave', () => {
+			track.children[i]?.classList.remove('color');
+			track.children[i + count]?.classList.remove('color');
+			if (!paused) getAnim()?.play();
+		});
 	});
 
 	// editorial track optionen pause + weiter
@@ -169,20 +195,4 @@ const chosen = [
         setTimeout(() => dot?.classList.remove('click'), 400);
     });
 
-	// link zu collection im unteren Bereich der Seite
-	const linkCollection = document.getElementById('link-site');
-
-	linkCollection?.addEventListener('mouseenter', () => {
-		if (dotMeta) dotMeta.textContent = 'enter collection';
-		dot?.classList.add('active');
-	});
-
-	linkCollection?.addEventListener('mouseleave', () => {
-		if (dotMeta) dotMeta.textContent = '';
-		dot?.classList.remove('active');
-	});
-
-	linkCollection?.addEventListener('click', () => {
-		navigate('/collection');
-	});
 </script>

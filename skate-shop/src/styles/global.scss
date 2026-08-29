@@ -243,7 +243,8 @@ body *{
 .editorial-loop{
     --editorial-speed: 40s;
 
-    height: 75vh;
+    // 5vh an den collection-link-button abgegeben (vorher 75vh)
+    height: 70vh;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -261,8 +262,8 @@ body *{
             inset: 0;
             z-index: 3;
             background-image: url('/landingpage/strafe_alternative_white.svg');
-            background-size: 100%;
-            background-position: 0% 20%;
+            background-size: 45%;
+            background-position: 50%;
             background-repeat: no-repeat;
             pointer-events: none;
         }
@@ -282,11 +283,23 @@ body *{
         flex-shrink: 0;
         user-select: none;
         pointer-events: none;
+
+        // test: bilder standardmäßig grayscale, nur das zum gehoverten
+        // chosen-product gehörende bild (klasse .color per js) kommt in farbe
+        filter: grayscale(1);
+
+        &.color{
+            filter: grayscale(0);
+        }
     }
 
     .options{
-        position: relative;
+        position: absolute;
+        bottom: 0;
+        right: 0;
         z-index: 4;
+        mix-blend-mode: difference;
+        color: var(--white);
 
         display: flex;
         justify-content: flex-end;
@@ -308,8 +321,45 @@ body *{
     
 }
 
-.link-site{
-    height: 25vh;
+.collection-link{
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 20px;
+    background-color: var(--currentcolor);
+    color: var(--white);
+    font-family: var(--ibm);
+    text-transform: uppercase;
+    text-decoration: none;
+    overflow: hidden;
+
+    .collection-link-meta{
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .collection-link-cta{
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6em;
+        font-size: clamp(14px, 2.4vh, 26px);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+
+        .arrow{
+            display: inline-block;
+        }
+    }
+
+    &:hover .collection-link-cta .arrow{
+        transform: translateX(6px);
+    }
 }
 
 @keyframes editorial-scroll{
@@ -336,7 +386,9 @@ body *{
 }
 
 .chosen-products{
-    position: absolute;
+    // fixed (statt absolute), da der 25vh-spacer .link-site entfernt wurde und
+    // sonst die höhe des dokuments (nicht des viewports) referenziert würde
+    position: fixed;
     bottom: 50px;
     left: 0;
     right: 0;
@@ -364,7 +416,7 @@ body *{
         left: 20px;
         opacity: 0;
         pointer-events: none;
-        max-width: 20vw;
+        max-width: 25vw;
         height: 25vh;
 
         .title{
@@ -378,16 +430,7 @@ body *{
         .desc{
             font-family: var(--ibm);
             font-size: 12px;
-            text-align: justify;
-        }
-
-        .product-full{
-            flex: 1;
-            min-height: 0;
-            width: 100%;
-            object-fit: contain;
-            object-position: left;
-            margin-bottom: 8px;
+            text-align: left;
         }
     }
 
