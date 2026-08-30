@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import { products } from '../data/products';
 
-// anzahl + kategorien für den collection-link-button (dynamisch aus den produkten)
 const pieceCount = products.length;
 const catLabels: Record<string, string> = { accessories: 'ACC', collectible: 'DECKS' };
 const catLine = [...new Set(products.map((p) => p.category))]

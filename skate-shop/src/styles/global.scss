@@ -446,7 +446,6 @@ body *{
     }
 }
 
-// das mittige logo langsam ein-/ausblenden (beim hovern eines chosen-products)
 .editorial-loop .editorial-viewport::after{
     transition: opacity 0.7s ease;
 }
@@ -506,6 +505,73 @@ body *{
 .collection{
     min-height: 100vh;
     padding: 20px 20px 20px 20px;
+
+    .collection-hero{
+        position: relative;
+
+        .hero-portrait{
+            display: none;
+        }
+
+        img{
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .collection-hero-info{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            text-align: center;
+            color: var(--white);
+            pointer-events: none;
+
+            .title{
+                font-family: var(--satoshi);
+                font-weight: 900;
+                font-size: clamp(2rem, 5vw, 5rem);
+                line-height: 1;
+            }
+
+            .desc{
+                font-family: var(--ibm);
+                font-size: 12px;
+                max-width: 40vw;
+            }
+        }
+    }
+
+    .collection-grid:not(.single) .collection-hero{
+        grid-column: 1 / -1;
+        margin-bottom: 20px;
+    }
+
+    .collection-grid.single .collection-hero{
+        flex: 0 0 auto;
+        height: 100%;
+        width: calc((100vh - 90px) * 3 / 4);
+
+        .hero-landscape{
+            display: none;
+        }
+
+        .hero-portrait{
+            display: block;
+        }
+
+        img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
 
     .collection-grid {
         display: grid;
@@ -634,7 +700,6 @@ body *{
             }
         }
 
-        // spalten-ansichten: bild fuellt die zelle und reserviert hoehe (sonst laden lazy-bilder nicht)
         &:not(.single) .product-img > img{
             width: 100%;
             aspect-ratio: 3 / 4;
@@ -856,7 +921,6 @@ body *{
     }
 }
 
-// nav-icons: auf desktop versteckt, auf mobile sichtbar (siehe media query)
 .nav-icon{
     display: none;
     width: 16px;
@@ -1588,13 +1652,11 @@ body *{
     }
 }
 
-// 2col ist nur auf mobile sichtbar
 #two-btn{
     display: none;
 }
 
 @media(max-width:599px){
-    // auf mobile nur 1row und 2col, nicht 3/4/5col
     #two-btn{
         display: grid;
     }
@@ -1603,6 +1665,7 @@ body *{
     .options, .collection-link-meta, .links, .help-toggle,  #min-btn, #mid-btn, #max-btn{
         display: none;
         opacity: 0;
+        pointer-events: none;
     }
 
     .cursor{
@@ -1615,7 +1678,6 @@ body *{
         cursor: default !important;
     }
 
-    // nur in der single-ansicht scrollt das grid intern, sonst scrollt die seite normal
     body:has(.collection-grid.single){
         height: 100dvh;
         overflow: hidden;
@@ -1656,7 +1718,55 @@ body *{
     }
 
     .impressum-page{
-        padding: 60px 16px 60px 16px;
+        padding: 0;
+
+        .impressum_datenschutz-img .editorial-loop-vertical{
+            height: 100dvh;
+        }
+
+        .impressum_datenschutz-img img{
+            height: 20dvh;
+            object-fit: cover;
+        }
+
+        .impressum_datenschutz{
+            max-width: none;
+            padding: 10px 10px 60px;
+        }
+    }
+
+    .nav-impressum{
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+        margin: 0;
+        z-index: 10;
+        gap: 10px;
+        font-size: 10px;
+        justify-content: flex-start;
+
+        &::before{
+            width: 100%;
+            left: 0;
+        }
+
+        .main-icon, .cart-expand-button, .nav-button{
+            white-space: nowrap;
+        }
+
+        .cart-expand-button{
+            margin-left: auto;
+        }
+
+        .nav-product{
+            gap: 5px;
+        }
+
+        .nav-button{
+            padding: 0 6px;
+        }
     }
 
     //collection
@@ -1664,7 +1774,18 @@ body *{
         padding: 0px 10px;
         min-height: 100dvh;
 
-        // abstand oben + platz fuer die fixe nav-leiste beim scrollen (2col)
+        .collection-hero .collection-hero-info{
+            gap: 10px;
+
+            .title{
+                font-size: clamp(1.4rem, 7vw, 2.2rem);
+            }
+
+            .desc{
+                max-width: 80vw;
+            }
+        }
+
         .collection-grid:not(.single){
             padding-top: 10px;
             padding-bottom: 60px;
@@ -1682,6 +1803,16 @@ body *{
                 width: calc(100vw - 20px);
                 min-width: calc(100vw - 20px);
                 scroll-snap-align: start;
+            }
+
+            .collection-hero{
+                width: calc(100vw - 20px);
+                height: auto;
+                scroll-snap-align: start;
+
+                img{
+                    height: auto;
+                }
             }
 
             .product-card{
@@ -1704,8 +1835,7 @@ body *{
         }
     }
 
-    // menu/cart (und die produkt-buttons) als icons statt text – einheitliche breite
-    .nav-collection, .nav-products{
+    .nav-collection, .nav-products, .nav-impressum{
         .nav-label{
             display: none;
         }
@@ -1749,8 +1879,6 @@ body *{
         }
     }
 
-    // product-page: bilder im natuerlichen verhaeltnis, vertikal gescrollt
-    // die bild-flaeche ist begrenzt und endet immer 10px ueber dem menue (wie collection)
     .product-page{
         height: 100dvh;
         padding-bottom: 50px;

@@ -32,6 +32,14 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
 <Layout title="collection">
     <section class="collection">
         <div class="collection-grid single" id="grid">
+            <div class="collection-hero">
+                <img class="hero-landscape" src="/collection/test_collection_hero.webp" alt="collection hero" />
+                <img class="hero-portrait" src="/collection/test_collection_hero_hk.webp" alt="collection hero" />
+                <div class="collection-hero-info">
+                    <span class="title">STRAFE SS26</span>
+                    <span class="desc">Spring/Summer 2026 — heavyweight fleece, baggy denim and worn-in staples, built for the street and everything after.</span>
+                </div>
+            </div>
             {sortedProducts.map((p) => {
                 const front = p.images.find((img) => img.type === 'front') ?? p.images[0];
                 const modell = p.images.find((img) => img.type === 'modell');
