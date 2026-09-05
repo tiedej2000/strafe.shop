@@ -320,8 +320,8 @@ body *{
     justify-content: space-between;
     gap: 20px;
     padding: 0 20px;
-    background-color: black;
-    color: var(--white);
+    background-color: white;
+    color: var(--black);
     font-family: var(--ibm);
     text-transform: uppercase;
     text-decoration: none;
@@ -342,23 +342,27 @@ body *{
         display: inline-flex;
         align-items: center;
         gap: 0.6em;
-        font-size: clamp(0.8rem, 1vw, 1rem);
-        font-weight: 700;
+        font-size: 12px;
         white-space: nowrap;
 
         .arrow{
             display: inline-block;
 
             svg{
-                fill: var(--white);
+                fill: var(--black);
                 height: 14px;
                 width: auto;
             }
         }
     }
 
-    &:hover .collection-link-cta .arrow{
+    &:hover .collection-link-cta .arrow svg{
         transform: translateX(6px);
+        fill: white;
+    }
+
+    &:hover{
+        color: white;
     }
 }
 
