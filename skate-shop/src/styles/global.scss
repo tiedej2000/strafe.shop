@@ -733,8 +733,7 @@ body *{
         flex-direction: column;
         gap: 6px;
         padding: 10px;
-        background-color: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
+        background-color: var(--white);
 
         &.open{
             display: flex;
