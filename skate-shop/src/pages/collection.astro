@@ -226,8 +226,8 @@ import { initCartUI } from '../scripts/cart';
         });
     });
 
-    // gespeicherte nav-einstellungen wiederherstellen (grid: standard 5col)
-    document.getElementById(localStorage.getItem('col-grid') ?? 'max-btn')?.click();
+    // gespeicherte nav-einstellungen wiederherstellen (grid: standard 3col)
+    document.getElementById(localStorage.getItem('col-grid') ?? 'min-btn')?.click();
 
     const savedView = localStorage.getItem('col-view');
     if (savedView) document.getElementById(savedView)?.click();

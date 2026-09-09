@@ -261,7 +261,7 @@ body *{
             inset: 0;
             z-index: 3;
             background-image: url('/landingpage/strafe_alternative_white.svg');
-            background-size: 55%;
+            background-size: 40%;
             background-position: 50%;
             background-repeat: no-repeat;
             pointer-events: none;
@@ -576,7 +576,7 @@ body *{
             display: block;
         }
 
-        img{
+        > img{
             height: 100%;
             width: 100%;
             object-fit: cover;
