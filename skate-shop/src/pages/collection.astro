@@ -33,11 +33,11 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
     <section class="collection">
         <div class="collection-grid single" id="grid">
             <div class="collection-hero">
-                <img class="hero-landscape" src="/collection/test_collection_hero.webp" alt="collection hero" />
-                <img class="hero-portrait" src="/collection/test_collection_hero_hk.webp" alt="collection hero" />
+                <img class="hero-landscape" src="/collection/test_collection_hero4.webp" alt="collection hero" />
+                <img class="hero-portrait" src="/collection/test_collection_hero_hk4.webp" alt="collection hero" />
                 <div class="collection-hero-info">
-                    <span class="title">STRAFE SS26</span>
-                    <span class="desc">Spring/Summer 2026 — heavyweight fleece, baggy denim and worn-in staples, built for the street and everything after.</span>
+                    <img class="hero-logo" src='/landingpage/strafe_alternative_white.svg' alt="">
+                    <span class="desc">Spring/Summer 2026 — zip hoodies, baggy jeans and graphic tees, finished with decks, beanies and belts. Built for the street and everything after.</span>
                 </div>
             </div>
             {sortedProducts.map((p) => {
@@ -226,11 +226,11 @@ import { initCartUI } from '../scripts/cart';
         });
     });
 
-    // gespeicherte nav-einstellungen wiederherstellen
-    ['col-grid', 'col-view'].forEach((key) => {
-        const id = localStorage.getItem(key);
-        if (id) document.getElementById(id)?.click();
-    });
+    // gespeicherte nav-einstellungen wiederherstellen (grid: standard 5col)
+    document.getElementById(localStorage.getItem('col-grid') ?? 'max-btn')?.click();
+
+    const savedView = localStorage.getItem('col-view');
+    if (savedView) document.getElementById(savedView)?.click();
 
 
     // beim hovern eines produktbilds den titel in die cursor-meta schreiben

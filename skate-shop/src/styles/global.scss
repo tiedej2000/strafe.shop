@@ -261,7 +261,7 @@ body *{
             inset: 0;
             z-index: 3;
             background-image: url('/landingpage/strafe_alternative_white.svg');
-            background-size: 45%;
+            background-size: 55%;
             background-position: 50%;
             background-repeat: no-repeat;
             pointer-events: none;
@@ -430,7 +430,7 @@ body *{
         transition: opacity 0.7s ease;
 
         .title{
-            font-size: clamp(1.5rem, 5vw, 5rem);
+            font-size: clamp(1.5rem, 3vw, 5rem);
             line-height: 1;
             font-family: var(--satoshi);
             font-weight: 900;
@@ -439,7 +439,7 @@ body *{
 
         .desc{
             font-family: var(--ibm);
-            font-size: 12px;
+            font-size: 14px;
             text-align: center;
             max-width: 40vw;
         }
@@ -525,9 +525,9 @@ body *{
 
         .collection-hero-info{
             position: absolute;
-            top: 50%;
+            bottom: 20px;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -536,6 +536,12 @@ body *{
             text-align: center;
             color: var(--white);
             pointer-events: none;
+
+            .hero-logo{
+                width: clamp(48px, 7vw, 110px);
+                height: auto;
+                fill: var(--white);
+            }
 
             .title{
                 font-family: var(--satoshi);
