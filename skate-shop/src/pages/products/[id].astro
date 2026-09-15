@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SiteNav from '../../components/SiteNav.astro';
 import { products } from '../../data/products';
 
 export function getStaticPaths() {
@@ -10,7 +11,6 @@ export function getStaticPaths() {
 }
 
 const { product } = Astro.props;
-const path = Astro.url.pathname;
 
 // magazine: statt "one size" die ausgabe bestaetigen ("issue 07")
 const isMagazine = product.title.startsWith('MAG');
@@ -47,14 +47,8 @@ const overlayOptions = product.sizes ?? [isMagazine ? issueLabel : 'one size'];
 			<button class="size-overlay-option size-overlay-cancel" data-cancel>nevermind</button>
 		</div>
 	</section>
-	<div class="nav-products">
-        <div class="nav-main">
-            <div class="main-icon">
-                <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z"></path></svg>
-                <span class="nav-label">menu</span>
-            </div>
-        </div>
-        <div class="nav-product">
+	<SiteNav variant="products">
+        <Fragment slot="buttons">
             <div class="product-buttons">
                 <div class="nav-button" data-panel="description">
                     <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M32,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H40A8,8,0,0,1,32,64Zm8,48H168a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16Zm176,24H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm-48,40H40a8,8,0,0,0,0,16H168a8,8,0,0,0,0-16Z"></path></svg>
@@ -79,62 +73,44 @@ const overlayOptions = product.sizes ?? [isMagazine ? issueLabel : 'one size'];
                     <span class="nav-label">size guide</span>
                 </div>
             </div>
-            <div class="nav-expanded" id="nav-panel">
-                <div class="panel-section" data-panel="main">
-                    <div class="nav-options">
-                        <ul>
-                            <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
-                            <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
-                            <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
-                        </ul>
-						<div class="logo"><img src="/favicon/favicon.svg" alt=""></div>
-                    </div>
-                    <div class="titles"><span>strafe.site</span><span> made by JT</span></div>
-                </div>
-
-                <div class="panel-section" data-panel="description">
-                    <span class="panel-eyebrow"><span>description</span><span>{product.title}</span></span>
-                    <p class="panel-text">{product.description}</p>
-                </div>
-                <div class="panel-section" data-panel="details">
-                    <span class="panel-eyebrow"><span>details</span><span>{product.title}</span></span>
-                    <p class="panel-text">{product.productDetails}</p>
-                </div>
-                <div class="panel-section" data-panel="care">
-                    <span class="panel-eyebrow"><span>care</span><span>{product.title}</span></span>
-                    <p class="panel-text">{product.productCare}</p>
-                </div>
-                <div class="panel-section" data-panel="size">
-                    <span class="panel-eyebrow"><span>size guide</span><span>{product.title}</span></span>
-                    {product.sizeGuide?.columns && (
-                        <div class="size-row size-head">
-                            {product.sizeGuide.columns.map((col) => (<span>{col}</span>))}
-                        </div>
-                    )}
-                    {product.sizeGuide?.rows?.map((row) => (
-                        <div class="size-row">
-                            {row.map((cell) => (<span>{cell}</span>))}
-                        </div>
-                    ))}
-                    {product.sizeGuide?.note && (
-                        <p class="panel-text size-note">{product.sizeGuide.note}</p>
-                    )}
-                </div>
-
-                <div class="panel-section" data-panel="cart"></div>
+        </Fragment>
+        <Fragment slot="panels">
+            <div class="panel-section" data-panel="description">
+                <span class="panel-eyebrow"><span>description</span><span>{product.title}</span></span>
+                <p class="panel-text">{product.description}</p>
             </div>
-        </div>
-        <div class="cart-expand-button">
-            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM176,88a48,48,0,0,1-96,0,8,8,0,0,1,16,0,32,32,0,0,0,64,0,8,8,0,0,1,16,0Z"></path></svg>
-            <span class="nav-label">cart (0)</span>
-        </div>
-    </div>
+            <div class="panel-section" data-panel="details">
+                <span class="panel-eyebrow"><span>details</span><span>{product.title}</span></span>
+                <p class="panel-text">{product.productDetails}</p>
+            </div>
+            <div class="panel-section" data-panel="care">
+                <span class="panel-eyebrow"><span>care</span><span>{product.title}</span></span>
+                <p class="panel-text">{product.productCare}</p>
+            </div>
+            <div class="panel-section" data-panel="size">
+                <span class="panel-eyebrow"><span>size guide</span><span>{product.title}</span></span>
+                {product.sizeGuide?.columns && (
+                    <div class="size-row size-head">
+                        {product.sizeGuide.columns.map((col) => (<span>{col}</span>))}
+                    </div>
+                )}
+                {product.sizeGuide?.rows?.map((row) => (
+                    <div class="size-row">
+                        {row.map((cell) => (<span>{cell}</span>))}
+                    </div>
+                ))}
+                {product.sizeGuide?.note && (
+                    <p class="panel-text size-note">{product.sizeGuide.note}</p>
+                )}
+            </div>
+        </Fragment>
+    </SiteNav>
 </Layout>
 
 <script>
 	import { addToCart, initCartUI } from '../../scripts/cart';
 	import { products } from '../../data/products';
-	import { navigate } from "astro:transitions/client";
+	import { initNav } from '../../scripts/nav';
 
 	// vertikales mausrad auf horizontales scrollen der bilder mappen
 	// (nur desktop; mobile scrollt die bilder vertikal)
@@ -184,49 +160,21 @@ const overlayOptions = product.sizes ?? [isMagazine ? issueLabel : 'one size'];
 		sizeOverlay.classList.remove('open');
 	});
 
-	// ein panel für alle: zeigt die gewählte sektion, gleicher klick schließt
-	const navPanel = document.getElementById('nav-panel')!;
+	// nav-panels (menu / description / details / care / size / cart)
+	const navWrapper = document.querySelector<HTMLElement>('.nav-products')!;
+	const cartBtn = navWrapper.querySelector<HTMLElement>('.cart-expand-button')!;
 
-	function openPanel(name: string) {
-		const section = navPanel.querySelector(`[data-panel="${name}"]`)!;
-		const wasOpen = section.classList.contains('active');
-		navPanel.querySelectorAll('.panel-section').forEach((s) => s.classList.remove('active'));
-		navPanel.classList.toggle('active', !wasOpen);
-		section.classList.toggle('active', !wasOpen);
-		return !wasOpen;
-	}
-
-	// alle nav buttons einsammeln, jeweils mit ihrem panel
-	const navButtons: { el: HTMLElement; panel: string }[] = [];
-
-	navButtons.push({ el: document.querySelector<HTMLElement>('.main-icon')!, panel: 'main' });
-
-	document.querySelectorAll<HTMLElement>('.product-buttons .nav-button').forEach((el) => {
-		navButtons.push({ el, panel: el.dataset.panel! });
+	const navPairs = [{ el: navWrapper.querySelector<HTMLElement>('.main-icon')!, panel: 'main' }];
+	navWrapper.querySelectorAll<HTMLElement>('.product-buttons .nav-button').forEach((el) => {
+		navPairs.push({ el, panel: el.dataset.panel! });
 	});
+	navPairs.push({ el: cartBtn, panel: 'cart' });
 
-	navButtons.push({ el: document.querySelector<HTMLElement>('.cart-expand-button')!, panel: 'cart' });
+	initNav(navWrapper, navPairs);
 
-	// klick: panel togglen und active bei allen anderen buttons entfernen
-	navButtons.forEach(({ el, panel }) => {
-		el.addEventListener('click', () => {
-			const offen = openPanel(panel);
-			navButtons.forEach((b) => b.el.classList.remove('active'));
-			el.classList.toggle('active', offen);
-		});
-	});
-
-	// beim verlassen der nav schliesst sich das offene panel automatisch
-	document.querySelector<HTMLElement>('.nav-products')!.addEventListener('mouseleave', () => {
-		navPanel.classList.remove('active');
-		navPanel.querySelectorAll('.panel-section').forEach((s) => s.classList.remove('active'));
-		navButtons.forEach((b) => b.el.classList.remove('active'));
-	});
-
-	// cart panel (gemeinsames rendering aus cart.ts)
 	initCartUI(
-		navPanel.querySelector<HTMLElement>('[data-panel="cart"]')!,
-		document.querySelector<HTMLElement>('.cart-expand-button')!,
+		navWrapper.querySelector<HTMLElement>('[data-panel="cart"]')!,
+		cartBtn,
 		products,
 	);
 

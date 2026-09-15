@@ -218,14 +218,6 @@ body *{
 
 @font-face {
     font-family: 'Satoshi';
-    src: url('/fonts/Satoshi/Satoshi-Medium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Satoshi';
     src: url('/fonts/Satoshi/Satoshi-Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
@@ -431,7 +423,7 @@ body *{
 
         .title{
             font-size: clamp(1.5rem, 3vw, 5rem);
-            line-height: 1;
+            line-height: 1.1;
             font-family: var(--satoshi);
             font-weight: 900;
             text-wrap: pretty;
@@ -478,7 +470,7 @@ body *{
         font-family: var(--satoshi);
         font-weight: 700;
         font-size: clamp(1rem, 1vw, 3rem);
-        line-height: 1.05;
+        line-height: 1.1;
         color: var(--white);
     }
 
@@ -1172,7 +1164,7 @@ body *{
             .panel-text{
                 font-family: var(--ibm);
                 font-size: 12px;
-                line-height: 1.7;
+                line-height: 1.6;
                 max-width: 60ch;
             }
 
@@ -1393,7 +1385,7 @@ body *{
 
     .datenschutzerklärung__text{
         font-size: 12px;
-        line-height: 1.7;
+        line-height: 1.6;
         margin-bottom: 12px;
     }
 
@@ -1451,7 +1443,7 @@ body *{
 
     .desc{
         font-size: 13px;
-        line-height: 1.7;
+        line-height: 1.6;
         max-width: 85%;
         margin-bottom: 24px;
     }
@@ -1579,7 +1571,7 @@ body *{
 
     .checkout-text{
         font-size: 12px;
-        line-height: 1.7;
+        line-height: 1.6;
     }
 
     .checkout-btn{

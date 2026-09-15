@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const path = Astro.url.pathname;
+import SiteNav from '../components/SiteNav.astro';
 
 const editorials = [
 	'/landingpage/editiorial_strafe_1.webp',
@@ -141,43 +140,18 @@ const editorials = [
             <p class="datenschutzerklärung__text">Quelle: <a href="https://www.e-recht24.de" target="_blank" rel="noopener noreferrer">https://www.e-recht24.de</a></p>
         </article>
     </section>
-    <div class="nav-impressum">
-        <div class="nav-main">
-            <div class="main-icon">
-                <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z"></path></svg>
-                <span class="nav-label">menu</span>
-            </div>
+    <SiteNav variant="impressum">
+        <div class="product-buttons" slot="buttons">
+            <div class="nav-button" id="impressum-btn">impressum</div>
+            <div class="nav-button" id="datenschutz-btn">datenschutz</div>
         </div>
-        <div class="nav-product">
-            <div class="product-buttons">
-                <div class="nav-button" id="impressum-btn">impressum</div>
-                <div class="nav-button" id="datenschutz-btn">datenschutz</div>
-            </div>
-            <div class="nav-expanded" id="nav-panel">
-                <div class="panel-section" data-panel="main">
-                    <div class="nav-options">
-                        <ul>
-                            <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>start</a></li>
-                            <li><a href="/collection" aria-current={path === '/collection' ? 'page' : undefined}>collection</a></li>
-                            <li><a href="/impressum" aria-current={path === '/impressum' ? 'page' : undefined}>impressum</a></li>
-                        </ul>
-                        <div class="logo"><img src="/favicon/favicon.svg" alt=""></div>
-                    </div>
-                    <div class="titles"><span>strafe.site</span><span> made by JT</span></div>
-                </div>
-                <div class="panel-section" data-panel="cart"></div>
-            </div>
-        </div>
-        <div class="cart-expand-button">
-            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM176,88a48,48,0,0,1-96,0,8,8,0,0,1,16,0,32,32,0,0,0,64,0,8,8,0,0,1,16,0Z"></path></svg>
-            <span class="nav-label">cart (0)</span>
-        </div>
-    </div>
+    </SiteNav>
 </Layout>
 
 <script>
 	import { navigate } from "astro:transitions/client";
 	import { initCartUI } from '../scripts/cart';
+	import { initNav } from '../scripts/nav';
 	import { products } from '../data/products';
 
     const dotMeta = document.getElementById('dot-meta');
@@ -192,34 +166,17 @@ const editorials = [
         document.getElementById('datenschutz-section')?.scrollIntoView({ behavior: 'smooth' });
     });
 
-    // ein panel für alle: zeigt die gewählte sektion, gleicher klick schließt
-    const navPanel = document.getElementById('nav-panel')!;
+    // nav-panels (menu / cart)
+    const navWrapper = document.querySelector<HTMLElement>('.nav-impressum')!;
+    const cartBtn = navWrapper.querySelector<HTMLElement>('.cart-expand-button')!;
+    initNav(navWrapper, [
+        { el: navWrapper.querySelector<HTMLElement>('.main-icon')!, panel: 'main' },
+        { el: cartBtn, panel: 'cart' },
+    ]);
 
-    function openPanel(name: string) {
-        const section = navPanel.querySelector(`[data-panel="${name}"]`)!;
-        const wasOpen = section.classList.contains('active');
-        navPanel.querySelectorAll('.panel-section').forEach((s) => s.classList.remove('active'));
-        navPanel.classList.toggle('active', !wasOpen);
-        section.classList.toggle('active', !wasOpen);
-        return !wasOpen;
-    }
-
-    const menuBtn = document.querySelector('.main-icon')!;
-    menuBtn.addEventListener('click', () => {
-        const offen = openPanel('main');
-        menuBtn.classList.toggle('active', offen);
-    });
-
-    const cartBtn = document.querySelector('.cart-expand-button')!;
-    cartBtn.addEventListener('click', () => {
-        const offen = openPanel('cart');
-        cartBtn.classList.toggle('active', offen);
-    });
-
-    // cart panel (gemeinsames rendering aus cart.ts)
     initCartUI(
-        navPanel.querySelector<HTMLElement>('[data-panel="cart"]')!,
-        cartBtn as HTMLElement,
+        navWrapper.querySelector<HTMLElement>('[data-panel="cart"]')!,
+        cartBtn,
         products,
     );
     // back button (dotMeta/dot sind oben schon deklariert)
