@@ -116,5 +116,14 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 		prevCount = now;
 		render();
 	});
+
+	// aus dem bfcache wiederhergestellte seite (browser-zurueck) laeuft nicht neu –
+	// darum hier frisch aus dem storage rendern, sonst zeigt der cart einen alten stand
+	window.addEventListener('pageshow', (e) => {
+		if (!e.persisted) return;
+		prevCount = cartCount();
+		render();
+	});
+
 	render();
 }
