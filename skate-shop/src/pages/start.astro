@@ -139,8 +139,6 @@ import Layout from '../layouts/Layout.astro';
             label.appendChild(text);
             contextEl.appendChild(label);
 
-            // sobald angehakt: einwilligung merken und clarity direkt erlauben,
-            // damit das cookie noch auf der start-seite gesetzt wird (bevor navigiert wird)
             box.checked = localStorage.getItem(CONSENT_KEY) === "granted";
             nextBtn.disabled = !box.checked;
             box.addEventListener("change", () => {

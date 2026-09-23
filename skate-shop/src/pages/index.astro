@@ -122,8 +122,6 @@ const chosen = [
 	// der Track enthaelt die Bilder doppelt
 	const count = track.children.length / 2;
 
-	// scroll-fortschritt (0..1), der bild i mittig im viewport zeigt.
-	// die animation läuft translateX(0) -> translateX(-50%), also -p * halbeTrackbreite.
 	function centerProgress(i: number) {
 		const imgs = [...track.children] as HTMLElement[];
 		const halfWidth = imgs.slice(0, count).reduce((sum, el) => sum + el.offsetWidth, 0);
@@ -131,14 +129,13 @@ const chosen = [
 		const centerI = before + imgs[i].offsetWidth / 2;
 		const viewport = (track.parentElement as HTMLElement).clientWidth;
 		const p = (centerI - viewport / 2) / halfWidth;
-		return ((p % 1) + 1) % 1; // in [0,1) halten (loop ist nahtlos wegen duplikat)
+		return ((p % 1) + 1) % 1;
 	}
 
 	let paused = false;
 
 	document.querySelectorAll('.chosen-product').forEach((el, i) => {
 		el.addEventListener('mouseenter', () => {
-			// nur das passende editorial-bild (index i und sein duplikat i+count) in farbe
 			track.children[i]?.classList.add('color');
 			track.children[i + count]?.classList.add('color');
 			const anim = getAnim();

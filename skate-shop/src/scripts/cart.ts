@@ -1,5 +1,4 @@
-// Warenkorb in localStorage. Es werden nur id + qty gespeichert –
-// Titel/Preis/Bild kommen beim Rendern frisch aus products.ts.
+// Warenkorb in localStorage setzen 
 
 export type CartItem = { id: string; qty: number; size?: string };
 
@@ -13,11 +12,9 @@ export function cartCount(): number {
 
 function save(cart: CartItem[]) {
 	localStorage.setItem('cart', JSON.stringify(cart));
-	// damit UI (counter, panel) ueberall reagieren kann
 	window.dispatchEvent(new Event('cart-change'));
 }
 
-// eine cart-zeile ist id + size: hoodie in M und hoodie in L sind zwei zeilen
 export function addToCart(id: string, size?: string) {
 	const cart = getCart();
 	const item = cart.find((i) => i.id === id && i.size === size);
@@ -38,7 +35,7 @@ export function removeFromCart(id: string, size?: string) {
 	}
 }
 
-// ---- gemeinsames cart-panel-rendering fuer collection + produktseite ----
+// ---- gemeinsames cart-panel-rendering für collection + produktseite ----
 
 type CartProduct = { id: string; title: string; price: number; images: { src: string }[] };
 
@@ -47,7 +44,6 @@ const EMPTY_CART_HTML =
 
 export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: CartProduct[]) {
 	const render = () => {
-		// ids aus dem storage mit den produktdaten zusammenfuehren
 		const items = [];
 		for (const entry of getCart()) {
 			const product = products.find(p => p.id === entry.id);
@@ -76,18 +72,15 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 				+ `<button class="cart-checkout">checkout</button>`
 			: EMPTY_CART_HTML;
 
-		// nur das label aktualisieren, damit ein evtl. vorhandenes icon erhalten bleibt
 		const cartLabel = cartBtn.querySelector('.nav-label') ?? cartBtn;
 		cartLabel.textContent = cartCount() ? `cart (${cartCount()})` : 'cart (0)';
 	};
 
-	// mindestens 5 verschiedene artikel im warenkorb pflicht fuer den checkout
+	// mindestens 5 verschiedene artikel im warenkorb 
 	const MIN_ITEMS = 5;
 
-	// ein listener fuer alle buttons im panel (auch nach re-render)
 	panel.addEventListener('click', (e) => {
 		const removeBtn = (e.target as HTMLElement).closest<HTMLElement>('.cart-remove');
-		// leeres data-size wieder zu undefined machen (zeile ohne groesse)
 		if (removeBtn) {
 			removeFromCart(removeBtn.dataset.id!, removeBtn.dataset.size || undefined);
 			return;
@@ -102,7 +95,7 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 		}
 	});
 
-	// beim hinzufuegen (menge steigt) kurz aufblinken lassen
+	// beim hinzufuegen warenkorb kurz aufblinken lassen
 	let prevCount = cartCount();
 	cartBtn.addEventListener('animationend', () => cartBtn.classList.remove('blink'));
 
@@ -110,15 +103,13 @@ export function initCartUI(panel: HTMLElement, cartBtn: HTMLElement, products: C
 		const now = cartCount();
 		if (now > prevCount) {
 			cartBtn.classList.remove('blink');
-			void cartBtn.offsetWidth; // reflow, damit die animation neu startet
+			void cartBtn.offsetWidth;
 			cartBtn.classList.add('blink');
 		}
 		prevCount = now;
 		render();
 	});
 
-	// aus dem bfcache wiederhergestellte seite (browser-zurueck) laeuft nicht neu –
-	// darum hier frisch aus dem storage rendern, sonst zeigt der cart einen alten stand
 	window.addEventListener('pageshow', (e) => {
 		if (!e.persisted) return;
 		prevCount = cartCount();

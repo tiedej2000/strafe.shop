@@ -382,8 +382,6 @@ body *{
 }
 
 .chosen-products{
-    // fixed (statt absolute), da der 25vh-spacer .link-site entfernt wurde und
-    // sonst die höhe des dokuments (nicht des viewports) referenziert würde
     position: fixed;
     bottom: 50px;
     left: 0;
@@ -1662,7 +1660,6 @@ body *{
         display: grid;
     }
 
-    // completely hide elements
     .options, .collection-link-meta, .links, .help-toggle,  #min-btn, #mid-btn, #max-btn{
         display: none;
         opacity: 0;

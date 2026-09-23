@@ -1,7 +1,4 @@
 ---
-// gemeinsame nav für collection, produktseite und impressum.
-// seiten-spezifische buttons kommen über <slot name="buttons">, zusätzliche
-// panels (grid-filter, produkt-tabs …) über <slot name="panels">.
 type Variant = 'collection' | 'products' | 'impressum';
 const { variant } = Astro.props as { variant: Variant };
 
