@@ -1,5 +1,5 @@
 Bachelorarbeit Justin Tiede, Hochschule Offenburg, 2026
-Strafe Mode-Onlineshop
+Quellcode für Strafe Mode-Onlineshop
 
 Inhalt
   src/            Quellcode der Seite
