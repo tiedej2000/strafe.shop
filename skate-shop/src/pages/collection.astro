@@ -47,7 +47,7 @@ const categories = ['all', ...new Set(sortedProducts.map((p) => p.category))];
                 const shots = p.images.filter((img) => img !== main);
                 return (
                 <a href={`/products/${p.id}`} data-category={p.category}>
-                    <article class="product-card">
+                    <article class="product-card" data-title={p.title}>
                         <div class="product-card-info">
                             <span class="title">{p.id}</span>
                             <span class="price">€{p.price}</span>
@@ -202,7 +202,7 @@ import { initNav } from '../scripts/nav';
 
     document.querySelectorAll<HTMLElement>('.product-card').forEach((card) => {
         const img = card.querySelector<HTMLElement>('.product-img');
-        const title = card.querySelector('.title')?.textContent ?? '';
+        const title = card.dataset.title ?? '';
         if (!img || !dotMeta) return;
 
         // falls die karte ein video hat: bei hover abspielen, sonst zuruecksetzen
